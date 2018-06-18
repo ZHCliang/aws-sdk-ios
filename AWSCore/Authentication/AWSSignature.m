@@ -131,6 +131,16 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
 
 @implementation AWSSignatureV4Signer
 
+static BOOL AWSSignatureV4SignerUseChunkedEncoding = NO;
+
++ (BOOL)useChunkedEncoding {
+    return AWSSignatureV4SignerUseChunkedEncoding;
+}
+
++ (void)setUseChunkedEncoding:(BOOL)useChunkedEncoding {
+    AWSSignatureV4SignerUseChunkedEncoding = useChunkedEncoding;
+}
+
 + (instancetype)signerWithCredentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider
                                      endpoint:(AWSEndpoint *)endpoint {
     AWSSignatureV4Signer *signer = [[AWSSignatureV4Signer alloc] initWithCredentialsProvider:credentialsProvider
@@ -222,12 +232,16 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
     NSInputStream *stream = [urlRequest HTTPBodyStream];
     NSUInteger contentLength = [[urlRequest allHTTPHeaderFields][@"Content-Length"] integerValue];
     if (nil != stream) {
-        contentSha256 = @"STREAMING-AWS4-HMAC-SHA256-PAYLOAD";
-        [urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[AWSS3ChunkedEncodingInputStream computeContentLengthForChunkedData:contentLength]]
-          forHTTPHeaderField:@"Content-Length"];
-        [urlRequest setValue:nil forHTTPHeaderField:@"Content-Length"]; //remove Content-Length header if it is a HTTPBodyStream
-        [urlRequest addValue:@"aws-chunked" forHTTPHeaderField:@"Content-Encoding"]; //add aws-chunked keyword for s3 chunk upload
-        [urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)contentLength] forHTTPHeaderField:@"x-amz-decoded-content-length"];
+        if (AWSSignatureV4Signer.useChunkedEncoding) {
+            contentSha256 = @"STREAMING-AWS4-HMAC-SHA256-PAYLOAD";
+            [urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[AWSS3ChunkedEncodingInputStream computeContentLengthForChunkedData:contentLength]]
+              forHTTPHeaderField:@"Content-Length"];
+            [urlRequest setValue:nil forHTTPHeaderField:@"Content-Length"]; //remove Content-Length header if it is a HTTPBodyStream
+            [urlRequest addValue:@"aws-chunked" forHTTPHeaderField:@"Content-Encoding"]; //add aws-chunked keyword for s3 chunk upload
+            [urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)contentLength] forHTTPHeaderField:@"x-amz-decoded-content-length"];
+        } else {
+            contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hash:[urlRequest HTTPBody]] encoding:NSASCIIStringEncoding]];
+        }
     } else {
         contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hash:[urlRequest HTTPBody]] encoding:NSASCIIStringEncoding]];
         //using Content-Length with value of '0' cause auth issue, remove it.
@@ -237,7 +251,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
             [urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[[urlRequest HTTPBody] length]] forHTTPHeaderField:@"Content-Length"];
         }
     }
-
+    
     //[request.urlRequest setValue:dateTime forHTTPHeaderField:@"X-Amz-Date"];
     [urlRequest setValue:contentSha256 forHTTPHeaderField:@"x-amz-content-sha256"];
 
@@ -285,7 +299,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
                                [AWSSignatureV4Signer getSignedHeadersString:headers],
                                signatureString];
 
-    if (nil != stream) {
+    if (nil != stream && AWSSignatureV4Signer.useChunkedEncoding) {
         AWSS3ChunkedEncodingInputStream *chunkedStream = [[AWSS3ChunkedEncodingInputStream alloc] initWithInputStream:stream
                                                                                                            date:date
                                                                                                           scope:scope

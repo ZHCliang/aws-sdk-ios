@@ -35,6 +35,8 @@ FOUNDATION_EXPORT NSString *const AWSSignatureV4Terminator;
 
 @interface AWSSignatureV4Signer : NSObject <AWSNetworkingRequestInterceptor>
 
+@property (class, nonatomic, assign) BOOL useChunkedEncoding;
+
 @property (nonatomic, strong, readonly) id<AWSCredentialsProvider> credentialsProvider;
 
 - (instancetype)initWithCredentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider
