@@ -20,6 +20,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//! SDK version for AWSTranscribe
+FOUNDATION_EXPORT NSString *const AWSTranscribeSDKVersion;
+
 /**
  <p>Operations and objects for transcribing speech to text.</p>
  */
@@ -172,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)removeTranscribeForKey:(NSString *)key;
 
 /**
- <p>Creates a new custom vocabulary that you can use to change the way Amazon Transcribe handles transcription of an audio file.</p>
+ <p>Creates a new custom vocabulary that you can use to change the way Amazon Transcribe handles transcription of an audio file. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message. </p>
  
  @param request A container for the necessary parameters to execute the CreateVocabulary service method.
 
@@ -184,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (AWSTask<AWSTranscribeCreateVocabularyResponse *> *)createVocabulary:(AWSTranscribeCreateVocabularyRequest *)request;
 
 /**
- <p>Creates a new custom vocabulary that you can use to change the way Amazon Transcribe handles transcription of an audio file.</p>
+ <p>Creates a new custom vocabulary that you can use to change the way Amazon Transcribe handles transcription of an audio file. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message. </p>
  
  @param request A container for the necessary parameters to execute the CreateVocabulary service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -197,11 +200,33 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createVocabulary:(AWSTranscribeCreateVocabularyRequest *)request completionHandler:(void (^ _Nullable)(AWSTranscribeCreateVocabularyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Deletes a previously submitted transcription job as well as any other generated results such as the transcription, models, and so on.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteTranscriptionJob service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorInternalFailure`.
+ 
+ @see AWSTranscribeDeleteTranscriptionJobRequest
+ */
+- (AWSTask *)deleteTranscriptionJob:(AWSTranscribeDeleteTranscriptionJobRequest *)request;
+
+/**
+ <p>Deletes a previously submitted transcription job as well as any other generated results such as the transcription, models, and so on.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteTranscriptionJob service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorInternalFailure`.
+ 
+ @see AWSTranscribeDeleteTranscriptionJobRequest
+ */
+- (void)deleteTranscriptionJob:(AWSTranscribeDeleteTranscriptionJobRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
  <p>Deletes a vocabulary from Amazon Transcribe. </p>
  
  @param request A container for the necessary parameters to execute the DeleteVocabulary service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorNotFound`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorInternalFailure`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorNotFound`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorInternalFailure`.
  
  @see AWSTranscribeDeleteVocabularyRequest
  */
@@ -212,7 +237,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param request A container for the necessary parameters to execute the DeleteVocabulary service method.
  @param completionHandler The completion handler to call when the load request is complete.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorNotFound`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorInternalFailure`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorNotFound`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorInternalFailure`.
  
  @see AWSTranscribeDeleteVocabularyRequest
  */
@@ -244,7 +269,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getTranscriptionJob:(AWSTranscribeGetTranscriptionJobRequest *)request completionHandler:(void (^ _Nullable)(AWSTranscribeGetTranscriptionJobResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Gets information about a vocabulary.</p>
+ <p>Gets information about a vocabulary. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message.</p>
  
  @param request A container for the necessary parameters to execute the GetVocabulary service method.
 
@@ -256,7 +281,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (AWSTask<AWSTranscribeGetVocabularyResponse *> *)getVocabulary:(AWSTranscribeGetVocabularyRequest *)request;
 
 /**
- <p>Gets information about a vocabulary.</p>
+ <p>Gets information about a vocabulary. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message.</p>
  
  @param request A container for the necessary parameters to execute the GetVocabulary service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -319,7 +344,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)listVocabularies:(AWSTranscribeListVocabulariesRequest *)request completionHandler:(void (^ _Nullable)(AWSTranscribeListVocabulariesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Starts an asynchronous job to transcribe speech to text.</p>
+ <p>Starts an asynchronous job to transcribe speech to text. Note that en-AU, en-UK, and fr-CA languages are in preview and are only available to whitelisted customers. </p>
  
  @param request A container for the necessary parameters to execute the StartTranscriptionJob service method.
 
@@ -331,7 +356,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (AWSTask<AWSTranscribeStartTranscriptionJobResponse *> *)startTranscriptionJob:(AWSTranscribeStartTranscriptionJobRequest *)request;
 
 /**
- <p>Starts an asynchronous job to transcribe speech to text.</p>
+ <p>Starts an asynchronous job to transcribe speech to text. Note that en-AU, en-UK, and fr-CA languages are in preview and are only available to whitelisted customers. </p>
  
  @param request A container for the necessary parameters to execute the StartTranscriptionJob service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -344,11 +369,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startTranscriptionJob:(AWSTranscribeStartTranscriptionJobRequest *)request completionHandler:(void (^ _Nullable)(AWSTranscribeStartTranscriptionJobResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Updates an existing vocabulary with new values.</p>
+ <p>Updates an existing vocabulary with new values. The <code>UpdateVocabulary</code> operation overwrites all of the existing information with the values that you provide in the request. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message.</p>
  
  @param request A container for the necessary parameters to execute the UpdateVocabulary service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSTranscribeUpdateVocabularyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorInternalFailure`, `AWSTranscribeErrorNotFound`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSTranscribeUpdateVocabularyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorInternalFailure`, `AWSTranscribeErrorNotFound`, `AWSTranscribeErrorConflict`.
  
  @see AWSTranscribeUpdateVocabularyRequest
  @see AWSTranscribeUpdateVocabularyResponse
@@ -356,12 +381,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (AWSTask<AWSTranscribeUpdateVocabularyResponse *> *)updateVocabulary:(AWSTranscribeUpdateVocabularyRequest *)request;
 
 /**
- <p>Updates an existing vocabulary with new values.</p>
+ <p>Updates an existing vocabulary with new values. The <code>UpdateVocabulary</code> operation overwrites all of the existing information with the values that you provide in the request. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message.</p>
  
  @param request A container for the necessary parameters to execute the UpdateVocabulary service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorInternalFailure`, `AWSTranscribeErrorNotFound`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSTranscribeErrorDomain` domain and the following error code: `AWSTranscribeErrorBadRequest`, `AWSTranscribeErrorLimitExceeded`, `AWSTranscribeErrorInternalFailure`, `AWSTranscribeErrorNotFound`, `AWSTranscribeErrorConflict`.
  
  @see AWSTranscribeUpdateVocabularyRequest
  @see AWSTranscribeUpdateVocabularyResponse

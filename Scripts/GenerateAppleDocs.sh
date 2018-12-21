@@ -9,7 +9,7 @@ function cleanup
 }
 
 
-VERSION="2.6.21"
+VERSION="2.8.1"
 if [ -n $1 ] && [ "$1" == "clean" ];
 then
 	cleanup
@@ -36,6 +36,8 @@ else
     cp -r AWSElasticLoadBalancing ./docs_tmp/AWSElasticLoadBalancing
     cp -r AWSIoT ./docs_tmp/AWSIoT
     cp -r AWSKinesis ./docs_tmp/AWSKinesis
+    cp -r AWSKinesisVideo ./docs_tmp/AWSKinesisVideo
+    cp -r AWSKinesisVideoArchivedMedia ./docs_tmp/AWSKinesisVideoArchivedMedia
     cp -r AWSKMS ./docs_tmp/AWSKMS
     cp -r AWSLambda ./docs_tmp/AWSLambda
     cp -r AWSLex ./docs_tmp/AWSLex
@@ -60,8 +62,7 @@ else
     cp -r AWSAuthSDK/Sources/AWSGoogleSignIn ./docs_tmp/AWSAuthSDK/
     cp -r AWSAuthSDK/Sources/AWSUserPoolsSignIn ./docs_tmp/AWSAuthSDK/
     cp -r AWSAuthSDK/Sources/AWSAuthUI ./docs_tmp/AWSAuthSDK/
-    cp -r AWSAuthSDK/Sources/AWSMobileClient ./docs_tmp/AWSAuthSDK/
-	
+
     rm -rf ./docs_tmp/AWSCore/Bolts
     rm -rf ./docs_tmp/AWSCore/Fabric
     rm -rf ./docs_tmp/AWSCore/FMDB

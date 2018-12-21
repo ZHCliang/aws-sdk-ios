@@ -100,6 +100,16 @@
       \"output\":{\"shape\":\"AcceptVpcPeeringConnectionResult\"},\
       \"documentation\":\"<p>Accept a VPC peering connection request. To accept a request, the VPC peering connection must be in the <code>pending-acceptance</code> state, and you must be the owner of the peer VPC. Use <a>DescribeVpcPeeringConnections</a> to view your outstanding VPC peering connection requests.</p> <p>For an inter-region VPC peering connection request, you must accept the VPC peering connection in the region of the accepter VPC.</p>\"\
     },\
+    \"AdvertiseByoipCidr\":{\
+      \"name\":\"AdvertiseByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"AdvertiseByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"AdvertiseByoipCidrResult\"},\
+      \"documentation\":\"<p>Advertises an IPv4 address range that is provisioned for use with your AWS resources through bring your own IP addresses (BYOIP).</p> <p>You can perform this operation at most once every 10 seconds, even if you specify different address ranges each time.</p> <p>We recommend that you stop advertising the BYOIP CIDR from other locations when you advertise it from AWS. To minimize down time, you can configure your AWS resources to use an address from a BYOIP CIDR before it is advertised, and then simultaneously stop advertising it from the current location and start advertising it through AWS.</p> <p>It can take a few minutes before traffic to the specified addresses starts routing to AWS because of BGP propagation delays.</p> <p>To stop advertising the BYOIP CIDR, use <a>WithdrawByoipCidr</a>.</p>\"\
+    },\
     \"AllocateAddress\":{\
       \"name\":\"AllocateAddress\",\
       \"http\":{\
@@ -108,7 +118,7 @@
       },\
       \"input\":{\"shape\":\"AllocateAddressRequest\"},\
       \"output\":{\"shape\":\"AllocateAddressResult\"},\
-      \"documentation\":\"<p>Allocates an Elastic IP address.</p> <p>An Elastic IP address is for use either in the EC2-Classic platform or in a VPC. By default, you can allocate 5 Elastic IP addresses for EC2-Classic per region and 5 Elastic IP addresses for EC2-VPC per region.</p> <p>If you release an Elastic IP address for use in a VPC, you might be able to recover it. To recover an Elastic IP address that you released, specify it in the <code>Address</code> parameter. Note that you cannot recover an Elastic IP address that you released after it is allocated to another AWS account.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Allocates an Elastic IP address to your AWS account. After you allocate the Elastic IP address you can associate it with an instance or network interface. After you release an Elastic IP address, it is released to the IP address pool and can be allocated to a different AWS account.</p> <p>You can allocate an Elastic IP address from an address pool owned by AWS or from an address pool created from a public IPv4 address range that you have brought to AWS for use with your AWS resources using bring your own IP addresses (BYOIP). For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\\\">Bring Your Own IP Addresses (BYOIP)</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>[EC2-VPC] If you release an Elastic IP address, you might be able to recover it. You cannot recover an Elastic IP address that you released after it is allocated to another AWS account. You cannot recover an Elastic IP address for EC2-Classic. To attempt to recover an Elastic IP address that you released, specify it in this operation.</p> <p>An Elastic IP address is for use either in the EC2-Classic platform or in a VPC. By default, you can allocate 5 Elastic IP addresses for EC2-Classic per region and 5 Elastic IP addresses for EC2-VPC per region.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"AllocateHosts\":{\
       \"name\":\"AllocateHosts\",\
@@ -118,7 +128,7 @@
       },\
       \"input\":{\"shape\":\"AllocateHostsRequest\"},\
       \"output\":{\"shape\":\"AllocateHostsResult\"},\
-      \"documentation\":\"<p>Allocates a Dedicated Host to your account. At minimum you need to specify the instance size type, Availability Zone, and quantity of hosts you want to allocate.</p>\"\
+      \"documentation\":\"<p>Allocates a Dedicated Host to your account. At a minimum, specify the instance size type, Availability Zone, and quantity of hosts to allocate.</p>\"\
     },\
     \"AssignIpv6Addresses\":{\
       \"name\":\"AssignIpv6Addresses\",\
@@ -137,7 +147,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"AssignPrivateIpAddressesRequest\"},\
-      \"documentation\":\"<p>Assigns one or more secondary private IP addresses to the specified network interface. You can specify one or more specific secondary IP addresses, or you can specify the number of secondary IP addresses to be automatically assigned within the subnet's CIDR block range. The number of secondary IP addresses that you can assign to an instance varies by instance type. For information about instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html\\\">Instance Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. For more information about Elastic IP addresses, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>AssignPrivateIpAddresses is available only in EC2-VPC.</p>\"\
+      \"documentation\":\"<p>Assigns one or more secondary private IP addresses to the specified network interface.</p> <p>You can specify one or more specific secondary IP addresses, or you can specify the number of secondary IP addresses to be automatically assigned within the subnet's CIDR block range. The number of secondary IP addresses that you can assign to an instance varies by instance type. For information about instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html\\\">Instance Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. For more information about Elastic IP addresses, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>When you move a secondary private IP address to another network interface, any Elastic IP address that is associated with the IP address is also moved.</p> <p>Remapping an IP address is an asynchronous operation. When you move an IP address from one network interface to another, check <code>network/interfaces/macs/mac/local-ipv4s</code> in the instance metadata to confirm that the remapping is complete.</p>\"\
     },\
     \"AssociateAddress\":{\
       \"name\":\"AssociateAddress\",\
@@ -147,7 +157,7 @@
       },\
       \"input\":{\"shape\":\"AssociateAddressRequest\"},\
       \"output\":{\"shape\":\"AssociateAddressResult\"},\
-      \"documentation\":\"<p>Associates an Elastic IP address with an instance or a network interface.</p> <p>An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>[EC2-Classic, VPC in an EC2-VPC-only account] If the Elastic IP address is already associated with a different instance, it is disassociated from that instance and associated with the specified instance. If you associate an Elastic IP address with an instance that has an existing Elastic IP address, the existing address is disassociated from the instance, but remains allocated to your account.</p> <p>[VPC in an EC2-Classic account] If you don't specify a private IP address, the Elastic IP address is associated with the primary IP address. If the Elastic IP address is already associated with a different instance or a network interface, you get an error unless you allow reassociation. You cannot associate an Elastic IP address with an instance or network interface that has an existing Elastic IP address.</p> <important> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error, and you may be charged for each time the Elastic IP address is remapped to the same instance. For more information, see the <i>Elastic IP Addresses</i> section of <a href=\\\"http://aws.amazon.com/ec2/pricing/\\\">Amazon EC2 Pricing</a>.</p> </important>\"\
+      \"documentation\":\"<p>Associates an Elastic IP address with an instance or a network interface. Before you can use an Elastic IP address, you must allocate it to your account.</p> <p>An Elastic IP address is for use in either the EC2-Classic platform or in a VPC. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>[EC2-Classic, VPC in an EC2-VPC-only account] If the Elastic IP address is already associated with a different instance, it is disassociated from that instance and associated with the specified instance. If you associate an Elastic IP address with an instance that has an existing Elastic IP address, the existing address is disassociated from the instance, but remains allocated to your account.</p> <p>[VPC in an EC2-Classic account] If you don't specify a private IP address, the Elastic IP address is associated with the primary IP address. If the Elastic IP address is already associated with a different instance or a network interface, you get an error unless you allow reassociation. You cannot associate an Elastic IP address with an instance or network interface that has an existing Elastic IP address.</p> <important> <p>This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error, and you may be charged for each time the Elastic IP address is remapped to the same instance. For more information, see the <i>Elastic IP Addresses</i> section of <a href=\\\"http://aws.amazon.com/ec2/pricing/\\\">Amazon EC2 Pricing</a>.</p> </important>\"\
     },\
     \"AssociateDhcpOptions\":{\
       \"name\":\"AssociateDhcpOptions\",\
@@ -176,7 +186,7 @@
       },\
       \"input\":{\"shape\":\"AssociateRouteTableRequest\"},\
       \"output\":{\"shape\":\"AssociateRouteTableResult\"},\
-      \"documentation\":\"<p>Associates a subnet with a route table. The subnet and route table must be in the same VPC. This association causes traffic originating from the subnet to be routed according to the routes in the route table. The action returns an association ID, which you need in order to disassociate the route table from the subnet later. A route table can be associated with multiple subnets.</p> <p>For more information about route tables, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Associates a subnet with a route table. The subnet and route table must be in the same VPC. This association causes traffic originating from the subnet to be routed according to the routes in the route table. The action returns an association ID, which you need in order to disassociate the route table from the subnet later. A route table can be associated with multiple subnets.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"AssociateSubnetCidrBlock\":{\
       \"name\":\"AssociateSubnetCidrBlock\",\
@@ -215,7 +225,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"AttachInternetGatewayRequest\"},\
-      \"documentation\":\"<p>Attaches an Internet gateway to a VPC, enabling connectivity between the Internet and the VPC. For more information about your VPC and Internet gateway, see the <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/\\\">Amazon Virtual Private Cloud User Guide</a>.</p>\"\
+      \"documentation\":\"<p>Attaches an internet gateway to a VPC, enabling connectivity between the internet and the VPC. For more information about your VPC and internet gateway, see the <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/\\\">Amazon Virtual Private Cloud User Guide</a>.</p>\"\
     },\
     \"AttachNetworkInterface\":{\
       \"name\":\"AttachNetworkInterface\",\
@@ -235,7 +245,7 @@
       },\
       \"input\":{\"shape\":\"AttachVolumeRequest\"},\
       \"output\":{\"shape\":\"VolumeAttachment\"},\
-      \"documentation\":\"<p>Attaches an EBS volume to a running or stopped instance and exposes it to the instance with the specified device name.</p> <p>Encrypted EBS volumes may only be attached to instances that support Amazon EBS encryption. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>For a list of supported device names, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html\\\">Attaching an EBS Volume to an Instance</a>. Any device names that aren't reserved for instance store volumes can be used for EBS volumes. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html\\\">Amazon EC2 Instance Store</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>If a volume has an AWS Marketplace product code:</p> <ul> <li> <p>The volume can be attached only to a stopped instance.</p> </li> <li> <p>AWS Marketplace product codes are copied from the volume to the instance.</p> </li> <li> <p>You must be subscribed to the product.</p> </li> <li> <p>The instance type and operating system of the instance must support the product. For example, you can't detach a volume from a Windows instance and attach it to a Linux instance.</p> </li> </ul> <p>For an overview of the AWS Marketplace, see <a href=\\\"https://aws.amazon.com/marketplace/help/200900000\\\">Introducing AWS Marketplace</a>.</p> <p>For more information about EBS volumes, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html\\\">Attaching Amazon EBS Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Attaches an EBS volume to a running or stopped instance and exposes it to the instance with the specified device name.</p> <p>Encrypted EBS volumes may only be attached to instances that support Amazon EBS encryption. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>For a list of supported device names, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html\\\">Attaching an EBS Volume to an Instance</a>. Any device names that aren't reserved for instance store volumes can be used for EBS volumes. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html\\\">Amazon EC2 Instance Store</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>If a volume has an AWS Marketplace product code:</p> <ul> <li> <p>The volume can be attached only to a stopped instance.</p> </li> <li> <p>AWS Marketplace product codes are copied from the volume to the instance.</p> </li> <li> <p>You must be subscribed to the product.</p> </li> <li> <p>The instance type and operating system of the instance must support the product. For example, you can't detach a volume from a Windows instance and attach it to a Linux instance.</p> </li> </ul> <p>For more information about EBS volumes, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html\\\">Attaching Amazon EBS Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"AttachVpnGateway\":{\
       \"name\":\"AttachVpnGateway\",\
@@ -273,7 +283,7 @@
       },\
       \"input\":{\"shape\":\"BundleInstanceRequest\"},\
       \"output\":{\"shape\":\"BundleInstanceResult\"},\
-      \"documentation\":\"<p>Bundles an Amazon instance store-backed Windows instance.</p> <p>During bundling, only the root device volume (C:\\\\) is bundled. Data on other instance store volumes is not preserved.</p> <note> <p>This action is not applicable for Linux/Unix instances or Windows instances that are backed by Amazon EBS.</p> </note> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/Creating_InstanceStoreBacked_WinAMI.html\\\">Creating an Instance Store-Backed Windows AMI</a>.</p>\"\
+      \"documentation\":\"<p>Bundles an Amazon instance store-backed Windows instance.</p> <p>During bundling, only the root device volume (C:\\\\) is bundled. Data on other instance store volumes is not preserved.</p> <note> <p>This action is not applicable for Linux/Unix instances or Windows instances that are backed by Amazon EBS.</p> </note>\"\
     },\
     \"CancelBundleTask\":{\
       \"name\":\"CancelBundleTask\",\
@@ -284,6 +294,16 @@
       \"input\":{\"shape\":\"CancelBundleTaskRequest\"},\
       \"output\":{\"shape\":\"CancelBundleTaskResult\"},\
       \"documentation\":\"<p>Cancels a bundling operation for an instance store-backed Windows instance.</p>\"\
+    },\
+    \"CancelCapacityReservation\":{\
+      \"name\":\"CancelCapacityReservation\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"CancelCapacityReservationRequest\"},\
+      \"output\":{\"shape\":\"CancelCapacityReservationResult\"},\
+      \"documentation\":\"<p>Cancels the specified Capacity Reservation, releases the reserved capacity, and changes the Capacity Reservation's state to <code>cancelled</code>.</p> <p>Instances running in the reserved capacity continue running until you stop them. Stopped instances that target the Capacity Reservation can no longer launch. Modify these instances to either target a different Capacity Reservation, launch On-Demand Instance capacity, or run in any open Capacity Reservation that has matching attributes and sufficient capacity.</p>\"\
     },\
     \"CancelConversionTask\":{\
       \"name\":\"CancelConversionTask\",\
@@ -371,7 +391,7 @@
       },\
       \"input\":{\"shape\":\"CopyImageRequest\"},\
       \"output\":{\"shape\":\"CopyImageResult\"},\
-      \"documentation\":\"<p>Initiates the copy of an AMI from the specified source region to the current region. You specify the destination region by using its endpoint when making the request.</p> <p>For more information about the prerequisites and limits when copying an AMI, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html\\\">Copying an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Initiates the copy of an AMI from the specified source region to the current region. You specify the destination region by using its endpoint when making the request.</p> <p>Copies of encrypted backing snapshots for the AMI are encrypted. Copies of unencrypted backing snapshots remain unencrypted, unless you set <code>Encrypted</code> during the copy operation. You cannot create an unencrypted copy of an encrypted backing snapshot.</p> <p>For more information about the prerequisites and limits when copying an AMI, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html\\\">Copying an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CopySnapshot\":{\
       \"name\":\"CopySnapshot\",\
@@ -381,7 +401,17 @@
       },\
       \"input\":{\"shape\":\"CopySnapshotRequest\"},\
       \"output\":{\"shape\":\"CopySnapshotResult\"},\
-      \"documentation\":\"<p>Copies a point-in-time snapshot of an EBS volume and stores it in Amazon S3. You can copy the snapshot within the same region or from one region to another. You can use the snapshot to create EBS volumes or Amazon Machine Images (AMIs). The snapshot is copied to the regional endpoint that you send the HTTP request to.</p> <p>Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted snapshots remain unencrypted, unless the <code>Encrypted</code> flag is specified during the snapshot copy operation. By default, encrypted snapshot copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a non-default CMK with the <code>KmsKeyId</code> parameter. </p> <note> <p>To copy an encrypted snapshot that has been shared from another account, you must have permissions for the CMK used to encrypt the snapshot.</p> </note> <note> <p>Snapshots created by the CopySnapshot action have an arbitrary volume ID that should not be used for any purpose.</p> </note> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html\\\">Copying an Amazon EBS Snapshot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Copies a point-in-time snapshot of an EBS volume and stores it in Amazon S3. You can copy the snapshot within the same region or from one region to another. You can use the snapshot to create EBS volumes or Amazon Machine Images (AMIs). The snapshot is copied to the regional endpoint that you send the HTTP request to.</p> <p>Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted snapshots remain unencrypted, unless the <code>Encrypted</code> flag is specified during the snapshot copy operation. By default, encrypted snapshot copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a non-default CMK with the <code>KmsKeyId</code> parameter.</p> <p>To copy an encrypted snapshot that has been shared from another account, you must have permissions for the CMK used to encrypt the snapshot.</p> <p>Snapshots created by copying another snapshot have an arbitrary volume ID that should not be used for any purpose.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html\\\">Copying an Amazon EBS Snapshot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+    },\
+    \"CreateCapacityReservation\":{\
+      \"name\":\"CreateCapacityReservation\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"CreateCapacityReservationRequest\"},\
+      \"output\":{\"shape\":\"CreateCapacityReservationResult\"},\
+      \"documentation\":\"<p>Creates a new Capacity Reservation with the specified attributes.</p> <p>Capacity Reservations enable you to reserve capacity for your Amazon EC2 instances in a specific Availability Zone for any duration. This gives you the flexibility to selectively add capacity reservations and still get the Regional RI discounts for that usage. By creating Capacity Reservations, you ensure that you always have access to Amazon EC2 capacity when you need it, for as long as you need it. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html\\\">Capacity Reservations</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Your request to create a Capacity Reservation could fail if Amazon EC2 does not have sufficient capacity to fulfill the request. If your request fails due to Amazon EC2 capacity constraints, either try again at a later time, try in a different Availability Zone, or request a smaller capacity reservation. If your application is flexible across instance types and sizes, try to create a Capacity Reservation with different instance attributes.</p> <p>Your request could also fail if the requested quantity exceeds your On-Demand Instance limit for the selected instance type. If your request fails due to limit constraints, increase your On-Demand Instance limit for the required instance type and try again. For more information about increasing your instance limits, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html\\\">Amazon EC2 Service Limits</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CreateCustomerGateway\":{\
       \"name\":\"CreateCustomerGateway\",\
@@ -411,7 +441,7 @@
       },\
       \"input\":{\"shape\":\"CreateDefaultVpcRequest\"},\
       \"output\":{\"shape\":\"CreateDefaultVpcResult\"},\
-      \"documentation\":\"<p>Creates a default VPC with a size <code>/16</code> IPv4 CIDR block and a default subnet in each Availability Zone. For more information about the components of a default VPC, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html\\\">Default VPC and Default Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>. You cannot specify the components of the default VPC yourself.</p> <p>You can create a default VPC if you deleted your previous default VPC. You cannot have more than one default VPC per region. </p> <p>If your account supports EC2-Classic, you cannot use this action to create a default VPC in a region that supports EC2-Classic. If you want a default VPC in a region that supports EC2-Classic, see \\\"I really want a default VPC for my existing EC2 account. Is that possible?\\\" in the <a href=\\\"http://aws.amazon.com/vpc/faqs/#Default_VPCs\\\">Default VPCs FAQ</a>.</p>\"\
+      \"documentation\":\"<p>Creates a default VPC with a size <code>/16</code> IPv4 CIDR block and a default subnet in each Availability Zone. For more information about the components of a default VPC, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html\\\">Default VPC and Default Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>. You cannot specify the components of the default VPC yourself.</p> <p>If you deleted your previous default VPC, you can create a default VPC. You cannot have more than one default VPC per Region.</p> <p>If your account supports EC2-Classic, you cannot use this action to create a default VPC in a Region that supports EC2-Classic. If you want a default VPC in a Region that supports EC2-Classic, see \\\"I really want a default VPC for my existing EC2 account. Is that possible?\\\" in the <a href=\\\"http://aws.amazon.com/vpc/faqs/#Default_VPCs\\\">Default VPCs FAQ</a>.</p>\"\
     },\
     \"CreateDhcpOptions\":{\
       \"name\":\"CreateDhcpOptions\",\
@@ -421,7 +451,7 @@
       },\
       \"input\":{\"shape\":\"CreateDhcpOptionsRequest\"},\
       \"output\":{\"shape\":\"CreateDhcpOptionsResult\"},\
-      \"documentation\":\"<p>Creates a set of DHCP options for your VPC. After creating the set, you must associate it with the VPC, causing all existing and new instances that you launch in the VPC to use this set of DHCP options. The following are the individual DHCP options you can specify. For more information about the options, see <a href=\\\"http://www.ietf.org/rfc/rfc2132.txt\\\">RFC 2132</a>.</p> <ul> <li> <p> <code>domain-name-servers</code> - The IP addresses of up to four domain name servers, or AmazonProvidedDNS. The default DHCP option set specifies AmazonProvidedDNS. If specifying more than one domain name server, specify the IP addresses in a single parameter, separated by commas. If you want your instance to receive a custom DNS hostname as specified in <code>domain-name</code>, you must set <code>domain-name-servers</code> to a custom DNS server.</p> </li> <li> <p> <code>domain-name</code> - If you're using AmazonProvidedDNS in <code>us-east-1</code>, specify <code>ec2.internal</code>. If you're using AmazonProvidedDNS in another region, specify <code>region.compute.internal</code> (for example, <code>ap-northeast-1.compute.internal</code>). Otherwise, specify a domain name (for example, <code>MyCompany.com</code>). This value is used to complete unqualified DNS hostnames. <b>Important</b>: Some Linux operating systems accept multiple domain names separated by spaces. However, Windows and other Linux operating systems treat the value as a single domain, which results in unexpected behavior. If your DHCP options set is associated with a VPC that has instances with multiple operating systems, specify only one domain name.</p> </li> <li> <p> <code>ntp-servers</code> - The IP addresses of up to four Network Time Protocol (NTP) servers.</p> </li> <li> <p> <code>netbios-name-servers</code> - The IP addresses of up to four NetBIOS name servers.</p> </li> <li> <p> <code>netbios-node-type</code> - The NetBIOS node type (1, 2, 4, or 8). We recommend that you specify 2 (broadcast and multicast are not currently supported). For more information about these node types, see <a href=\\\"http://www.ietf.org/rfc/rfc2132.txt\\\">RFC 2132</a>.</p> </li> </ul> <p>Your VPC automatically starts out with a set of DHCP options that includes only a DNS server that we provide (AmazonProvidedDNS). If you create a set of options, and if your VPC has an Internet gateway, make sure to set the <code>domain-name-servers</code> option either to <code>AmazonProvidedDNS</code> or to a domain name server of your choice. For more information about DHCP options, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html\\\">DHCP Options Sets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a set of DHCP options for your VPC. After creating the set, you must associate it with the VPC, causing all existing and new instances that you launch in the VPC to use this set of DHCP options. The following are the individual DHCP options you can specify. For more information about the options, see <a href=\\\"http://www.ietf.org/rfc/rfc2132.txt\\\">RFC 2132</a>.</p> <ul> <li> <p> <code>domain-name-servers</code> - The IP addresses of up to four domain name servers, or AmazonProvidedDNS. The default DHCP option set specifies AmazonProvidedDNS. If specifying more than one domain name server, specify the IP addresses in a single parameter, separated by commas. ITo have your instance to receive a custom DNS hostname as specified in <code>domain-name</code>, you must set <code>domain-name-servers</code> to a custom DNS server.</p> </li> <li> <p> <code>domain-name</code> - If you're using AmazonProvidedDNS in <code>us-east-1</code>, specify <code>ec2.internal</code>. If you're using AmazonProvidedDNS in another region, specify <code>region.compute.internal</code> (for example, <code>ap-northeast-1.compute.internal</code>). Otherwise, specify a domain name (for example, <code>MyCompany.com</code>). This value is used to complete unqualified DNS hostnames. <b>Important</b>: Some Linux operating systems accept multiple domain names separated by spaces. However, Windows and other Linux operating systems treat the value as a single domain, which results in unexpected behavior. If your DHCP options set is associated with a VPC that has instances with multiple operating systems, specify only one domain name.</p> </li> <li> <p> <code>ntp-servers</code> - The IP addresses of up to four Network Time Protocol (NTP) servers.</p> </li> <li> <p> <code>netbios-name-servers</code> - The IP addresses of up to four NetBIOS name servers.</p> </li> <li> <p> <code>netbios-node-type</code> - The NetBIOS node type (1, 2, 4, or 8). We recommend that you specify 2 (broadcast and multicast are not currently supported). For more information about these node types, see <a href=\\\"http://www.ietf.org/rfc/rfc2132.txt\\\">RFC 2132</a>.</p> </li> </ul> <p>Your VPC automatically starts out with a set of DHCP options that includes only a DNS server that we provide (AmazonProvidedDNS). If you create a set of options, and if your VPC has an internet gateway, make sure to set the <code>domain-name-servers</code> option either to <code>AmazonProvidedDNS</code> or to a domain name server of your choice. For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html\\\">DHCP Options Sets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"CreateEgressOnlyInternetGateway\":{\
       \"name\":\"CreateEgressOnlyInternetGateway\",\
@@ -431,7 +461,7 @@
       },\
       \"input\":{\"shape\":\"CreateEgressOnlyInternetGatewayRequest\"},\
       \"output\":{\"shape\":\"CreateEgressOnlyInternetGatewayResult\"},\
-      \"documentation\":\"<p>[IPv6 only] Creates an egress-only Internet gateway for your VPC. An egress-only Internet gateway is used to enable outbound communication over IPv6 from instances in your VPC to the Internet, and prevents hosts outside of your VPC from initiating an IPv6 connection with your instance.</p>\"\
+      \"documentation\":\"<p>[IPv6 only] Creates an egress-only internet gateway for your VPC. An egress-only internet gateway is used to enable outbound communication over IPv6 from instances in your VPC to the internet, and prevents hosts outside of your VPC from initiating an IPv6 connection with your instance.</p>\"\
     },\
     \"CreateFleet\":{\
       \"name\":\"CreateFleet\",\
@@ -451,7 +481,7 @@
       },\
       \"input\":{\"shape\":\"CreateFlowLogsRequest\"},\
       \"output\":{\"shape\":\"CreateFlowLogsResult\"},\
-      \"documentation\":\"<p>Creates one or more flow logs to capture IP traffic for a specific network interface, subnet, or VPC. Flow logs are delivered to a specified log group in Amazon CloudWatch Logs. If you specify a VPC or subnet in the request, a log stream is created in CloudWatch Logs for each network interface in the subnet or VPC. Log streams can include information about accepted and rejected traffic to a network interface. You can view the data in your log streams using Amazon CloudWatch Logs.</p> <p>In your request, you must also specify an IAM role that has permission to publish logs to CloudWatch Logs.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html\\\">VPC Flow Logs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates one or more flow logs to capture information about IP traffic for a specific network interface, subnet, or VPC. </p> <p>Flow log data for a monitored network interface is recorded as flow log records, which are log events consisting of fields that describe the traffic flow. For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html#flow-log-records\\\">Flow Log Records</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>When publishing to CloudWatch Logs, flow log records are published to a log group, and each network interface has a unique log stream in the log group. When publishing to Amazon S3, flow log records for all of the monitored network interfaces are published to a single log file object that is stored in the specified bucket.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html\\\">VPC Flow Logs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"CreateFpgaImage\":{\
       \"name\":\"CreateFpgaImage\",\
@@ -491,7 +521,7 @@
       },\
       \"input\":{\"shape\":\"CreateInternetGatewayRequest\"},\
       \"output\":{\"shape\":\"CreateInternetGatewayResult\"},\
-      \"documentation\":\"<p>Creates an Internet gateway for use with a VPC. After creating the Internet gateway, you attach it to a VPC using <a>AttachInternetGateway</a>.</p> <p>For more information about your VPC and Internet gateway, see the <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/\\\">Amazon Virtual Private Cloud User Guide</a>.</p>\"\
+      \"documentation\":\"<p>Creates an internet gateway for use with a VPC. After creating the internet gateway, you attach it to a VPC using <a>AttachInternetGateway</a>.</p> <p>For more information about your VPC and internet gateway, see the <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/\\\">Amazon Virtual Private Cloud User Guide</a>.</p>\"\
     },\
     \"CreateKeyPair\":{\
       \"name\":\"CreateKeyPair\",\
@@ -541,7 +571,7 @@
       },\
       \"input\":{\"shape\":\"CreateNetworkAclRequest\"},\
       \"output\":{\"shape\":\"CreateNetworkAclResult\"},\
-      \"documentation\":\"<p>Creates a network ACL in a VPC. Network ACLs provide an optional layer of security (in addition to security groups) for the instances in your VPC.</p> <p>For more information about network ACLs, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a network ACL in a VPC. Network ACLs provide an optional layer of security (in addition to security groups) for the instances in your VPC.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"CreateNetworkAclEntry\":{\
       \"name\":\"CreateNetworkAclEntry\",\
@@ -599,7 +629,7 @@
       },\
       \"input\":{\"shape\":\"CreateRouteRequest\"},\
       \"output\":{\"shape\":\"CreateRouteResult\"},\
-      \"documentation\":\"<p>Creates a route in a route table within a VPC.</p> <p>You must specify one of the following targets: Internet gateway or virtual private gateway, NAT instance, NAT gateway, VPC peering connection, network interface, or egress-only Internet gateway.</p> <p>When determining how to route traffic, we use the route with the most specific match. For example, traffic is destined for the IPv4 address <code>192.0.2.3</code>, and the route table includes the following two IPv4 routes:</p> <ul> <li> <p> <code>192.0.2.0/24</code> (goes to some target A)</p> </li> <li> <p> <code>192.0.2.0/28</code> (goes to some target B)</p> </li> </ul> <p>Both routes apply to the traffic destined for <code>192.0.2.3</code>. However, the second route in the list covers a smaller number of IP addresses and is therefore more specific, so we use that route to determine where to target the traffic.</p> <p>For more information about route tables, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a route in a route table within a VPC.</p> <p>You must specify one of the following targets: internet gateway or virtual private gateway, NAT instance, NAT gateway, VPC peering connection, network interface, or egress-only internet gateway.</p> <p>When determining how to route traffic, we use the route with the most specific match. For example, traffic is destined for the IPv4 address <code>192.0.2.3</code>, and the route table includes the following two IPv4 routes:</p> <ul> <li> <p> <code>192.0.2.0/24</code> (goes to some target A)</p> </li> <li> <p> <code>192.0.2.0/28</code> (goes to some target B)</p> </li> </ul> <p>Both routes apply to the traffic destined for <code>192.0.2.3</code>. However, the second route in the list covers a smaller number of IP addresses and is therefore more specific, so we use that route to determine where to target the traffic.</p> <p>For more information about route tables, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"CreateRouteTable\":{\
       \"name\":\"CreateRouteTable\",\
@@ -609,7 +639,7 @@
       },\
       \"input\":{\"shape\":\"CreateRouteTableRequest\"},\
       \"output\":{\"shape\":\"CreateRouteTableResult\"},\
-      \"documentation\":\"<p>Creates a route table for the specified VPC. After you create a route table, you can add routes and associate the table with a subnet.</p> <p>For more information about route tables, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a route table for the specified VPC. After you create a route table, you can add routes and associate the table with a subnet.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"CreateSecurityGroup\":{\
       \"name\":\"CreateSecurityGroup\",\
@@ -629,7 +659,7 @@
       },\
       \"input\":{\"shape\":\"CreateSnapshotRequest\"},\
       \"output\":{\"shape\":\"Snapshot\"},\
-      \"documentation\":\"<p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p> <p>When a snapshot is created, any AWS Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p> <p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your EBS volume at the time the snapshot command is issued; this may exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p> <p>To create a snapshot for EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.</p> <p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.</p> <p>You can tag your snapshots during creation. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\\\">Tagging Your Amazon EC2 Resources</a>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html\\\">Amazon Elastic Block Store</a> and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p> <p>When a snapshot is created, any AWS Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p> <p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your EBS volume at the time the snapshot command is issued; this may exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p> <p>To create a snapshot for EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.</p> <p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.</p> <p>You can tag your snapshots during creation. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\\\">Tagging Your Amazon EC2 Resources</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html\\\">Amazon Elastic Block Store</a> and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CreateSpotDatafeedSubscription\":{\
       \"name\":\"CreateSpotDatafeedSubscription\",\
@@ -649,7 +679,7 @@
       },\
       \"input\":{\"shape\":\"CreateSubnetRequest\"},\
       \"output\":{\"shape\":\"CreateSubnetResult\"},\
-      \"documentation\":\"<p>Creates a subnet in an existing VPC.</p> <p>When you create each subnet, you provide the VPC ID and the IPv4 CIDR block you want for the subnet. After you create a subnet, you can't change its CIDR block. The size of the subnet's IPv4 CIDR block can be the same as a VPC's IPv4 CIDR block, or a subset of a VPC's IPv4 CIDR block. If you create more than one subnet in a VPC, the subnets' CIDR blocks must not overlap. The smallest IPv4 subnet (and VPC) you can create uses a /28 netmask (16 IPv4 addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses).</p> <p>If you've associated an IPv6 CIDR block with your VPC, you can create a subnet with an IPv6 CIDR block that uses a /64 prefix length. </p> <important> <p>AWS reserves both the first four and the last IPv4 address in each subnet's CIDR block. They're not available for use.</p> </important> <p>If you add more than one subnet to a VPC, they're set up in a star topology with a logical router in the middle.</p> <p>If you launch an instance in a VPC using an Amazon EBS-backed AMI, the IP address doesn't change if you stop and restart the instance (unlike a similar instance launched outside a VPC, which gets a new IP address when restarted). It's therefore possible to have a subnet with no running instances (they're all stopped), but no remaining IP addresses available.</p> <p>For more information about subnets, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html\\\">Your VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a subnet in an existing VPC.</p> <p>When you create each subnet, you provide the VPC ID and IPv4 CIDR block for the subnet. After you create a subnet, you can't change its CIDR block. The size of the subnet's IPv4 CIDR block can be the same as a VPC's IPv4 CIDR block, or a subset of a VPC's IPv4 CIDR block. If you create more than one subnet in a VPC, the subnets' CIDR blocks must not overlap. The smallest IPv4 subnet (and VPC) you can create uses a /28 netmask (16 IPv4 addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses).</p> <p>If you've associated an IPv6 CIDR block with your VPC, you can create a subnet with an IPv6 CIDR block that uses a /64 prefix length. </p> <important> <p>AWS reserves both the first four and the last IPv4 address in each subnet's CIDR block. They're not available for use.</p> </important> <p>If you add more than one subnet to a VPC, they're set up in a star topology with a logical router in the middle.</p> <p>If you launch an instance in a VPC using an Amazon EBS-backed AMI, the IP address doesn't change if you stop and restart the instance (unlike a similar instance launched outside a VPC, which gets a new IP address when restarted). It's therefore possible to have a subnet with no running instances (they're all stopped), but no remaining IP addresses available.</p> <p>For more information about subnets, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html\\\">Your VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"CreateTags\":{\
       \"name\":\"CreateTags\",\
@@ -668,7 +698,7 @@
       },\
       \"input\":{\"shape\":\"CreateVolumeRequest\"},\
       \"output\":{\"shape\":\"Volume\"},\
-      \"documentation\":\"<p>Creates an EBS volume that can be attached to an instance in the same Availability Zone. The volume is created in the regional endpoint that you send the HTTP request to. For more information see <a href=\\\"http://docs.aws.amazon.com/general/latest/gr/rande.html\\\">Regions and Endpoints</a>.</p> <p>You can create a new empty volume or restore a volume from an EBS snapshot. Any AWS Marketplace product codes from the snapshot are propagated to the volume.</p> <p>You can create encrypted volumes with the <code>Encrypted</code> parameter. Encrypted volumes may only be attached to instances that support Amazon EBS encryption. Volumes that are created from encrypted snapshots are also automatically encrypted. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>You can tag your volumes during creation. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\\\">Tagging Your Amazon EC2 Resources</a>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html\\\">Creating an Amazon EBS Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates an EBS volume that can be attached to an instance in the same Availability Zone. The volume is created in the regional endpoint that you send the HTTP request to. For more information see <a href=\\\"http://docs.aws.amazon.com/general/latest/gr/rande.html\\\">Regions and Endpoints</a>.</p> <p>You can create a new empty volume or restore a volume from an EBS snapshot. Any AWS Marketplace product codes from the snapshot are propagated to the volume.</p> <p>You can create encrypted volumes with the <code>Encrypted</code> parameter. Encrypted volumes may only be attached to instances that support Amazon EBS encryption. Volumes that are created from encrypted snapshots are also automatically encrypted. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>You can tag your volumes during creation. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\\\">Tagging Your Amazon EC2 Resources</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html\\\">Creating an Amazon EBS Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CreateVpc\":{\
       \"name\":\"CreateVpc\",\
@@ -678,7 +708,7 @@
       },\
       \"input\":{\"shape\":\"CreateVpcRequest\"},\
       \"output\":{\"shape\":\"CreateVpcResult\"},\
-      \"documentation\":\"<p>Creates a VPC with the specified IPv4 CIDR block. The smallest VPC you can create uses a /28 netmask (16 IPv4 addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses). To help you decide how big to make your VPC, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html\\\">Your VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>You can optionally request an Amazon-provided IPv6 CIDR block for the VPC. The IPv6 CIDR block uses a /56 prefix length, and is allocated from Amazon's pool of IPv6 addresses. You cannot choose the IPv6 range for your VPC.</p> <p>By default, each instance you launch in the VPC has the default DHCP options, which includes only a default DNS server that we provide (AmazonProvidedDNS). For more information about DHCP options, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html\\\">DHCP Options Sets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>You can specify the instance tenancy value for the VPC when you create it. You can't change this value for the VPC after you create it. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html\\\">Dedicated Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Creates a VPC with the specified IPv4 CIDR block. The smallest VPC you can create uses a /28 netmask (16 IPv4 addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses). For more information about how large to make your VPC, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html\\\">Your VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>You can optionally request an Amazon-provided IPv6 CIDR block for the VPC. The IPv6 CIDR block uses a /56 prefix length, and is allocated from Amazon's pool of IPv6 addresses. You cannot choose the IPv6 range for your VPC.</p> <p>By default, each instance you launch in the VPC has the default DHCP options, which include only a default DNS server that we provide (AmazonProvidedDNS). For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html\\\">DHCP Options Sets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>You can specify the instance tenancy value for the VPC when you create it. You can't change this value for the VPC after you create it. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html\\\">Dedicated Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CreateVpcEndpoint\":{\
       \"name\":\"CreateVpcEndpoint\",\
@@ -718,7 +748,7 @@
       },\
       \"input\":{\"shape\":\"CreateVpcPeeringConnectionRequest\"},\
       \"output\":{\"shape\":\"CreateVpcPeeringConnectionResult\"},\
-      \"documentation\":\"<p>Requests a VPC peering connection between two VPCs: a requester VPC that you own and an accepter VPC with which to create the connection. The accepter VPC can belong to another AWS account and can be in a different region to the requester VPC. The requester VPC and accepter VPC cannot have overlapping CIDR blocks.</p> <note> <p>Limitations and rules apply to a VPC peering connection. For more information, see the <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/vpc-peering-basics.html#vpc-peering-limitations\\\">limitations</a> section in the <i>VPC Peering Guide</i>.</p> </note> <p>The owner of the accepter VPC must accept the peering request to activate the peering connection. The VPC peering connection request expires after 7 days, after which it cannot be accepted or rejected.</p> <p>If you create a VPC peering connection request between VPCs with overlapping CIDR blocks, the VPC peering connection has a status of <code>failed</code>.</p>\"\
+      \"documentation\":\"<p>Requests a VPC peering connection between two VPCs: a requester VPC that you own and an accepter VPC with which to create the connection. The accepter VPC can belong to another AWS account and can be in a different Region to the requester VPC. The requester VPC and accepter VPC cannot have overlapping CIDR blocks.</p> <note> <p>Limitations and rules apply to a VPC peering connection. For more information, see the <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/vpc-peering-basics.html#vpc-peering-limitations\\\">limitations</a> section in the <i>VPC Peering Guide</i>.</p> </note> <p>The owner of the accepter VPC must accept the peering request to activate the peering connection. The VPC peering connection request expires after 7 days, after which it cannot be accepted or rejected.</p> <p>If you create a VPC peering connection request between VPCs with overlapping CIDR blocks, the VPC peering connection has a status of <code>failed</code>.</p>\"\
     },\
     \"CreateVpnConnection\":{\
       \"name\":\"CreateVpnConnection\",\
@@ -775,7 +805,7 @@
       },\
       \"input\":{\"shape\":\"DeleteEgressOnlyInternetGatewayRequest\"},\
       \"output\":{\"shape\":\"DeleteEgressOnlyInternetGatewayResult\"},\
-      \"documentation\":\"<p>Deletes an egress-only Internet gateway.</p>\"\
+      \"documentation\":\"<p>Deletes an egress-only internet gateway.</p>\"\
     },\
     \"DeleteFleets\":{\
       \"name\":\"DeleteFleets\",\
@@ -785,7 +815,7 @@
       },\
       \"input\":{\"shape\":\"DeleteFleetsRequest\"},\
       \"output\":{\"shape\":\"DeleteFleetsResult\"},\
-      \"documentation\":\"<p>Deletes the specified EC2 Fleet.</p> <p>After you delete an EC2 Fleet, the EC2 Fleet launches no new instances. You must specify whether the EC2 Fleet should also terminate its instances. If you terminate the instances, the EC2 Fleet enters the <code>deleted_terminating</code> state. Otherwise, the EC2 Fleet enters the <code>deleted_running</code> state, and the instances continue to run until they are interrupted or you terminate them manually. </p>\"\
+      \"documentation\":\"<p>Deletes the specified EC2 Fleet.</p> <p>After you delete an EC2 Fleet, it launches no new instances. You must specify whether an EC2 Fleet should also terminate its instances. If you terminate the instances, the EC2 Fleet enters the <code>deleted_terminating</code> state. Otherwise, the EC2 Fleet enters the <code>deleted_running</code> state, and the instances continue to run until they are interrupted or you terminate them manually. </p>\"\
     },\
     \"DeleteFlowLogs\":{\
       \"name\":\"DeleteFlowLogs\",\
@@ -814,7 +844,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"DeleteInternetGatewayRequest\"},\
-      \"documentation\":\"<p>Deletes the specified Internet gateway. You must detach the Internet gateway from the VPC before you can delete it.</p>\"\
+      \"documentation\":\"<p>Deletes the specified internet gateway. You must detach the internet gateway from the VPC before you can delete it.</p>\"\
     },\
     \"DeleteKeyPair\":{\
       \"name\":\"DeleteKeyPair\",\
@@ -971,7 +1001,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"DeleteVolumeRequest\"},\
-      \"documentation\":\"<p>Deletes the specified EBS volume. The volume must be in the <code>available</code> state (not attached to an instance).</p> <note> <p>The volume may remain in the <code>deleting</code> state for several minutes.</p> </note> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-volume.html\\\">Deleting an Amazon EBS Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Deletes the specified EBS volume. The volume must be in the <code>available</code> state (not attached to an instance).</p> <p>The volume can remain in the <code>deleting</code> state for several minutes.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-volume.html\\\">Deleting an Amazon EBS Volume</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"DeleteVpc\":{\
       \"name\":\"DeleteVpc\",\
@@ -1049,6 +1079,16 @@
       \"input\":{\"shape\":\"DeleteVpnGatewayRequest\"},\
       \"documentation\":\"<p>Deletes the specified virtual private gateway. We recommend that before you delete a virtual private gateway, you detach it from the VPC and delete the VPN connection. Note that you don't need to delete the virtual private gateway if you plan to delete and recreate the VPN connection between your VPC and your network.</p>\"\
     },\
+    \"DeprovisionByoipCidr\":{\
+      \"name\":\"DeprovisionByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DeprovisionByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"DeprovisionByoipCidrResult\"},\
+      \"documentation\":\"<p>Releases the specified address range that you provisioned for use with your AWS resources through bring your own IP addresses (BYOIP) and deletes the corresponding address pool.</p> <p>Before you can release an address range, you must stop advertising it using <a>WithdrawByoipCidr</a> and you must not have any IP addresses allocated from its address range.</p>\"\
+    },\
     \"DeregisterImage\":{\
       \"name\":\"DeregisterImage\",\
       \"http\":{\
@@ -1108,6 +1148,26 @@
       \"output\":{\"shape\":\"DescribeBundleTasksResult\"},\
       \"documentation\":\"<p>Describes one or more of your bundling tasks.</p> <note> <p>Completed bundle tasks are listed for only a limited time. If your bundle task is no longer in the list, you can still register an AMI from it. Just use <code>RegisterImage</code> with the Amazon S3 bucket name and image manifest name you provided to the bundle task.</p> </note>\"\
     },\
+    \"DescribeByoipCidrs\":{\
+      \"name\":\"DescribeByoipCidrs\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DescribeByoipCidrsRequest\"},\
+      \"output\":{\"shape\":\"DescribeByoipCidrsResult\"},\
+      \"documentation\":\"<p>Describes the IP address ranges that were specified in calls to <a>ProvisionByoipCidr</a>.</p> <p>To describe the address pools that were created when you provisioned the address ranges, use <a>DescribePublicIpv4Pools</a>.</p>\"\
+    },\
+    \"DescribeCapacityReservations\":{\
+      \"name\":\"DescribeCapacityReservations\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DescribeCapacityReservationsRequest\"},\
+      \"output\":{\"shape\":\"DescribeCapacityReservationsResult\"},\
+      \"documentation\":\"<p>Describes one or more of your Capacity Reservations. The results describe only the Capacity Reservations in the AWS Region that you're currently using.</p>\"\
+    },\
     \"DescribeClassicLinkInstances\":{\
       \"name\":\"DescribeClassicLinkInstances\",\
       \"http\":{\
@@ -1116,7 +1176,7 @@
       },\
       \"input\":{\"shape\":\"DescribeClassicLinkInstancesRequest\"},\
       \"output\":{\"shape\":\"DescribeClassicLinkInstancesResult\"},\
-      \"documentation\":\"<p>Describes one or more of your linked EC2-Classic instances. This request only returns information about EC2-Classic instances linked to a VPC through ClassicLink; you cannot use this request to return information about other instances.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your linked EC2-Classic instances. This request only returns information about EC2-Classic instances linked to a VPC through ClassicLink. You cannot use this request to return information about other instances.</p>\"\
     },\
     \"DescribeConversionTasks\":{\
       \"name\":\"DescribeConversionTasks\",\
@@ -1146,7 +1206,7 @@
       },\
       \"input\":{\"shape\":\"DescribeDhcpOptionsRequest\"},\
       \"output\":{\"shape\":\"DescribeDhcpOptionsResult\"},\
-      \"documentation\":\"<p>Describes one or more of your DHCP options sets.</p> <p>For more information about DHCP options sets, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html\\\">DHCP Options Sets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your DHCP options sets.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html\\\">DHCP Options Sets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeEgressOnlyInternetGateways\":{\
       \"name\":\"DescribeEgressOnlyInternetGateways\",\
@@ -1156,7 +1216,7 @@
       },\
       \"input\":{\"shape\":\"DescribeEgressOnlyInternetGatewaysRequest\"},\
       \"output\":{\"shape\":\"DescribeEgressOnlyInternetGatewaysResult\"},\
-      \"documentation\":\"<p>Describes one or more of your egress-only Internet gateways.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your egress-only internet gateways.</p>\"\
     },\
     \"DescribeElasticGpus\":{\
       \"name\":\"DescribeElasticGpus\",\
@@ -1206,7 +1266,7 @@
       },\
       \"input\":{\"shape\":\"DescribeFleetsRequest\"},\
       \"output\":{\"shape\":\"DescribeFleetsResult\"},\
-      \"documentation\":\"<p>Describes the specified EC2 Fleet.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your EC2 Fleet.</p>\"\
     },\
     \"DescribeFlowLogs\":{\
       \"name\":\"DescribeFlowLogs\",\
@@ -1246,7 +1306,7 @@
       },\
       \"input\":{\"shape\":\"DescribeHostReservationOfferingsRequest\"},\
       \"output\":{\"shape\":\"DescribeHostReservationOfferingsResult\"},\
-      \"documentation\":\"<p>Describes the Dedicated Host Reservations that are available to purchase.</p> <p>The results describe all the Dedicated Host Reservation offerings, including offerings that may not match the instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the the instance family and region of the offering matches that of the Dedicated Host/s it will be associated with. For an overview of supported instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html\\\">Dedicated Hosts Overview</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\"\
+      \"documentation\":\"<p>Describes the Dedicated Host reservations that are available to purchase.</p> <p>The results describe all the Dedicated Host reservation offerings, including offerings that may not match the instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the instance family and Region of the offering matches that of the Dedicated Hosts with which it is to be associated. For more information about supported instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html\\\">Dedicated Hosts Overview</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\"\
     },\
     \"DescribeHostReservations\":{\
       \"name\":\"DescribeHostReservations\",\
@@ -1256,7 +1316,7 @@
       },\
       \"input\":{\"shape\":\"DescribeHostReservationsRequest\"},\
       \"output\":{\"shape\":\"DescribeHostReservationsResult\"},\
-      \"documentation\":\"<p>Describes Dedicated Host Reservations which are associated with Dedicated Hosts in your account.</p>\"\
+      \"documentation\":\"<p>Describes reservations that are associated with Dedicated Hosts in your account.</p>\"\
     },\
     \"DescribeHosts\":{\
       \"name\":\"DescribeHosts\",\
@@ -1266,7 +1326,7 @@
       },\
       \"input\":{\"shape\":\"DescribeHostsRequest\"},\
       \"output\":{\"shape\":\"DescribeHostsResult\"},\
-      \"documentation\":\"<p>Describes one or more of your Dedicated Hosts.</p> <p>The results describe only the Dedicated Hosts in the region you're currently using. All listed instances consume capacity on your Dedicated Host. Dedicated Hosts that have recently been released will be listed with the state <code>released</code>.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your Dedicated Hosts.</p> <p>The results describe only the Dedicated Hosts in the region you're currently using. All listed instances consume capacity on your Dedicated Host. Dedicated Hosts that have recently been released are listed with the state <code>released</code>.</p>\"\
     },\
     \"DescribeIamInstanceProfileAssociations\":{\
       \"name\":\"DescribeIamInstanceProfileAssociations\",\
@@ -1356,7 +1416,7 @@
       },\
       \"input\":{\"shape\":\"DescribeInstanceCreditSpecificationsRequest\"},\
       \"output\":{\"shape\":\"DescribeInstanceCreditSpecificationsResult\"},\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of one or more of your T2 instances. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>If you do not specify an instance ID, Amazon EC2 returns only the T2 instances with the <code>unlimited</code> credit option. If you specify one or more instance IDs, Amazon EC2 returns the credit option (<code>standard</code> or <code>unlimited</code>) of those instances. If you specify an instance ID that is not valid, such as an instance that is not a T2 instance, an error is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If an Availability Zone is experiencing a service disruption and you specify instance IDs in the affected zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs in an unaffected zone, the call works normally.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html\\\">T2 Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of one or more of your T2 or T3 instances. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>If you do not specify an instance ID, Amazon EC2 returns T2 and T3 instances with the <code>unlimited</code> credit option, as well as instances that were previously configured as T2 or T3 with the <code>unlimited</code> credit option. For example, if you resize a T2 instance, while it is configured as <code>unlimited</code>, to an M4 instance, Amazon EC2 returns the M4 instance.</p> <p>If you specify one or more instance IDs, Amazon EC2 returns the credit option (<code>standard</code> or <code>unlimited</code>) of those instances. If you specify an instance ID that is not valid, such as an instance that is not a T2 or T3 instance, an error is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If an Availability Zone is experiencing a service disruption and you specify instance IDs in the affected zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs in an unaffected zone, the call works normally.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\\\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeInstanceStatus\":{\
       \"name\":\"DescribeInstanceStatus\",\
@@ -1386,7 +1446,7 @@
       },\
       \"input\":{\"shape\":\"DescribeInternetGatewaysRequest\"},\
       \"output\":{\"shape\":\"DescribeInternetGatewaysResult\"},\
-      \"documentation\":\"<p>Describes one or more of your Internet gateways.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your internet gateways.</p>\"\
     },\
     \"DescribeKeyPairs\":{\
       \"name\":\"DescribeKeyPairs\",\
@@ -1436,7 +1496,7 @@
       },\
       \"input\":{\"shape\":\"DescribeNatGatewaysRequest\"},\
       \"output\":{\"shape\":\"DescribeNatGatewaysResult\"},\
-      \"documentation\":\"<p>Describes one or more of the your NAT gateways.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your NAT gateways.</p>\"\
     },\
     \"DescribeNetworkAcls\":{\
       \"name\":\"DescribeNetworkAcls\",\
@@ -1446,7 +1506,7 @@
       },\
       \"input\":{\"shape\":\"DescribeNetworkAclsRequest\"},\
       \"output\":{\"shape\":\"DescribeNetworkAclsResult\"},\
-      \"documentation\":\"<p>Describes one or more of your network ACLs.</p> <p>For more information about network ACLs, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your network ACLs.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeNetworkInterfaceAttribute\":{\
       \"name\":\"DescribeNetworkInterfaceAttribute\",\
@@ -1496,7 +1556,7 @@
       },\
       \"input\":{\"shape\":\"DescribePrefixListsRequest\"},\
       \"output\":{\"shape\":\"DescribePrefixListsResult\"},\
-      \"documentation\":\"<p>Describes available AWS services in a prefix list format, which includes the prefix list name and prefix list ID of the service and the IP address range for the service. A prefix list ID is required for creating an outbound security group rule that allows traffic from a VPC to access an AWS service through a gateway VPC endpoint.</p>\"\
+      \"documentation\":\"<p>Describes available AWS services in a prefix list format, which includes the prefix list name and prefix list ID of the service and the IP address range for the service. A prefix list ID is required for creating an outbound security group rule that allows traffic from a VPC to access an AWS service through a gateway VPC endpoint. Currently, the services that support this action are Amazon S3 and Amazon DynamoDB.</p>\"\
     },\
     \"DescribePrincipalIdFormat\":{\
       \"name\":\"DescribePrincipalIdFormat\",\
@@ -1507,6 +1567,16 @@
       \"input\":{\"shape\":\"DescribePrincipalIdFormatRequest\"},\
       \"output\":{\"shape\":\"DescribePrincipalIdFormatResult\"},\
       \"documentation\":\"<p>Describes the ID format settings for the root user and all IAM roles and IAM users that have explicitly specified a longer ID (17-character ID) preference. </p> <p>By default, all IAM roles and IAM users default to the same ID settings as the root user, unless they explicitly override the settings. This request is useful for identifying those IAM users and IAM roles that have overridden the default ID settings.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p>\"\
+    },\
+    \"DescribePublicIpv4Pools\":{\
+      \"name\":\"DescribePublicIpv4Pools\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DescribePublicIpv4PoolsRequest\"},\
+      \"output\":{\"shape\":\"DescribePublicIpv4PoolsResult\"},\
+      \"documentation\":\"<p>Describes the specified IPv4 address pools.</p>\"\
     },\
     \"DescribeRegions\":{\
       \"name\":\"DescribeRegions\",\
@@ -1566,7 +1636,7 @@
       },\
       \"input\":{\"shape\":\"DescribeRouteTablesRequest\"},\
       \"output\":{\"shape\":\"DescribeRouteTablesResult\"},\
-      \"documentation\":\"<p>Describes one or more of your route tables.</p> <p>Each subnet in your VPC must be associated with a route table. If a subnet is not explicitly associated with any route table, it is implicitly associated with the main route table. This command does not return the subnet ID for implicit associations.</p> <p>For more information about route tables, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your route tables.</p> <p>Each subnet in your VPC must be associated with a route table. If a subnet is not explicitly associated with any route table, it is implicitly associated with the main route table. This command does not return the subnet ID for implicit associations.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeScheduledInstanceAvailability\":{\
       \"name\":\"DescribeScheduledInstanceAvailability\",\
@@ -1656,7 +1726,7 @@
       },\
       \"input\":{\"shape\":\"DescribeSpotFleetRequestHistoryRequest\"},\
       \"output\":{\"shape\":\"DescribeSpotFleetRequestHistoryResponse\"},\
-      \"documentation\":\"<p>Describes the events for the specified Spot Fleet request during the specified time.</p> <p>Spot Fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query by the last evaluated time and not miss a recorded event.</p>\"\
+      \"documentation\":\"<p>Describes the events for the specified Spot Fleet request during the specified time.</p> <p>Spot Fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query by the last evaluated time and not miss a recorded event. Spot Fleet events are available for 48 hours.</p>\"\
     },\
     \"DescribeSpotFleetRequests\":{\
       \"name\":\"DescribeSpotFleetRequests\",\
@@ -1706,7 +1776,7 @@
       },\
       \"input\":{\"shape\":\"DescribeSubnetsRequest\"},\
       \"output\":{\"shape\":\"DescribeSubnetsResult\"},\
-      \"documentation\":\"<p>Describes one or more of your subnets.</p> <p>For more information about subnets, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html\\\">Your VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Describes one or more of your subnets.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html\\\">Your VPC and Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeTags\":{\
       \"name\":\"DescribeTags\",\
@@ -1736,7 +1806,7 @@
       },\
       \"input\":{\"shape\":\"DescribeVolumeStatusRequest\"},\
       \"output\":{\"shape\":\"DescribeVolumeStatusResult\"},\
-      \"documentation\":\"<p>Describes the status of the specified volumes. Volume status provides the result of the checks performed on your volumes to determine events that can impair the performance of your volumes. The performance of a volume can be affected if an issue occurs on the volume's underlying host. If the volume's underlying host experiences a power outage or system issue, after the system is restored, there could be data inconsistencies on the volume. Volume events notify you if this occurs. Volume actions notify you if any action needs to be taken in response to the event.</p> <p>The <code>DescribeVolumeStatus</code> operation provides the following information about the specified volumes:</p> <p> <i>Status</i>: Reflects the current status of the volume. The possible values are <code>ok</code>, <code>impaired</code> , <code>warning</code>, or <code>insufficient-data</code>. If all checks pass, the overall status of the volume is <code>ok</code>. If the check fails, the overall status is <code>impaired</code>. If the status is <code>insufficient-data</code>, then the checks may still be taking place on your volume at the time. We recommend that you retry the request. For more information on volume status, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-volume-status.html\\\">Monitoring the Status of Your Volumes</a>.</p> <p> <i>Events</i>: Reflect the cause of a volume status and may require you to take action. For example, if your volume returns an <code>impaired</code> status, then the volume event might be <code>potential-data-inconsistency</code>. This means that your volume has been affected by an issue with the underlying host, has all I/O operations disabled, and may have inconsistent data.</p> <p> <i>Actions</i>: Reflect the actions you may have to take in response to an event. For example, if the status of the volume is <code>impaired</code> and the volume event shows <code>potential-data-inconsistency</code>, then the action shows <code>enable-volume-io</code>. This means that you may want to enable the I/O operations for the volume by calling the <a>EnableVolumeIO</a> action and then check the volume for data consistency.</p> <note> <p>Volume status is based on the volume status checks, and does not reflect the volume state. Therefore, volume status does not indicate volumes in the <code>error</code> state (for example, when a volume is incapable of accepting I/O.)</p> </note>\"\
+      \"documentation\":\"<p>Describes the status of the specified volumes. Volume status provides the result of the checks performed on your volumes to determine events that can impair the performance of your volumes. The performance of a volume can be affected if an issue occurs on the volume's underlying host. If the volume's underlying host experiences a power outage or system issue, after the system is restored, there could be data inconsistencies on the volume. Volume events notify you if this occurs. Volume actions notify you if any action needs to be taken in response to the event.</p> <p>The <code>DescribeVolumeStatus</code> operation provides the following information about the specified volumes:</p> <p> <i>Status</i>: Reflects the current status of the volume. The possible values are <code>ok</code>, <code>impaired</code> , <code>warning</code>, or <code>insufficient-data</code>. If all checks pass, the overall status of the volume is <code>ok</code>. If the check fails, the overall status is <code>impaired</code>. If the status is <code>insufficient-data</code>, then the checks may still be taking place on your volume at the time. We recommend that you retry the request. For more information about volume status, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-volume-status.html\\\">Monitoring the Status of Your Volumes</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p> <i>Events</i>: Reflect the cause of a volume status and may require you to take action. For example, if your volume returns an <code>impaired</code> status, then the volume event might be <code>potential-data-inconsistency</code>. This means that your volume has been affected by an issue with the underlying host, has all I/O operations disabled, and may have inconsistent data.</p> <p> <i>Actions</i>: Reflect the actions you may have to take in response to an event. For example, if the status of the volume is <code>impaired</code> and the volume event shows <code>potential-data-inconsistency</code>, then the action shows <code>enable-volume-io</code>. This means that you may want to enable the I/O operations for the volume by calling the <a>EnableVolumeIO</a> action and then check the volume for data consistency.</p> <p>Volume status is based on the volume status checks, and does not reflect the volume state. Therefore, volume status does not indicate volumes in the <code>error</code> state (for example, when a volume is incapable of accepting I/O.)</p>\"\
     },\
     \"DescribeVolumes\":{\
       \"name\":\"DescribeVolumes\",\
@@ -1756,7 +1826,7 @@
       },\
       \"input\":{\"shape\":\"DescribeVolumesModificationsRequest\"},\
       \"output\":{\"shape\":\"DescribeVolumesModificationsResult\"},\
-      \"documentation\":\"<p>Reports the current modification status of EBS volumes.</p> <p>Current-generation EBS volumes support modification of attributes including type, size, and (for <code>io1</code> volumes) IOPS provisioning while either attached to or detached from an instance. Following an action from the API or the console to modify a volume, the status of the modification may be <code>modifying</code>, <code>optimizing</code>, <code>completed</code>, or <code>failed</code>. If a volume has never been modified, then certain elements of the returned <code>VolumeModification</code> objects are null. </p> <p> You can also use CloudWatch Events to check the status of a modification to an EBS volume. For information about CloudWatch Events, see the <a href=\\\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/\\\">Amazon CloudWatch Events User Guide</a>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods\\\">Monitoring Volume Modifications\\\"</a>. </p>\"\
+      \"documentation\":\"<p>Reports the current modification status of EBS volumes.</p> <p>Current-generation EBS volumes support modification of attributes including type, size, and (for <code>io1</code> volumes) IOPS provisioning while either attached to or detached from an instance. Following an action from the API or the console to modify a volume, the status of the modification may be <code>modifying</code>, <code>optimizing</code>, <code>completed</code>, or <code>failed</code>. If a volume has never been modified, then certain elements of the returned <code>VolumeModification</code> objects are null. </p> <p> You can also use CloudWatch Events to check the status of a modification to an EBS volume. For information about CloudWatch Events, see the <a href=\\\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/\\\">Amazon CloudWatch Events User Guide</a>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods\\\">Monitoring Volume Modifications\\\"</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeVpcAttribute\":{\
       \"name\":\"DescribeVpcAttribute\",\
@@ -1905,7 +1975,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"DetachInternetGatewayRequest\"},\
-      \"documentation\":\"<p>Detaches an Internet gateway from a VPC, disabling connectivity between the Internet and the VPC. The VPC must not contain any running instances with Elastic IP addresses or public IPv4 addresses.</p>\"\
+      \"documentation\":\"<p>Detaches an internet gateway from a VPC, disabling connectivity between the internet and the VPC. The VPC must not contain any running instances with Elastic IP addresses or public IPv4 addresses.</p>\"\
     },\
     \"DetachNetworkInterface\":{\
       \"name\":\"DetachNetworkInterface\",\
@@ -1962,7 +2032,7 @@
       },\
       \"input\":{\"shape\":\"DisableVpcClassicLinkDnsSupportRequest\"},\
       \"output\":{\"shape\":\"DisableVpcClassicLinkDnsSupportResult\"},\
-      \"documentation\":\"<p>Disables ClassicLink DNS support for a VPC. If disabled, DNS hostnames resolve to public IP addresses when addressed between a linked EC2-Classic instance and instances in the VPC to which it's linked. For more information about ClassicLink, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\\\">ClassicLink</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Disables ClassicLink DNS support for a VPC. If disabled, DNS hostnames resolve to public IP addresses when addressed between a linked EC2-Classic instance and instances in the VPC to which it's linked. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\\\">ClassicLink</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"DisassociateAddress\":{\
       \"name\":\"DisassociateAddress\",\
@@ -2038,7 +2108,7 @@
       },\
       \"input\":{\"shape\":\"EnableVpcClassicLinkRequest\"},\
       \"output\":{\"shape\":\"EnableVpcClassicLinkResult\"},\
-      \"documentation\":\"<p>Enables a VPC for ClassicLink. You can then link EC2-Classic instances to your ClassicLink-enabled VPC to allow communication over private IP addresses. You cannot enable your VPC for ClassicLink if any of your VPC's route tables have existing routes for address ranges within the <code>10.0.0.0/8</code> IP address range, excluding local routes for VPCs in the <code>10.0.0.0/16</code> and <code>10.1.0.0/16</code> IP address ranges. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\\\">ClassicLink</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Enables a VPC for ClassicLink. You can then link EC2-Classic instances to your ClassicLink-enabled VPC to allow communication over private IP addresses. You cannot enable your VPC for ClassicLink if any of your VPC route tables have existing routes for address ranges within the <code>10.0.0.0/8</code> IP address range, excluding local routes for VPCs in the <code>10.0.0.0/16</code> and <code>10.1.0.0/16</code> IP address ranges. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\\\">ClassicLink</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"EnableVpcClassicLinkDnsSupport\":{\
       \"name\":\"EnableVpcClassicLinkDnsSupport\",\
@@ -2048,7 +2118,7 @@
       },\
       \"input\":{\"shape\":\"EnableVpcClassicLinkDnsSupportRequest\"},\
       \"output\":{\"shape\":\"EnableVpcClassicLinkDnsSupportResult\"},\
-      \"documentation\":\"<p>Enables a VPC to support DNS hostname resolution for ClassicLink. If enabled, the DNS hostname of a linked EC2-Classic instance resolves to its private IP address when addressed from an instance in the VPC to which it's linked. Similarly, the DNS hostname of an instance in a VPC resolves to its private IP address when addressed from a linked EC2-Classic instance. For more information about ClassicLink, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\\\">ClassicLink</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Enables a VPC to support DNS hostname resolution for ClassicLink. If enabled, the DNS hostname of a linked EC2-Classic instance resolves to its private IP address when addressed from an instance in the VPC to which it's linked. Similarly, the DNS hostname of an instance in a VPC resolves to its private IP address when addressed from a linked EC2-Classic instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html\\\">ClassicLink</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"GetConsoleOutput\":{\
       \"name\":\"GetConsoleOutput\",\
@@ -2058,7 +2128,7 @@
       },\
       \"input\":{\"shape\":\"GetConsoleOutputRequest\"},\
       \"output\":{\"shape\":\"GetConsoleOutputResult\"},\
-      \"documentation\":\"<p>Gets the console output for the specified instance. For Linux instances, the instance console output displays the exact console output that would normally be displayed on a physical monitor attached to a computer. For Windows instances, the instance console output includes output from the EC2Config service.</p> <p> <a>GetConsoleOutput</a> returns up to 64 KB of console output shortly after it's generated by the instance.</p> <p>By default, the console output returns buffered information that was posted shortly after an instance transition state (start, stop, reboot, or terminate). This information is available for at least one hour after the most recent post.</p> <p>You can optionally retrieve the latest serial console output at any time during the instance lifecycle. This option is only supported on C5, M5, and <code>i3.metal</code> instances.</p>\"\
+      \"documentation\":\"<p>Gets the console output for the specified instance. For Linux instances, the instance console output displays the exact console output that would normally be displayed on a physical monitor attached to a computer. For Windows instances, the instance console output includes the last three system event log errors.</p> <p>By default, the console output returns buffered information that was posted shortly after an instance transition state (start, stop, reboot, or terminate). This information is available for at least one hour after the most recent post. Only the most recent 64 KB of console output is available.</p> <p>You can optionally retrieve the latest serial console output at any time during the instance lifecycle. This option is supported on instance types that use the Nitro hypervisor.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html#instance-console-console-output\\\">Instance Console Output</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"GetConsoleScreenshot\":{\
       \"name\":\"GetConsoleScreenshot\",\
@@ -2160,6 +2230,16 @@
       \"output\":{\"shape\":\"ImportVolumeResult\"},\
       \"documentation\":\"<p>Creates an import volume task using metadata from the specified disk image.For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/importing-your-volumes-into-amazon-ebs.html\\\">Importing Disks to Amazon EBS</a>.</p> <p>For information about the import manifest referenced by this API action, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html\\\">VM Import Manifest</a>.</p>\"\
     },\
+    \"ModifyCapacityReservation\":{\
+      \"name\":\"ModifyCapacityReservation\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ModifyCapacityReservationRequest\"},\
+      \"output\":{\"shape\":\"ModifyCapacityReservationResult\"},\
+      \"documentation\":\"<p>Modifies a Capacity Reservation's capacity and the conditions under which it is to be released. You cannot change a Capacity Reservation's instance type, EBS optimization, instance store settings, platform, Availability Zone, or instance eligibility. If you need to modify any of these attributes, we recommend that you cancel the Capacity Reservation, and then create a new one with the required attributes.</p>\"\
+    },\
     \"ModifyFleet\":{\
       \"name\":\"ModifyFleet\",\
       \"http\":{\
@@ -2188,7 +2268,7 @@
       },\
       \"input\":{\"shape\":\"ModifyHostsRequest\"},\
       \"output\":{\"shape\":\"ModifyHostsResult\"},\
-      \"documentation\":\"<p>Modify the auto-placement setting of a Dedicated Host. When auto-placement is enabled, AWS will place instances that you launch with a tenancy of <code>host</code>, but without targeting a specific host ID, onto any available Dedicated Host in your account which has auto-placement enabled. When auto-placement is disabled, you need to provide a host ID if you want the instance to launch onto a specific host. If no host ID is provided, the instance will be launched onto a suitable host which has auto-placement enabled.</p>\"\
+      \"documentation\":\"<p>Modify the auto-placement setting of a Dedicated Host. When auto-placement is enabled, any instances that you launch with a tenancy of <code>host</code> but without a specific host ID are placed onto any available Dedicated Host in your account that has auto-placement enabled. When auto-placement is disabled, you need to provide a host ID to have the instance launch onto a specific host. If no host ID is provided, the instance is launched onto a suitable host with auto-placement enabled.</p>\"\
     },\
     \"ModifyIdFormat\":{\
       \"name\":\"ModifyIdFormat\",\
@@ -2226,6 +2306,16 @@
       \"input\":{\"shape\":\"ModifyInstanceAttributeRequest\"},\
       \"documentation\":\"<p>Modifies the specified attribute of the specified instance. You can specify only one attribute at a time.</p> <p> <b>Note: </b>Using this action to change the security groups associated with an elastic network interface (ENI) attached to an instance in a VPC can result in an error if the instance has more than one ENI. To change the security groups associated with an ENI attached to an instance that has multiple ENIs, we recommend that you use the <a>ModifyNetworkInterfaceAttribute</a> action.</p> <p>To modify some attributes, the instance must be stopped. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_ChangingAttributesWhileInstanceStopped.html\\\">Modifying Attributes of a Stopped Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
+    \"ModifyInstanceCapacityReservationAttributes\":{\
+      \"name\":\"ModifyInstanceCapacityReservationAttributes\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ModifyInstanceCapacityReservationAttributesRequest\"},\
+      \"output\":{\"shape\":\"ModifyInstanceCapacityReservationAttributesResult\"},\
+      \"documentation\":\"<p>Modifies the Capacity Reservation settings for a stopped instance. Use this action to configure an instance to target a specific Capacity Reservation, run in any <code>open</code> Capacity Reservation with matching attributes, or run On-Demand Instance capacity.</p>\"\
+    },\
     \"ModifyInstanceCreditSpecification\":{\
       \"name\":\"ModifyInstanceCreditSpecification\",\
       \"http\":{\
@@ -2234,7 +2324,7 @@
       },\
       \"input\":{\"shape\":\"ModifyInstanceCreditSpecificationRequest\"},\
       \"output\":{\"shape\":\"ModifyInstanceCreditSpecificationResult\"},\
-      \"documentation\":\"<p>Modifies the credit option for CPU usage on a running or stopped T2 instance. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html\\\">T2 Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Modifies the credit option for CPU usage on a running or stopped T2 or T3 instance. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\\\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"ModifyInstancePlacement\":{\
       \"name\":\"ModifyInstancePlacement\",\
@@ -2282,7 +2372,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"ModifySnapshotAttributeRequest\"},\
-      \"documentation\":\"<p>Adds or removes permission settings for the specified snapshot. You may add or remove specified AWS account IDs from a snapshot's list of create volume permissions, but you cannot do both in a single API call. If you need to both add and remove account IDs for a snapshot, you must use multiple API calls.</p> <note> <p>Encrypted snapshots and snapshots with AWS Marketplace product codes cannot be made public. Snapshots encrypted with your default CMK cannot be shared with other accounts.</p> </note> <p>For more information on modifying snapshot permissions, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html\\\">Sharing Snapshots</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Adds or removes permission settings for the specified snapshot. You may add or remove specified AWS account IDs from a snapshot's list of create volume permissions, but you cannot do both in a single API call. If you need to both add and remove account IDs for a snapshot, you must use multiple API calls.</p> <p>Encrypted snapshots and snapshots with AWS Marketplace product codes cannot be made public. Snapshots encrypted with your default CMK cannot be shared with other accounts.</p> <p>For more information about modifying snapshot permissions, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html\\\">Sharing Snapshots</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"ModifySpotFleetRequest\":{\
       \"name\":\"ModifySpotFleetRequest\",\
@@ -2311,7 +2401,7 @@
       },\
       \"input\":{\"shape\":\"ModifyVolumeRequest\"},\
       \"output\":{\"shape\":\"ModifyVolumeResult\"},\
-      \"documentation\":\"<p>You can modify several parameters of an existing EBS volume, including volume size, volume type, and IOPS capacity. If your EBS volume is attached to a current-generation EC2 instance type, you may be able to apply these changes without stopping the instance or detaching the volume from it. For more information about modifying an EBS volume running Linux, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Linux</a>. For more information about modifying an EBS volume running Windows, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Windows</a>. </p> <p> When you complete a resize operation on your volume, you need to extend the volume's file-system size to take advantage of the new storage capacity. For information about extending a Linux file system, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#recognize-expanded-volume-linux\\\">Extending a Linux File System</a>. For information about extending a Windows file system, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html#recognize-expanded-volume-windows\\\">Extending a Windows File System</a>. </p> <p> You can use CloudWatch Events to check the status of a modification to an EBS volume. For information about CloudWatch Events, see the <a href=\\\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/\\\">Amazon CloudWatch Events User Guide</a>. You can also track the status of a modification using the <a>DescribeVolumesModifications</a> API. For information about tracking status changes using either method, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods\\\">Monitoring Volume Modifications</a>. </p> <note> <p>With previous-generation instance types, resizing an EBS volume may require detaching and reattaching the volume or stopping and restarting the instance. For more information about modifying an EBS volume running Linux, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Linux</a>. For more information about modifying an EBS volume running Windows, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Windows</a>.</p> </note> <note> <p>If you reach the maximum volume modification rate per volume limit, you will need to wait at least six hours before applying further modifications to the affected EBS volume.</p> </note>\"\
+      \"documentation\":\"<p>You can modify several parameters of an existing EBS volume, including volume size, volume type, and IOPS capacity. If your EBS volume is attached to a current-generation EC2 instance type, you may be able to apply these changes without stopping the instance or detaching the volume from it. For more information about modifying an EBS volume running Linux, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Linux</a>. For more information about modifying an EBS volume running Windows, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Windows</a>. </p> <p> When you complete a resize operation on your volume, you need to extend the volume's file-system size to take advantage of the new storage capacity. For information about extending a Linux file system, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#recognize-expanded-volume-linux\\\">Extending a Linux File System</a>. For information about extending a Windows file system, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html#recognize-expanded-volume-windows\\\">Extending a Windows File System</a>. </p> <p> You can use CloudWatch Events to check the status of a modification to an EBS volume. For information about CloudWatch Events, see the <a href=\\\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/\\\">Amazon CloudWatch Events User Guide</a>. You can also track the status of a modification using the <a>DescribeVolumesModifications</a> API. For information about tracking status changes using either method, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods\\\">Monitoring Volume Modifications</a>. </p> <p>With previous-generation instance types, resizing an EBS volume may require detaching and reattaching the volume or stopping and restarting the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Linux</a> and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-expand-volume.html\\\">Modifying the Size, IOPS, or Type of an EBS Volume on Windows</a>.</p> <p>If you reach the maximum volume modification rate per volume limit, you will need to wait at least six hours before applying further modifications to the affected EBS volume.</p>\"\
     },\
     \"ModifyVolumeAttribute\":{\
       \"name\":\"ModifyVolumeAttribute\",\
@@ -2369,7 +2459,7 @@
       },\
       \"input\":{\"shape\":\"ModifyVpcEndpointServicePermissionsRequest\"},\
       \"output\":{\"shape\":\"ModifyVpcEndpointServicePermissionsResult\"},\
-      \"documentation\":\"<p>Modifies the permissions for your <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/endpoint-service.html\\\">VPC endpoint service</a>. You can add or remove permissions for service consumers (IAM users, IAM roles, and AWS accounts) to connect to your endpoint service.</p>\"\
+      \"documentation\":\"<p>Modifies the permissions for your <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/endpoint-service.html\\\">VPC endpoint service</a>. You can add or remove permissions for service consumers (IAM users, IAM roles, and AWS accounts) to connect to your endpoint service.</p> <p>If you grant permissions to all principals, the service is public. Any users who know the name of a public service can send a request to attach an endpoint. If the service does not require manual approval, attachments are automatically approved.</p>\"\
     },\
     \"ModifyVpcPeeringConnectionOptions\":{\
       \"name\":\"ModifyVpcPeeringConnectionOptions\",\
@@ -2389,7 +2479,7 @@
       },\
       \"input\":{\"shape\":\"ModifyVpcTenancyRequest\"},\
       \"output\":{\"shape\":\"ModifyVpcTenancyResult\"},\
-      \"documentation\":\"<p>Modifies the instance tenancy attribute of the specified VPC. You can change the instance tenancy attribute of a VPC to <code>default</code> only. You cannot change the instance tenancy attribute to <code>dedicated</code>.</p> <p>After you modify the tenancy of the VPC, any new instances that you launch into the VPC have a tenancy of <code>default</code>, unless you specify otherwise during launch. The tenancy of any existing instances in the VPC is not affected.</p> <p>For more information about Dedicated Instances, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html\\\">Dedicated Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Modifies the instance tenancy attribute of the specified VPC. You can change the instance tenancy attribute of a VPC to <code>default</code> only. You cannot change the instance tenancy attribute to <code>dedicated</code>.</p> <p>After you modify the tenancy of the VPC, any new instances that you launch into the VPC have a tenancy of <code>default</code>, unless you specify otherwise during launch. The tenancy of any existing instances in the VPC is not affected.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html\\\">Dedicated Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"MonitorInstances\":{\
       \"name\":\"MonitorInstances\",\
@@ -2410,6 +2500,16 @@
       \"input\":{\"shape\":\"MoveAddressToVpcRequest\"},\
       \"output\":{\"shape\":\"MoveAddressToVpcResult\"},\
       \"documentation\":\"<p>Moves an Elastic IP address from the EC2-Classic platform to the EC2-VPC platform. The Elastic IP address must be allocated to your account for more than 24 hours, and it must not be associated with an instance. After the Elastic IP address is moved, it is no longer available for use in the EC2-Classic platform, unless you move it back using the <a>RestoreAddressToClassic</a> request. You cannot move an Elastic IP address that was originally allocated for use in the EC2-VPC platform to the EC2-Classic platform. </p>\"\
+    },\
+    \"ProvisionByoipCidr\":{\
+      \"name\":\"ProvisionByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ProvisionByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"ProvisionByoipCidrResult\"},\
+      \"documentation\":\"<p>Provisions an address range for use with your AWS resources through bring your own IP addresses (BYOIP) and creates a corresponding address pool. After the address range is provisioned, it is ready to be advertised using <a>AdvertiseByoipCidr</a>.</p> <p>AWS verifies that you own the address range and are authorized to advertise it. You must ensure that the address range is registered to you and that you created an RPKI ROA to authorize Amazon ASNs 16509 and 14618 to advertise the address range. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\\\">Bring Your Own IP Addresses (BYOIP)</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Provisioning an address range is an asynchronous operation, so the call returns immediately, but the address range is not ready to use until its status changes from <code>pending-provision</code> to <code>provisioned</code>. To monitor the status of an address range, use <a>DescribeByoipCidrs</a>. To allocate an Elastic IP address from your address pool, use <a>AllocateAddress</a> with either the specific address from the address pool or the ID of the address pool.</p>\"\
     },\
     \"PurchaseHostReservation\":{\
       \"name\":\"PurchaseHostReservation\",\
@@ -2458,7 +2558,7 @@
       },\
       \"input\":{\"shape\":\"RegisterImageRequest\"},\
       \"output\":{\"shape\":\"RegisterImageResult\"},\
-      \"documentation\":\"<p>Registers an AMI. When you're creating an AMI, this is the final step you must complete before you can launch an instance from the AMI. For more information about creating AMIs, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami.html\\\">Creating Your Own AMIs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <note> <p>For Amazon EBS-backed instances, <a>CreateImage</a> creates and registers the AMI in a single request, so you don't have to register the AMI yourself.</p> </note> <p>You can also use <code>RegisterImage</code> to create an Amazon EBS-backed Linux AMI from a snapshot of a root device volume. You specify the snapshot using the block device mapping. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-launch-snapshot.html\\\">Launching a Linux Instance from a Backup</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>You can't register an image where a secondary (non-root) snapshot has AWS Marketplace product codes.</p> <p>Some Linux distributions, such as Red Hat Enterprise Linux (RHEL) and SUSE Linux Enterprise Server (SLES), use the EC2 billing product code associated with an AMI to verify the subscription status for package updates. Creating an AMI from an EBS snapshot does not maintain this billing code, and subsequent instances launched from such an AMI will not be able to connect to package update infrastructure. To create an AMI that must retain billing codes, see <a>CreateImage</a>.</p> <p>If needed, you can deregister an AMI at any time. Any modifications you make to an AMI backed by an instance store volume invalidates its registration. If you make changes to an image, deregister the previous image and register the new image.</p>\"\
+      \"documentation\":\"<p>Registers an AMI. When you're creating an AMI, this is the final step you must complete before you can launch an instance from the AMI. For more information about creating AMIs, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami.html\\\">Creating Your Own AMIs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <note> <p>For Amazon EBS-backed instances, <a>CreateImage</a> creates and registers the AMI in a single request, so you don't have to register the AMI yourself.</p> </note> <p>You can also use <code>RegisterImage</code> to create an Amazon EBS-backed Linux AMI from a snapshot of a root device volume. You specify the snapshot using the block device mapping. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-launch-snapshot.html\\\">Launching a Linux Instance from a Backup</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>You can't register an image where a secondary (non-root) snapshot has AWS Marketplace product codes.</p> <p>Some Linux distributions, such as Red Hat Enterprise Linux (RHEL) and SUSE Linux Enterprise Server (SLES), use the EC2 billing product code associated with an AMI to verify the subscription status for package updates. Creating an AMI from an EBS snapshot does not maintain this billing code, and instances launched from such an AMI are not able to connect to package update infrastructure. If you purchase a Reserved Instance offering for one of these Linux distributions and launch instances using an AMI that does not contain the required billing code, your Reserved Instance is not applied to these instances.</p> <p>To create an AMI for operating systems that require a billing code, see <a>CreateImage</a>.</p> <p>If needed, you can deregister an AMI at any time. Any modifications you make to an AMI backed by an instance store volume invalidates its registration. If you make changes to an image, deregister the previous image and register the new image.</p>\"\
     },\
     \"RejectVpcEndpointConnections\":{\
       \"name\":\"RejectVpcEndpointConnections\",\
@@ -2497,7 +2597,7 @@
       },\
       \"input\":{\"shape\":\"ReleaseHostsRequest\"},\
       \"output\":{\"shape\":\"ReleaseHostsResult\"},\
-      \"documentation\":\"<p>When you no longer want to use an On-Demand Dedicated Host it can be released. On-Demand billing is stopped and the host goes into <code>released</code> state. The host ID of Dedicated Hosts that have been released can no longer be specified in another request, e.g., ModifyHosts. You must stop or terminate all instances on a host before it can be released.</p> <p>When Dedicated Hosts are released, it make take some time for them to stop counting toward your limit and you may receive capacity errors when trying to allocate new Dedicated hosts. Try waiting a few minutes, and then try again.</p> <p>Released hosts will still appear in a <a>DescribeHosts</a> response.</p>\"\
+      \"documentation\":\"<p>When you no longer want to use an On-Demand Dedicated Host it can be released. On-Demand billing is stopped and the host goes into <code>released</code> state. The host ID of Dedicated Hosts that have been released can no longer be specified in another request, for example, to modify the host. You must stop or terminate all instances on a host before it can be released.</p> <p>When Dedicated Hosts are released, it may take some time for them to stop counting toward your limit and you may receive capacity errors when trying to allocate new Dedicated Hosts. Wait a few minutes and then try again.</p> <p>Released hosts still appear in a <a>DescribeHosts</a> response.</p>\"\
     },\
     \"ReplaceIamInstanceProfileAssociation\":{\
       \"name\":\"ReplaceIamInstanceProfileAssociation\",\
@@ -2517,7 +2617,7 @@
       },\
       \"input\":{\"shape\":\"ReplaceNetworkAclAssociationRequest\"},\
       \"output\":{\"shape\":\"ReplaceNetworkAclAssociationResult\"},\
-      \"documentation\":\"<p>Changes which network ACL a subnet is associated with. By default when you create a subnet, it's automatically associated with the default network ACL. For more information about network ACLs, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>This is an idempotent operation.</p>\"\
+      \"documentation\":\"<p>Changes which network ACL a subnet is associated with. By default when you create a subnet, it's automatically associated with the default network ACL. For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p> <p>This is an idempotent operation.</p>\"\
     },\
     \"ReplaceNetworkAclEntry\":{\
       \"name\":\"ReplaceNetworkAclEntry\",\
@@ -2526,7 +2626,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"ReplaceNetworkAclEntryRequest\"},\
-      \"documentation\":\"<p>Replaces an entry (rule) in a network ACL. For more information about network ACLs, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Replaces an entry (rule) in a network ACL. For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html\\\">Network ACLs</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"ReplaceRoute\":{\
       \"name\":\"ReplaceRoute\",\
@@ -2535,7 +2635,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"ReplaceRouteRequest\"},\
-      \"documentation\":\"<p>Replaces an existing route within a route table in a VPC. You must provide only one of the following: Internet gateway or virtual private gateway, NAT instance, NAT gateway, VPC peering connection, network interface, or egress-only Internet gateway.</p> <p>For more information about route tables, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Replaces an existing route within a route table in a VPC. You must provide only one of the following: internet gateway or virtual private gateway, NAT instance, NAT gateway, VPC peering connection, network interface, or egress-only internet gateway.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html\\\">Route Tables</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>\"\
     },\
     \"ReplaceRouteTableAssociation\":{\
       \"name\":\"ReplaceRouteTableAssociation\",\
@@ -2620,7 +2720,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"ResetSnapshotAttributeRequest\"},\
-      \"documentation\":\"<p>Resets permission settings for the specified snapshot.</p> <p>For more information on modifying snapshot permissions, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html\\\">Sharing Snapshots</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Resets permission settings for the specified snapshot.</p> <p>For more information about modifying snapshot permissions, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html\\\">Sharing Snapshots</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"RestoreAddressToClassic\":{\
       \"name\":\"RestoreAddressToClassic\",\
@@ -2748,6 +2848,16 @@
       \"input\":{\"shape\":\"UpdateSecurityGroupRuleDescriptionsIngressRequest\"},\
       \"output\":{\"shape\":\"UpdateSecurityGroupRuleDescriptionsIngressResult\"},\
       \"documentation\":\"<p>Updates the description of an ingress (inbound) security group rule. You can replace an existing description, or add a description to a rule that did not have one previously.</p> <p>You specify the description as part of the IP permissions structure. You can remove a description for a security group rule by omitting the description parameter in the request.</p>\"\
+    },\
+    \"WithdrawByoipCidr\":{\
+      \"name\":\"WithdrawByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"WithdrawByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"WithdrawByoipCidrResult\"},\
+      \"documentation\":\"<p>Stops advertising an IPv4 address range that is provisioned as an address pool.</p> <p>You can perform this operation at most once every 10 seconds, even if you specify different address ranges each time.</p> <p>It can take a few minutes before traffic to the specified addresses stops routing to AWS because of BGP propagation delays.</p>\"\
     }\
   },\
   \"shapes\":{\
@@ -2828,8 +2938,7 @@
           \"documentation\":\"<p>The ID of the VPC peering connection. You must specify this parameter in the request.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AcceptVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"AcceptVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -2839,8 +2948,7 @@
           \"documentation\":\"<p>Information about the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnection\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AcceptVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"AccountAttribute\":{\
       \"type\":\"structure\",\
@@ -2986,6 +3094,11 @@
           \"shape\":\"TagList\",\
           \"documentation\":\"<p>Any tags assigned to the Elastic IP address.</p>\",\
           \"locationName\":\"tagSet\"\
+        },\
+        \"PublicIpv4Pool\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of an address pool.</p>\",\
+          \"locationName\":\"publicIpv4Pool\"\
         }\
       },\
       \"documentation\":\"<p>Describes an Elastic IP address.</p>\"\
@@ -2995,6 +3108,30 @@
       \"member\":{\
         \"shape\":\"Address\",\
         \"locationName\":\"item\"\
+      }\
+    },\
+    \"AdvertiseByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The IPv4 address range, in CIDR notation.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"AdvertiseByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address range.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
       }\
     },\
     \"Affinity\":{\
@@ -3013,15 +3150,18 @@
         },\
         \"Address\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>[EC2-VPC] The Elastic IP address to recover.</p>\"\
+          \"documentation\":\"<p>[EC2-VPC] The Elastic IP address to recover or an IPv4 address from an address pool.</p>\"\
+        },\
+        \"PublicIpv4Pool\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of an address pool that you own. Use this parameter to let Amazon EC2 select an address from the address pool. To specify a specific address from the address pool, use the <code>Address</code> parameter instead.</p>\"\
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AllocateAddress.</p>\"\
+      }\
     },\
     \"AllocateAddressResult\":{\
       \"type\":\"structure\",\
@@ -3036,13 +3176,17 @@
           \"documentation\":\"<p>[EC2-VPC] The ID that AWS assigns to represent the allocation of the Elastic IP address for use with instances in a VPC.</p>\",\
           \"locationName\":\"allocationId\"\
         },\
+        \"PublicIpv4Pool\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of an address pool.</p>\",\
+          \"locationName\":\"publicIpv4Pool\"\
+        },\
         \"Domain\":{\
           \"shape\":\"DomainType\",\
           \"documentation\":\"<p>Indicates whether this Elastic IP address is for use with instances in EC2-Classic (<code>standard</code>) or instances in a VPC (<code>vpc</code>).</p>\",\
           \"locationName\":\"domain\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AllocateAddress.</p>\"\
+      }\
     },\
     \"AllocateHostsRequest\":{\
       \"type\":\"structure\",\
@@ -3064,28 +3208,32 @@
         },\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\",\
           \"locationName\":\"clientToken\"\
         },\
         \"InstanceType\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Specify the instance type that you want your Dedicated Hosts to be configured for. When you specify the instance type, that is the only instance type that you can launch onto that host.</p>\",\
+          \"documentation\":\"<p>Specify the instance type for which to configure your Dedicated Hosts. When you specify the instance type, that is the only instance type that you can launch onto that host.</p>\",\
           \"locationName\":\"instanceType\"\
         },\
         \"Quantity\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The number of Dedicated Hosts you want to allocate to your account with these parameters.</p>\",\
+          \"documentation\":\"<p>The number of Dedicated Hosts to allocate to your account with these parameters.</p>\",\
           \"locationName\":\"quantity\"\
+        },\
+        \"TagSpecifications\":{\
+          \"shape\":\"TagSpecificationList\",\
+          \"documentation\":\"<p>The tags to apply to the Dedicated Host during creation.</p>\",\
+          \"locationName\":\"TagSpecification\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AllocateHosts.</p>\"\
+      }\
     },\
     \"AllocateHostsResult\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"HostIds\":{\
           \"shape\":\"ResponseHostIdList\",\
-          \"documentation\":\"<p>The ID of the allocated Dedicated Host. This is used when you want to launch an instance onto a specific host.</p>\",\
+          \"documentation\":\"<p>The ID of the allocated Dedicated Host. This is used to launch an instance onto a specific host.</p>\",\
           \"locationName\":\"hostIdSet\"\
         }\
       },\
@@ -3243,8 +3391,7 @@
           \"documentation\":\"<p>[EC2-VPC] The primary or secondary private IP address to associate with the Elastic IP address. If no private IP address is specified, the Elastic IP address is associated with the primary private IP address.</p>\",\
           \"locationName\":\"privateIpAddress\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AssociateAddress.</p>\"\
+      }\
     },\
     \"AssociateAddressResult\":{\
       \"type\":\"structure\",\
@@ -3254,8 +3401,7 @@
           \"documentation\":\"<p>[EC2-VPC] The ID that represents the association of the Elastic IP address with an instance.</p>\",\
           \"locationName\":\"associationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AssociateAddress.</p>\"\
+      }\
     },\
     \"AssociateDhcpOptionsRequest\":{\
       \"type\":\"structure\",\
@@ -3277,8 +3423,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AssociateDhcpOptions.</p>\"\
+      }\
     },\
     \"AssociateIamInstanceProfileRequest\":{\
       \"type\":\"structure\",\
@@ -3329,19 +3474,17 @@
           \"documentation\":\"<p>The ID of the subnet.</p>\",\
           \"locationName\":\"subnetId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AssociateRouteTable.</p>\"\
+      }\
     },\
     \"AssociateRouteTableResult\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"AssociationId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The route table association ID (needed to disassociate the route table).</p>\",\
+          \"documentation\":\"<p>The route table association ID. This ID is required for disassociating the route table.</p>\",\
           \"locationName\":\"associationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AssociateRouteTable.</p>\"\
+      }\
     },\
     \"AssociateSubnetCidrBlockRequest\":{\
       \"type\":\"structure\",\
@@ -3452,8 +3595,7 @@
           \"documentation\":\"<p>The ID of a ClassicLink-enabled VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AttachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"AttachClassicLinkVpcResult\":{\
       \"type\":\"structure\",\
@@ -3463,8 +3605,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AttachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"AttachInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -3480,7 +3621,7 @@
         },\
         \"InternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the Internet gateway.</p>\",\
+          \"documentation\":\"<p>The ID of the internet gateway.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         },\
         \"VpcId\":{\
@@ -3488,8 +3629,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AttachInternetGateway.</p>\"\
+      }\
     },\
     \"AttachNetworkInterfaceRequest\":{\
       \"type\":\"structure\",\
@@ -3675,8 +3815,7 @@
           \"documentation\":\"<p>Not supported. Use a set of IP permissions to specify a destination security group.</p>\",\
           \"locationName\":\"sourceSecurityGroupOwnerId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AuthorizeSecurityGroupEgress.</p>\"\
+      }\
     },\
     \"AuthorizeSecurityGroupIngressRequest\":{\
       \"type\":\"structure\",\
@@ -3722,8 +3861,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AuthorizeSecurityGroupIngress.</p>\"\
+      }\
     },\
     \"AutoPlacement\":{\
       \"type\":\"string\",\
@@ -3797,7 +3935,7 @@
       \"members\":{\
         \"AvailableInstanceCapacity\":{\
           \"shape\":\"AvailableInstanceCapacityList\",\
-          \"documentation\":\"<p>The total number of instances that the Dedicated Host supports.</p>\",\
+          \"documentation\":\"<p>The total number of instances supported by the Dedicated Host.</p>\",\
           \"locationName\":\"availableInstanceCapacity\"\
         },\
         \"AvailableVCpus\":{\
@@ -3854,7 +3992,7 @@
         },\
         \"VirtualName\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The virtual device name (<code>ephemeral</code>N). Instance store volumes are numbered starting from 0. An instance type with 2 available instance store volumes can specify mappings for <code>ephemeral0</code> and <code>ephemeral1</code>.The number of available instance store volumes depends on the instance type. After you connect to the instance, you must mount the volume.</p> <p>Constraints: For M3 instances, you must specify instance store volumes in the block device mapping for the instance. When you launch an M3 instance, we ignore any instance store volumes specified in the block device mapping for the AMI.</p>\",\
+          \"documentation\":\"<p>The virtual device name (<code>ephemeral</code>N). Instance store volumes are numbered starting from 0. An instance type with 2 available instance store volumes can specify mappings for <code>ephemeral0</code> and <code>ephemeral1</code>. The number of available instance store volumes depends on the instance type. After you connect to the instance, you must mount the volume.</p> <p>NVMe instance store volumes are automatically enumerated and assigned a device name. Including them in your block device mapping has no effect.</p> <p>Constraints: For M3 instances, you must specify instance store volumes in the block device mapping for the instance. When you launch an M3 instance, we ignore any instance store volumes specified in the block device mapping for the AMI.</p>\",\
           \"locationName\":\"virtualName\"\
         },\
         \"Ebs\":{\
@@ -4007,6 +4145,51 @@
         \"failed\"\
       ]\
     },\
+    \"ByoipCidr\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation.</p>\",\
+          \"locationName\":\"cidr\"\
+        },\
+        \"Description\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The description of the address range.</p>\",\
+          \"locationName\":\"description\"\
+        },\
+        \"StatusMessage\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Upon success, contains the ID of the address pool. Otherwise, contains an error message.</p>\",\
+          \"locationName\":\"statusMessage\"\
+        },\
+        \"State\":{\
+          \"shape\":\"ByoipCidrState\",\
+          \"documentation\":\"<p>The state of the address pool.</p>\",\
+          \"locationName\":\"state\"\
+        }\
+      },\
+      \"documentation\":\"<p>Information about an address range that is provisioned for use with your AWS resources through bring your own IP addresses (BYOIP).</p>\"\
+    },\
+    \"ByoipCidrSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"ByoipCidr\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"ByoipCidrState\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"advertised\",\
+        \"deprovisioned\",\
+        \"failed-deprovision\",\
+        \"failed-provision\",\
+        \"pending-deprovision\",\
+        \"pending-provision\",\
+        \"provisioned\"\
+      ]\
+    },\
     \"CancelBatchErrorCode\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -4042,6 +4225,30 @@
         }\
       },\
       \"documentation\":\"<p>Contains the output of CancelBundleTask.</p>\"\
+    },\
+    \"CancelCapacityReservationRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"CapacityReservationId\"],\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation to be cancelled.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"CancelCapacityReservationResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Return\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
+          \"locationName\":\"return\"\
+        }\
+      }\
     },\
     \"CancelConversionRequest\":{\
       \"type\":\"structure\",\
@@ -4320,6 +4527,207 @@
         \"shape\":\"CancelledSpotInstanceRequest\",\
         \"locationName\":\"item\"\
       }\
+    },\
+    \"CapacityReservation\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationId\"\
+        },\
+        \"InstanceType\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The type of instance for which the Capacity Reservation reserves capacity.</p>\",\
+          \"locationName\":\"instanceType\"\
+        },\
+        \"InstancePlatform\":{\
+          \"shape\":\"CapacityReservationInstancePlatform\",\
+          \"documentation\":\"<p>The type of operating system for which the Capacity Reservation reserves capacity.</p>\",\
+          \"locationName\":\"instancePlatform\"\
+        },\
+        \"AvailabilityZone\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The Availability Zone in which the capacity is reserved.</p>\",\
+          \"locationName\":\"availabilityZone\"\
+        },\
+        \"Tenancy\":{\
+          \"shape\":\"CapacityReservationTenancy\",\
+          \"documentation\":\"<p>Indicates the tenancy of the Capacity Reservation. A Capacity Reservation can have one of the following tenancy settings:</p> <ul> <li> <p> <code>default</code> - The Capacity Reservation is created on hardware that is shared with other AWS accounts.</p> </li> <li> <p> <code>dedicated</code> - The Capacity Reservation is created on single-tenant hardware that is dedicated to a single AWS account.</p> </li> </ul>\",\
+          \"locationName\":\"tenancy\"\
+        },\
+        \"TotalInstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of instances for which the Capacity Reservation reserves capacity.</p>\",\
+          \"locationName\":\"totalInstanceCount\"\
+        },\
+        \"AvailableInstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The remaining capacity. Indicates the number of instances that can be launched in the Capacity Reservation.</p>\",\
+          \"locationName\":\"availableInstanceCount\"\
+        },\
+        \"EbsOptimized\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>\",\
+          \"locationName\":\"ebsOptimized\"\
+        },\
+        \"EphemeralStorage\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports instances with temporary, block-level storage.</p>\",\
+          \"locationName\":\"ephemeralStorage\"\
+        },\
+        \"State\":{\
+          \"shape\":\"CapacityReservationState\",\
+          \"documentation\":\"<p>The current state of the Capacity Reservation. A Capacity Reservation can be in one of the following states:</p> <ul> <li> <p> <code>active</code> - The Capacity Reservation is active and the capacity is available for your use.</p> </li> <li> <p> <code>cancelled</code> - The Capacity Reservation expired automatically at the date and time specified in your request. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>expired</code> - The Capacity Reservation was manually cancelled. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>pending</code> - The Capacity Reservation request was successful but the capacity provisioning is still pending.</p> </li> <li> <p> <code>failed</code> - The Capacity Reservation request has failed. A request might fail due to invalid request parameters, capacity constraints, or instance limit constraints. Failed requests are retained for 60 minutes.</p> </li> </ul>\",\
+          \"locationName\":\"state\"\
+        },\
+        \"EndDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p>\",\
+          \"locationName\":\"endDate\"\
+        },\
+        \"EndDateType\":{\
+          \"shape\":\"EndDateType\",\
+          \"documentation\":\"<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time.</p> </li> </ul>\",\
+          \"locationName\":\"endDateType\"\
+        },\
+        \"InstanceMatchCriteria\":{\
+          \"shape\":\"InstanceMatchCriteria\",\
+          \"documentation\":\"<p>Indicates the type of instance launches that the Capacity Reservation accepts. The options include:</p> <ul> <li> <p> <code>open</code> - The Capacity Reservation accepts all instances that have matching attributes (instance type, platform, and Availability Zone). Instances that have matching attributes launch into the Capacity Reservation automatically without specifying any additional parameters.</p> </li> <li> <p> <code>targeted</code> - The Capacity Reservation only accepts instances that have matching attributes (instance type, platform, and Availability Zone), and explicitly target the Capacity Reservation. This ensures that only permitted instances can use the reserved capacity. </p> </li> </ul>\",\
+          \"locationName\":\"instanceMatchCriteria\"\
+        },\
+        \"CreateDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation was created.</p>\",\
+          \"locationName\":\"createDate\"\
+        },\
+        \"Tags\":{\
+          \"shape\":\"TagList\",\
+          \"documentation\":\"<p>Any tags assigned to the Capacity Reservation.</p>\",\
+          \"locationName\":\"tagSet\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes a Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationIdSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"String\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"CapacityReservationInstancePlatform\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"Linux/UNIX\",\
+        \"Red Hat Enterprise Linux\",\
+        \"SUSE Linux\",\
+        \"Windows\",\
+        \"Windows with SQL Server\",\
+        \"Windows with SQL Server Enterprise\",\
+        \"Windows with SQL Server Standard\",\
+        \"Windows with SQL Server Web\"\
+      ]\
+    },\
+    \"CapacityReservationPreference\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"open\",\
+        \"none\"\
+      ]\
+    },\
+    \"CapacityReservationSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"CapacityReservation\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"CapacityReservationSpecification\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs as an On-Demand Instance.</p> </li> </ul>\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTarget\",\
+          \"documentation\":\"<p>Information about the target Capacity Reservation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an instance's Capacity Reservation targeting option. You can specify only one option at a time. Use the <code>CapacityReservationPreference</code> parameter to configure the instance to run as an On-Demand Instance or to run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). Use the <code>CapacityReservationTarget</code> parameter to explicitly target a specific Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationSpecificationResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Describes the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>\",\
+          \"locationName\":\"capacityReservationPreference\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTargetResponse\",\
+          \"documentation\":\"<p>Information about the targeted Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationTarget\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes the instance's Capacity Reservation targeting preferences. The action returns the <code>capacityReservationPreference</code> response element if the instance is configured to run in On-Demand capacity, or if it is configured in run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). The action returns the <code>capacityReservationTarget</code> response element if the instance explicily targets a specific Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationState\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"active\",\
+        \"expired\",\
+        \"cancelled\",\
+        \"pending\",\
+        \"failed\"\
+      ]\
+    },\
+    \"CapacityReservationTarget\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes a target Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationTargetResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationId\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes a target Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationTenancy\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"default\",\
+        \"dedicated\"\
+      ]\
+    },\
+    \"CidrAuthorizationContext\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"Message\",\
+        \"Signature\"\
+      ],\
+      \"members\":{\
+        \"Message\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The plain-text authorization message for the prefix and account.</p>\"\
+        },\
+        \"Signature\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The signed authorization message for the prefix and account.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Provides authorization for Amazon to bring a specific IP address range to a specific AWS account using bring your own IP addresses (BYOIP).</p>\"\
     },\
     \"CidrBlock\":{\
       \"type\":\"structure\",\
@@ -4670,7 +5078,7 @@
         },\
         \"Encrypted\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Specifies whether the destination snapshots of the copied image should be encrypted. The default CMK for EBS is used unless a non-default AWS Key Management Service (AWS KMS) CMK is specified with <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
+          \"documentation\":\"<p>Specifies whether the destination snapshots of the copied image should be encrypted. You can encrypt a copy of an unencrypted snapshot, but you cannot create an unencrypted copy of an encrypted snapshot. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
           \"locationName\":\"encrypted\"\
         },\
         \"KmsKeyId\":{\
@@ -4722,12 +5130,12 @@
         },\
         \"DestinationRegion\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The destination region to use in the <code>PresignedUrl</code> parameter of a snapshot copy operation. This parameter is only valid for specifying the destination region in a <code>PresignedUrl</code> parameter, where it is required.</p> <note> <p> <code>CopySnapshot</code> sends the snapshot copy to the regional endpoint that you send the HTTP request to, such as <code>ec2.us-east-1.amazonaws.com</code> (in the AWS CLI, this is specified with the <code>--region</code> parameter or the default region in your AWS configuration file).</p> </note>\",\
+          \"documentation\":\"<p>The destination region to use in the <code>PresignedUrl</code> parameter of a snapshot copy operation. This parameter is only valid for specifying the destination region in a <code>PresignedUrl</code> parameter, where it is required.</p> <p>The snapshot copy is sent to the regional endpoint that you sent the HTTP request to (for example, <code>ec2.us-east-1.amazonaws.com</code>). With the AWS CLI, this is specified using the <code>--region</code> parameter or the default region in your AWS configuration file.</p>\",\
           \"locationName\":\"destinationRegion\"\
         },\
         \"Encrypted\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Specifies whether the destination snapshot should be encrypted. You can encrypt a copy of an unencrypted snapshot using this flag, but you cannot use it to create an unencrypted copy from an encrypted snapshot. Your default CMK for EBS is used unless a non-default AWS Key Management Service (AWS KMS) CMK is specified with <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
+          \"documentation\":\"<p>Specifies whether the destination snapshot should be encrypted. You can encrypt a copy of an unencrypted snapshot, but you cannot use it to create an unencrypted copy of an encrypted snapshot. Your default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
           \"locationName\":\"encrypted\"\
         },\
         \"KmsKeyId\":{\
@@ -4796,6 +5204,79 @@
         }\
       },\
       \"documentation\":\"<p>The CPU options for the instance. Both the core count and threads per core must be specified in the request.</p>\"\
+    },\
+    \"CreateCapacityReservationRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"InstanceType\",\
+        \"InstancePlatform\",\
+        \"AvailabilityZone\",\
+        \"InstanceCount\"\
+      ],\
+      \"members\":{\
+        \"ClientToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p> <p>Constraint: Maximum 64 ASCII characters.</p>\"\
+        },\
+        \"InstanceType\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The instance type for which to reserve capacity. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html\\\">Instance Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"InstancePlatform\":{\
+          \"shape\":\"CapacityReservationInstancePlatform\",\
+          \"documentation\":\"<p>The type of operating system for which to reserve capacity.</p>\"\
+        },\
+        \"AvailabilityZone\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The Availability Zone in which to create the Capacity Reservation.</p>\"\
+        },\
+        \"Tenancy\":{\
+          \"shape\":\"CapacityReservationTenancy\",\
+          \"documentation\":\"<p>Indicates the tenancy of the Capacity Reservation. A Capacity Reservation can have one of the following tenancy settings:</p> <ul> <li> <p> <code>default</code> - The Capacity Reservation is created on hardware that is shared with other AWS accounts.</p> </li> <li> <p> <code>dedicated</code> - The Capacity Reservation is created on single-tenant hardware that is dedicated to a single AWS account.</p> </li> </ul>\"\
+        },\
+        \"InstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of instances for which to reserve capacity.</p>\"\
+        },\
+        \"EbsOptimized\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>\"\
+        },\
+        \"EphemeralStorage\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports instances with temporary, block-level storage.</p>\"\
+        },\
+        \"EndDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p> <p>You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>. Omit <code>EndDate</code> if <code>EndDateType</code> is <code>unlimited</code>.</p> <p>If the <code>EndDateType</code> is <code>limited</code>, the Capacity Reservation is cancelled within an hour from the specified time. For example, if you specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.</p>\"\
+        },\
+        \"EndDateType\":{\
+          \"shape\":\"EndDateType\",\
+          \"documentation\":\"<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it. Do not provide an <code>EndDate</code> if the <code>EndDateType</code> is <code>unlimited</code>.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time. You must provide an <code>EndDate</code> value if the <code>EndDateType</code> value is <code>limited</code>.</p> </li> </ul>\"\
+        },\
+        \"InstanceMatchCriteria\":{\
+          \"shape\":\"InstanceMatchCriteria\",\
+          \"documentation\":\"<p>Indicates the type of instance launches that the Capacity Reservation accepts. The options include:</p> <ul> <li> <p> <code>open</code> - The Capacity Reservation automatically matches all instances that have matching attributes (instance type, platform, and Availability Zone). Instances that have matching attributes run in the Capacity Reservation automatically without specifying any additional parameters.</p> </li> <li> <p> <code>targeted</code> - The Capacity Reservation only accepts instances that have matching attributes (instance type, platform, and Availability Zone), and explicitly target the Capacity Reservation. This ensures that only permitted instances can use the reserved capacity. </p> </li> </ul> <p>Default: <code>open</code> </p>\"\
+        },\
+        \"TagSpecifications\":{\
+          \"shape\":\"TagSpecificationList\",\
+          \"documentation\":\"<p>The tags to apply to the Capacity Reservation during launch.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"CreateCapacityReservationResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservation\":{\
+          \"shape\":\"CapacityReservation\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservation\"\
+        }\
+      }\
     },\
     \"CreateCustomerGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -4868,8 +5349,7 @@
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateDefaultVpc.</p>\"\
+      }\
     },\
     \"CreateDefaultVpcResult\":{\
       \"type\":\"structure\",\
@@ -4879,8 +5359,7 @@
           \"documentation\":\"<p>Information about the VPC.</p>\",\
           \"locationName\":\"vpc\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateDefaultVpc.</p>\"\
+      }\
     },\
     \"CreateDhcpOptionsRequest\":{\
       \"type\":\"structure\",\
@@ -4896,8 +5375,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateDhcpOptions.</p>\"\
+      }\
     },\
     \"CreateDhcpOptionsResult\":{\
       \"type\":\"structure\",\
@@ -4907,8 +5385,7 @@
           \"documentation\":\"<p>A set of DHCP options.</p>\",\
           \"locationName\":\"dhcpOptions\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateDhcpOptions.</p>\"\
+      }\
     },\
     \"CreateEgressOnlyInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -4916,7 +5393,7 @@
       \"members\":{\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p>\"\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p>\"\
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
@@ -4924,7 +5401,7 @@
         },\
         \"VpcId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the VPC for which to create the egress-only Internet gateway.</p>\"\
+          \"documentation\":\"<p>The ID of the VPC for which to create the egress-only internet gateway.</p>\"\
         }\
       }\
     },\
@@ -4933,12 +5410,12 @@
       \"members\":{\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request.</p>\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>\",\
           \"locationName\":\"clientToken\"\
         },\
         \"EgressOnlyInternetGateway\":{\
           \"shape\":\"EgressOnlyInternetGateway\",\
-          \"documentation\":\"<p>Information about the egress-only Internet gateway.</p>\",\
+          \"documentation\":\"<p>Information about the egress-only internet gateway.</p>\",\
           \"locationName\":\"egressOnlyInternetGateway\"\
         }\
       }\
@@ -4960,7 +5437,11 @@
         },\
         \"SpotOptions\":{\
           \"shape\":\"SpotOptionsRequest\",\
-          \"documentation\":\"<p>Includes <code>SpotAllocationStrategy</code> and <code>SpotInstanceInterruptionBehavior</code> inside this structure.</p>\"\
+          \"documentation\":\"<p>Describes the configuration of Spot Instances in an EC2 Fleet.</p>\"\
+        },\
+        \"OnDemandOptions\":{\
+          \"shape\":\"OnDemandOptionsRequest\",\
+          \"documentation\":\"<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>\"\
         },\
         \"ExcessCapacityTerminationPolicy\":{\
           \"shape\":\"FleetExcessCapacityTerminationPolicy\",\
@@ -4996,7 +5477,7 @@
         },\
         \"TagSpecifications\":{\
           \"shape\":\"TagSpecificationList\",\
-          \"documentation\":\"<p>The tags for an EC2 Fleet resource.</p>\",\
+          \"documentation\":\"<p>The key-value pair for tagging the EC2 Fleet request on creation. The value for <code>ResourceType</code> must be <code>fleet</code>, otherwise the fleet request fails. To tag instances at launch, specify the tags in the <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#create-launch-template\\\">launch template</a>. For information about tagging after launch, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#tag-resources\\\">Tagging Your Resources</a>. </p>\",\
           \"locationName\":\"TagSpecification\"\
         }\
       }\
@@ -5014,24 +5495,26 @@
     \"CreateFlowLogsRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\
-        \"DeliverLogsPermissionArn\",\
-        \"LogGroupName\",\
         \"ResourceIds\",\
         \"ResourceType\",\
         \"TrafficType\"\
       ],\
       \"members\":{\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p>\"\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p>\"\
         },\
         \"DeliverLogsPermissionArn\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group.</p>\"\
+          \"documentation\":\"<p>The ARN for the IAM role that's used to post flow logs to a log group.</p>\"\
         },\
         \"LogGroupName\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The name of the CloudWatch log group.</p>\"\
+          \"documentation\":\"<p>The name of the log group.</p>\"\
         },\
         \"ResourceIds\":{\
           \"shape\":\"ValueStringList\",\
@@ -5045,16 +5528,23 @@
         \"TrafficType\":{\
           \"shape\":\"TrafficType\",\
           \"documentation\":\"<p>The type of traffic to log.</p>\"\
+        },\
+        \"LogDestinationType\":{\
+          \"shape\":\"LogDestinationType\",\
+          \"documentation\":\"<p>Specifies the type of destination to which the flow log data is to be published. Flow log data can be published to CloudWatch Logs or Amazon S3. To publish flow log data to CloudWatch Logs, specify <code>cloud-watch-logs</code>. To publish flow log data to Amazon S3, specify <code>s3</code>.</p> <p>Default: <code>cloud-watch-logs</code> </p>\"\
+        },\
+        \"LogDestination\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Specifies the destination to which the flow log data is to be published. Flow log data can be published to an CloudWatch Logs log group or an Amazon S3 bucket. The value specified for this parameter depends on the value specified for LogDestinationType.</p> <p>If LogDestinationType is not specified or <code>cloud-watch-logs</code>, specify the Amazon Resource Name (ARN) of the CloudWatch Logs log group.</p> <p>If LogDestinationType is <code>s3</code>, specify the ARN of the Amazon S3 bucket. You can also specify a subfolder in the bucket. To specify a subfolder in the bucket, use the following ARN format: <code>bucket_ARN/subfolder_name/</code>. For example, to specify a subfolder named <code>my-logs</code> in a bucket named <code>my-bucket</code>, use the following ARN: <code>arn:aws:s3:::my-bucket/my-logs/</code>. You cannot use <code>AWSLogs</code> as a subfolder name. This is a reserved term.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateFlowLogs.</p>\"\
+      }\
     },\
     \"CreateFlowLogsResult\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request.</p>\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>\",\
           \"locationName\":\"clientToken\"\
         },\
         \"FlowLogIds\":{\
@@ -5067,8 +5557,7 @@
           \"documentation\":\"<p>Information about the flow logs that could not be created successfully.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateFlowLogs.</p>\"\
+      }\
     },\
     \"CreateFpgaImageRequest\":{\
       \"type\":\"structure\",\
@@ -5124,7 +5613,7 @@
       \"members\":{\
         \"BlockDeviceMappings\":{\
           \"shape\":\"BlockDeviceMappingRequestList\",\
-          \"documentation\":\"<p>Information about one or more block device mappings.</p>\",\
+          \"documentation\":\"<p>Information about one or more block device mappings. This parameter cannot be used to modify the encryption status of existing volumes or snapshots. To create an AMI with encrypted snapshots, use the <a>CopyImage</a> action.</p>\",\
           \"locationName\":\"blockDeviceMapping\"\
         },\
         \"Description\":{\
@@ -5212,19 +5701,17 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateInternetGateway.</p>\"\
+      }\
     },\
     \"CreateInternetGatewayResult\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"InternetGateway\":{\
           \"shape\":\"InternetGateway\",\
-          \"documentation\":\"<p>Information about the Internet gateway.</p>\",\
+          \"documentation\":\"<p>Information about the internet gateway.</p>\",\
           \"locationName\":\"internetGateway\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateInternetGateway.</p>\"\
+      }\
     },\
     \"CreateKeyPairRequest\":{\
       \"type\":\"structure\",\
@@ -5239,8 +5726,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateKeyPair.</p>\"\
+      }\
     },\
     \"CreateLaunchTemplateRequest\":{\
       \"type\":\"structure\",\
@@ -5338,14 +5824,13 @@
         },\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p> <p>Constraint: Maximum 64 ASCII characters.</p>\"\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p> <p>Constraint: Maximum 64 ASCII characters.</p>\"\
         },\
         \"SubnetId\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The subnet in which to create the NAT gateway.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateNatGateway.</p>\"\
+      }\
     },\
     \"CreateNatGatewayResult\":{\
       \"type\":\"structure\",\
@@ -5360,8 +5845,7 @@
           \"documentation\":\"<p>Information about the NAT gateway.</p>\",\
           \"locationName\":\"natGateway\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateNatGateway.</p>\"\
+      }\
     },\
     \"CreateNetworkAclEntryRequest\":{\
       \"type\":\"structure\",\
@@ -5390,7 +5874,7 @@
         },\
         \"IcmpTypeCode\":{\
           \"shape\":\"IcmpTypeCode\",\
-          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying the ICMP protocol, or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
+          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying protocol 1 (ICMP) or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
           \"locationName\":\"Icmp\"\
         },\
         \"Ipv6CidrBlock\":{\
@@ -5405,12 +5889,12 @@
         },\
         \"PortRange\":{\
           \"shape\":\"PortRange\",\
-          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to.</p>\",\
+          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying protocol 6 (TCP) or 17 (UDP).</p>\",\
           \"locationName\":\"portRange\"\
         },\
         \"Protocol\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The protocol. A value of <code>-1</code> or <code>all</code> means all protocols. If you specify <code>all</code>, <code>-1</code>, or a protocol number other than <code>6</code> (tcp), <code>17</code> (udp), or <code>1</code> (icmp), traffic on all ports is allowed, regardless of any ports or ICMP types or codes you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
+          \"documentation\":\"<p>The protocol number. A value of \\\"-1\\\" means all protocols. If you specify \\\"-1\\\" or a protocol number other than \\\"6\\\" (TCP), \\\"17\\\" (UDP), or \\\"1\\\" (ICMP), traffic on all ports is allowed, regardless of any ports or ICMP types or codes that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
           \"locationName\":\"protocol\"\
         },\
         \"RuleAction\":{\
@@ -5423,8 +5907,7 @@
           \"documentation\":\"<p>The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number.</p> <p>Constraints: Positive integer from 1 to 32766. The range 32767 to 65535 is reserved for internal use.</p>\",\
           \"locationName\":\"ruleNumber\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateNetworkAclEntry.</p>\"\
+      }\
     },\
     \"CreateNetworkAclRequest\":{\
       \"type\":\"structure\",\
@@ -5440,8 +5923,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateNetworkAcl.</p>\"\
+      }\
     },\
     \"CreateNetworkAclResult\":{\
       \"type\":\"structure\",\
@@ -5451,8 +5933,7 @@
           \"documentation\":\"<p>Information about the network ACL.</p>\",\
           \"locationName\":\"networkAcl\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateNetworkAcl.</p>\"\
+      }\
     },\
     \"CreateNetworkInterfacePermissionRequest\":{\
       \"type\":\"structure\",\
@@ -5647,12 +6128,12 @@
         },\
         \"EgressOnlyInternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>[IPv6 traffic only] The ID of an egress-only Internet gateway.</p>\",\
+          \"documentation\":\"<p>[IPv6 traffic only] The ID of an egress-only internet gateway.</p>\",\
           \"locationName\":\"egressOnlyInternetGatewayId\"\
         },\
         \"GatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of an Internet gateway or virtual private gateway attached to your VPC.</p>\",\
+          \"documentation\":\"<p>The ID of an internet gateway or virtual private gateway attached to your VPC.</p>\",\
           \"locationName\":\"gatewayId\"\
         },\
         \"InstanceId\":{\
@@ -5680,8 +6161,7 @@
           \"documentation\":\"<p>The ID of a VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateRoute.</p>\"\
+      }\
     },\
     \"CreateRouteResult\":{\
       \"type\":\"structure\",\
@@ -5691,8 +6171,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateRoute.</p>\"\
+      }\
     },\
     \"CreateRouteTableRequest\":{\
       \"type\":\"structure\",\
@@ -5708,8 +6187,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateRouteTable.</p>\"\
+      }\
     },\
     \"CreateRouteTableResult\":{\
       \"type\":\"structure\",\
@@ -5719,8 +6197,7 @@
           \"documentation\":\"<p>Information about the route table.</p>\",\
           \"locationName\":\"routeTable\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateRouteTable.</p>\"\
+      }\
     },\
     \"CreateSecurityGroupRequest\":{\
       \"type\":\"structure\",\
@@ -5747,8 +6224,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateSecurityGroup.</p>\"\
+      }\
     },\
     \"CreateSecurityGroupResult\":{\
       \"type\":\"structure\",\
@@ -5758,8 +6234,7 @@
           \"documentation\":\"<p>The ID of the security group.</p>\",\
           \"locationName\":\"groupId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateSecurityGroup.</p>\"\
+      }\
     },\
     \"CreateSnapshotRequest\":{\
       \"type\":\"structure\",\
@@ -5847,8 +6322,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateSubnet.</p>\"\
+      }\
     },\
     \"CreateSubnetResult\":{\
       \"type\":\"structure\",\
@@ -5858,8 +6332,7 @@
           \"documentation\":\"<p>Information about the subnet.</p>\",\
           \"locationName\":\"subnet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateSubnet.</p>\"\
+      }\
     },\
     \"CreateTagsRequest\":{\
       \"type\":\"structure\",\
@@ -5875,7 +6348,7 @@
         },\
         \"Resources\":{\
           \"shape\":\"ResourceIdList\",\
-          \"documentation\":\"<p>The IDs of one or more resources to tag. For example, ami-1a2b3c4d.</p>\",\
+          \"documentation\":\"<p>The IDs of one or more resources, separated by spaces.</p>\",\
           \"locationName\":\"ResourceId\"\
         },\
         \"Tags\":{\
@@ -5883,8 +6356,7 @@
           \"documentation\":\"<p>One or more tags. The <code>value</code> parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string. </p>\",\
           \"locationName\":\"Tag\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateTags.</p>\"\
+      }\
     },\
     \"CreateVolumePermission\":{\
       \"type\":\"structure\",\
@@ -5938,7 +6410,7 @@
         },\
         \"Iops\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Range is 100 to 32000 IOPS for volumes in most regions. For exceptions, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a>.</p> <p>This parameter is valid only for Provisioned IOPS SSD (io1) volumes.</p>\"\
+          \"documentation\":\"<p>The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Range is 100 to 32000 IOPS for volumes in most regions. For exceptions, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>This parameter is valid only for Provisioned IOPS SSD (io1) volumes.</p>\"\
         },\
         \"KmsKeyId\":{\
           \"shape\":\"String\",\
@@ -6065,7 +6537,7 @@
         },\
         \"PrivateDnsEnabled\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>(Interface endpoint) Indicate whether to associate a private hosted zone with the specified VPC. The private hosted zone contains a record set for the default public DNS name for the service for the region (for example, <code>kinesis.us-east-1.amazonaws.com</code>) which resolves to the private IP addresses of the endpoint network interfaces in the VPC. This enables you to make requests to the default public DNS name for the service instead of the public DNS names that are automatically generated by the VPC endpoint service.</p> <p>To use a private hosted zone, you must set the following VPC attributes to <code>true</code>: <code>enableDnsHostnames</code> and <code>enableDnsSupport</code>. Use <a>ModifyVpcAttribute</a> to set the VPC attributes.</p> <p>Default: <code>true</code> </p>\"\
+          \"documentation\":\"<p>(Interface endpoint) Indicate whether to associate a private hosted zone with the specified VPC. The private hosted zone contains a record set for the default public DNS name for the service for the region (for example, <code>kinesis.us-east-1.amazonaws.com</code>) which resolves to the private IP addresses of the endpoint network interfaces in the VPC. This enables you to make requests to the default public DNS name for the service instead of the public DNS names that are automatically generated by the VPC endpoint service.</p> <p>To use a private hosted zone, you must set the following VPC attributes to <code>true</code>: <code>enableDnsHostnames</code> and <code>enableDnsSupport</code>. Use <a>ModifyVpcAttribute</a> to set the VPC attributes.</p> <p>Default: <code>false</code> </p>\"\
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for CreateVpcEndpoint.</p>\"\
@@ -6151,8 +6623,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The region code for the accepter VPC, if the accepter VPC is located in a region other than the region in which you make the request.</p> <p>Default: The region in which you make the request.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"CreateVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -6162,8 +6633,7 @@
           \"documentation\":\"<p>Information about the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnection\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"CreateVpcRequest\":{\
       \"type\":\"structure\",\
@@ -6188,8 +6658,7 @@
           \"documentation\":\"<p>The tenancy options for instances launched into the VPC. For <code>default</code>, instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For <code>dedicated</code>, instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of <code>dedicated</code> or <code>host</code> into a dedicated tenancy VPC. </p> <p> <b>Important:</b> The <code>host</code> value cannot be used with this parameter. Use the <code>default</code> or <code>dedicated</code> values only.</p> <p>Default: <code>default</code> </p>\",\
           \"locationName\":\"instanceTenancy\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateVpc.</p>\"\
+      }\
     },\
     \"CreateVpcResult\":{\
       \"type\":\"structure\",\
@@ -6199,8 +6668,7 @@
           \"documentation\":\"<p>Information about the VPC.</p>\",\
           \"locationName\":\"vpc\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateVpc.</p>\"\
+      }\
     },\
     \"CreateVpnConnectionRequest\":{\
       \"type\":\"structure\",\
@@ -6304,11 +6772,11 @@
       \"members\":{\
         \"CpuCredits\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The credit option for CPU usage of a T2 instance.</p>\",\
+          \"documentation\":\"<p>The credit option for CPU usage of a T2 or T3 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\",\
           \"locationName\":\"cpuCredits\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 instance.</p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 or T3 instance.</p>\"\
     },\
     \"CreditSpecificationRequest\":{\
       \"type\":\"structure\",\
@@ -6316,10 +6784,10 @@
       \"members\":{\
         \"CpuCredits\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The credit option for CPU usage of a T2 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\"\
+          \"documentation\":\"<p>The credit option for CPU usage of a T2 or T3 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>The credit option for CPU usage of a T2 instance.</p>\"\
+      \"documentation\":\"<p>The credit option for CPU usage of a T2 or T3 instance.</p>\"\
     },\
     \"CurrencyCodeValues\":{\
       \"type\":\"string\",\
@@ -6419,8 +6887,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteDhcpOptions.</p>\"\
+      }\
     },\
     \"DeleteEgressOnlyInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -6432,7 +6899,7 @@
         },\
         \"EgressOnlyInternetGatewayId\":{\
           \"shape\":\"EgressOnlyInternetGatewayId\",\
-          \"documentation\":\"<p>The ID of the egress-only Internet gateway.</p>\"\
+          \"documentation\":\"<p>The ID of the egress-only internet gateway.</p>\"\
         }\
       }\
     },\
@@ -6563,13 +7030,16 @@
       \"type\":\"structure\",\
       \"required\":[\"FlowLogIds\"],\
       \"members\":{\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
         \"FlowLogIds\":{\
           \"shape\":\"ValueStringList\",\
           \"documentation\":\"<p>One or more flow log IDs.</p>\",\
           \"locationName\":\"FlowLogId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteFlowLogs.</p>\"\
+      }\
     },\
     \"DeleteFlowLogsResult\":{\
       \"type\":\"structure\",\
@@ -6579,8 +7049,7 @@
           \"documentation\":\"<p>Information about the flow logs that could not be deleted successfully.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DeleteFlowLogs.</p>\"\
+      }\
     },\
     \"DeleteFpgaImageRequest\":{\
       \"type\":\"structure\",\
@@ -6617,11 +7086,10 @@
         },\
         \"InternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the Internet gateway.</p>\",\
+          \"documentation\":\"<p>The ID of the internet gateway.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteInternetGateway.</p>\"\
+      }\
     },\
     \"DeleteKeyPairRequest\":{\
       \"type\":\"structure\",\
@@ -6636,8 +7104,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteKeyPair.</p>\"\
+      }\
     },\
     \"DeleteLaunchTemplateRequest\":{\
       \"type\":\"structure\",\
@@ -6773,8 +7240,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the NAT gateway.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteNatGateway.</p>\"\
+      }\
     },\
     \"DeleteNatGatewayResult\":{\
       \"type\":\"structure\",\
@@ -6784,8 +7250,7 @@
           \"documentation\":\"<p>The ID of the NAT gateway.</p>\",\
           \"locationName\":\"natGatewayId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DeleteNatGateway.</p>\"\
+      }\
     },\
     \"DeleteNetworkAclEntryRequest\":{\
       \"type\":\"structure\",\
@@ -6815,8 +7280,7 @@
           \"documentation\":\"<p>The rule number of the entry to delete.</p>\",\
           \"locationName\":\"ruleNumber\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteNetworkAclEntry.</p>\"\
+      }\
     },\
     \"DeleteNetworkAclRequest\":{\
       \"type\":\"structure\",\
@@ -6832,8 +7296,7 @@
           \"documentation\":\"<p>The ID of the network ACL.</p>\",\
           \"locationName\":\"networkAclId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteNetworkAcl.</p>\"\
+      }\
     },\
     \"DeleteNetworkInterfacePermissionRequest\":{\
       \"type\":\"structure\",\
@@ -6923,8 +7386,7 @@
           \"documentation\":\"<p>The ID of the route table.</p>\",\
           \"locationName\":\"routeTableId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteRoute.</p>\"\
+      }\
     },\
     \"DeleteRouteTableRequest\":{\
       \"type\":\"structure\",\
@@ -6940,8 +7402,7 @@
           \"documentation\":\"<p>The ID of the route table.</p>\",\
           \"locationName\":\"routeTableId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteRouteTable.</p>\"\
+      }\
     },\
     \"DeleteSecurityGroupRequest\":{\
       \"type\":\"structure\",\
@@ -6959,8 +7420,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteSecurityGroup.</p>\"\
+      }\
     },\
     \"DeleteSnapshotRequest\":{\
       \"type\":\"structure\",\
@@ -7002,8 +7462,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteSubnet.</p>\"\
+      }\
     },\
     \"DeleteTagsRequest\":{\
       \"type\":\"structure\",\
@@ -7016,7 +7475,7 @@
         },\
         \"Resources\":{\
           \"shape\":\"ResourceIdList\",\
-          \"documentation\":\"<p>The IDs of one or more resources.</p>\",\
+          \"documentation\":\"<p>The IDs of one or more resources, separated by spaces.</p>\",\
           \"locationName\":\"resourceId\"\
         },\
         \"Tags\":{\
@@ -7024,8 +7483,7 @@
           \"documentation\":\"<p>One or more tags to delete. Specify a tag key and an optional tag value to delete specific tags. If you specify a tag key without a tag value, we delete any tag with this key regardless of its value. If you specify a tag key with an empty string as the tag value, we delete the tag only if its value is an empty string.</p> <p>If you omit this parameter, we delete all user-defined tags for the specified resources. We do not delete AWS-generated tags (tags that have the <code>aws:</code> prefix).</p>\",\
           \"locationName\":\"tag\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteTags.</p>\"\
+      }\
     },\
     \"DeleteVolumeRequest\":{\
       \"type\":\"structure\",\
@@ -7134,8 +7592,7 @@
           \"documentation\":\"<p>The ID of the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"DeleteVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -7145,8 +7602,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DeleteVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"DeleteVpcRequest\":{\
       \"type\":\"structure\",\
@@ -7161,8 +7617,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteVpc.</p>\"\
+      }\
     },\
     \"DeleteVpnConnectionRequest\":{\
       \"type\":\"structure\",\
@@ -7214,6 +7669,30 @@
       },\
       \"documentation\":\"<p>Contains the parameters for DeleteVpnGateway.</p>\"\
     },\
+    \"DeprovisionByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation. The prefix must be the same prefix that you specified when you provisioned the address range.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"DeprovisionByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address range.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
+      }\
+    },\
     \"DeregisterImageRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"ImageId\"],\
@@ -7262,7 +7741,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters. Filter names and values are case-sensitive.</p> <ul> <li> <p> <code>allocation-id</code> - [EC2-VPC] The allocation ID for the address.</p> </li> <li> <p> <code>association-id</code> - [EC2-VPC] The association ID for the address.</p> </li> <li> <p> <code>domain</code> - Indicates whether the address is for use in EC2-Classic (<code>standard</code>) or in a VPC (<code>vpc</code>).</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance the address is associated with, if any.</p> </li> <li> <p> <code>network-interface-id</code> - [EC2-VPC] The ID of the network interface that the address is associated with, if any.</p> </li> <li> <p> <code>network-interface-owner-id</code> - The AWS account ID of the owner.</p> </li> <li> <p> <code>private-ip-address</code> - [EC2-VPC] The private IP address associated with the Elastic IP address.</p> </li> <li> <p> <code>public-ip</code> - The Elastic IP address.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of the tag's key). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters. Filter names and values are case-sensitive.</p> <ul> <li> <p> <code>allocation-id</code> - [EC2-VPC] The allocation ID for the address.</p> </li> <li> <p> <code>association-id</code> - [EC2-VPC] The association ID for the address.</p> </li> <li> <p> <code>domain</code> - Indicates whether the address is for use in EC2-Classic (<code>standard</code>) or in a VPC (<code>vpc</code>).</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance the address is associated with, if any.</p> </li> <li> <p> <code>network-interface-id</code> - [EC2-VPC] The ID of the network interface that the address is associated with, if any.</p> </li> <li> <p> <code>network-interface-owner-id</code> - The AWS account ID of the owner.</p> </li> <li> <p> <code>private-ip-address</code> - [EC2-VPC] The private IP address associated with the Elastic IP address.</p> </li> <li> <p> <code>public-ip</code> - The Elastic IP address.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"PublicIps\":{\
@@ -7280,8 +7759,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeAddresses.</p>\"\
+      }\
     },\
     \"DescribeAddressesResult\":{\
       \"type\":\"structure\",\
@@ -7291,8 +7769,7 @@
           \"documentation\":\"<p>Information about one or more Elastic IP addresses.</p>\",\
           \"locationName\":\"addressesSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeAddresses.</p>\"\
+      }\
     },\
     \"DescribeAggregateIdFormatRequest\":{\
       \"type\":\"structure\",\
@@ -7382,12 +7859,87 @@
       },\
       \"documentation\":\"<p>Contains the output of DescribeBundleTasks.</p>\"\
     },\
+    \"DescribeByoipCidrsRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"MaxResults\"],\
+      \"members\":{\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"MaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next page of results.</p>\"\
+        }\
+      }\
+    },\
+    \"DescribeByoipCidrsResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidrs\":{\
+          \"shape\":\"ByoipCidrSet\",\
+          \"documentation\":\"<p>Information about your address ranges.</p>\",\
+          \"locationName\":\"byoipCidrSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
+        }\
+      }\
+    },\
+    \"DescribeCapacityReservationsRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationIds\":{\
+          \"shape\":\"CapacityReservationIdSet\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"CapacityReservationId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned nextToken value.</p>\"\
+        },\
+        \"Filters\":{\
+          \"shape\":\"FilterList\",\
+          \"documentation\":\"<p>One or more filters.</p>\",\
+          \"locationName\":\"Filter\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"DescribeCapacityReservationsResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
+        },\
+        \"CapacityReservations\":{\
+          \"shape\":\"CapacityReservationSet\",\
+          \"documentation\":\"<p>Information about the Capacity Reservations.</p>\",\
+          \"locationName\":\"capacityReservationSet\"\
+        }\
+      }\
+    },\
     \"DescribeClassicLinkInstancesRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>group-id</code> - The ID of a VPC security group that's associated with the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC that the instance is linked to.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>group-id</code> - The ID of a VPC security group that's associated with the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC to which the instance is linked.</p> <p> <code>vpc-id</code> - The ID of the VPC that the instance is linked to.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -7402,7 +7954,7 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results of the initial request can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000; if <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned. You cannot specify this parameter and the instance IDs parameter in the same request.</p> <p>Constraint: If the value is greater than 1000, we return only 1000 items.</p>\",\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results of the initial request can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned. You cannot specify this parameter and the instance IDs parameter in the same request.</p> <p>Constraint: If the value is greater than 1000, we return only 1000 items.</p>\",\
           \"locationName\":\"maxResults\"\
         },\
         \"NextToken\":{\
@@ -7410,8 +7962,7 @@
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeClassicLinkInstances.</p>\"\
+      }\
     },\
     \"DescribeClassicLinkInstancesResult\":{\
       \"type\":\"structure\",\
@@ -7426,8 +7977,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeClassicLinkInstances.</p>\"\
+      }\
     },\
     \"DescribeConversionTaskList\":{\
       \"type\":\"list\",\
@@ -7473,7 +8023,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>bgp-asn</code> - The customer gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN).</p> </li> <li> <p> <code>customer-gateway-id</code> - The ID of the customer gateway.</p> </li> <li> <p> <code>ip-address</code> - The IP address of the customer gateway's Internet-routable external interface.</p> </li> <li> <p> <code>state</code> - The state of the customer gateway (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>type</code> - The type of customer gateway. Currently, the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>bgp-asn</code> - The customer gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN).</p> </li> <li> <p> <code>customer-gateway-id</code> - The ID of the customer gateway.</p> </li> <li> <p> <code>ip-address</code> - The IP address of the customer gateway's Internet-routable external interface.</p> </li> <li> <p> <code>state</code> - The state of the customer gateway (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>type</code> - The type of customer gateway. Currently, the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -7505,7 +8055,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>key</code> - The key for one of the options (for example, <code>domain-name</code>).</p> </li> <li> <p> <code>value</code> - The value for one of the options.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>key</code> - The key for one of the options (for example, <code>domain-name</code>).</p> </li> <li> <p> <code>value</code> - The value for one of the options.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -7513,8 +8063,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeDhcpOptions.</p>\"\
+      }\
     },\
     \"DescribeDhcpOptionsResult\":{\
       \"type\":\"structure\",\
@@ -7524,8 +8073,7 @@
           \"documentation\":\"<p>Information about one or more DHCP options sets.</p>\",\
           \"locationName\":\"dhcpOptionsSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeDhcpOptions.</p>\"\
+      }\
     },\
     \"DescribeEgressOnlyInternetGatewaysRequest\":{\
       \"type\":\"structure\",\
@@ -7536,12 +8084,12 @@
         },\
         \"EgressOnlyInternetGatewayIds\":{\
           \"shape\":\"EgressOnlyInternetGatewayIdList\",\
-          \"documentation\":\"<p>One or more egress-only Internet gateway IDs.</p>\",\
+          \"documentation\":\"<p>One or more egress-only internet gateway IDs.</p>\",\
           \"locationName\":\"EgressOnlyInternetGatewayId\"\
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000; if <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned.</p>\"\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned.</p>\"\
         },\
         \"NextToken\":{\
           \"shape\":\"String\",\
@@ -7554,7 +8102,7 @@
       \"members\":{\
         \"EgressOnlyInternetGateways\":{\
           \"shape\":\"EgressOnlyInternetGatewayList\",\
-          \"documentation\":\"<p>Information about the egress-only Internet gateways.</p>\",\
+          \"documentation\":\"<p>Information about the egress-only internet gateways.</p>\",\
           \"locationName\":\"egressOnlyInternetGatewaySet\"\
         },\
         \"NextToken\":{\
@@ -7718,7 +8266,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>instance-type</code> - The instance type.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         }\
       }\
@@ -7765,7 +8313,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>activity-status</code> - The progress of the EC2 Fleet ( <code>error</code> | <code>pending-fulfillment</code> | <code>pending-termination</code> | <code>fulfilled</code>).</p> </li> <li> <p> <code>excess-capacity-termination-policy</code> - Indicates whether to terminate running instances if the target capacity is decreased below the current EC2 Fleet size (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>fleet-state</code> - The state of the EC2 Fleet (<code>submitted</code> | <code>active</code> | <code>deleted</code> | <code>failed</code> | <code>deleted-running</code> | <code>deleted-terminating</code> | <code>modifying</code>).</p> </li> <li> <p> <code>replace-unhealthy-instances</code> - Indicates whether EC2 Fleet should replace unhealthy instances (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>type</code> - The type of request (<code>request</code> | <code>maintain</code>).</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         }\
       }\
@@ -7780,7 +8328,7 @@
         },\
         \"Fleets\":{\
           \"shape\":\"FleetSet\",\
-          \"documentation\":\"<p>The EC2 Fleets.</p>\",\
+          \"documentation\":\"<p>Information about the EC2 Fleets.</p>\",\
           \"locationName\":\"fleetSet\"\
         }\
       }\
@@ -7788,9 +8336,13 @@
     \"DescribeFlowLogsRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
         \"Filter\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>deliver-log-status</code> - The status of the logs delivery (<code>SUCCESS</code> | <code>FAILED</code>).</p> </li> <li> <p> <code>flow-log-id</code> - The ID of the flow log.</p> </li> <li> <p> <code>log-group-name</code> - The name of the log group.</p> </li> <li> <p> <code>resource-id</code> - The ID of the VPC, subnet, or network interface.</p> </li> <li> <p> <code>traffic-type</code> - The type of traffic (<code>ACCEPT</code> | <code>REJECT</code> | <code>ALL</code>)</p> </li> </ul>\"\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>deliver-log-status</code> - The status of the logs delivery (<code>SUCCESS</code> | <code>FAILED</code>).</p> </li> <li> <p> <code>log-destination-type</code> - The type of destination to which the flow log publishes data. Possible destination types include <code>cloud-watch-logs</code> and <code>S3</code>.</p> </li> <li> <p> <code>flow-log-id</code> - The ID of the flow log.</p> </li> <li> <p> <code>log-group-name</code> - The name of the log group.</p> </li> <li> <p> <code>resource-id</code> - The ID of the VPC, subnet, or network interface.</p> </li> <li> <p> <code>traffic-type</code> - The type of traffic (<code>ACCEPT</code> | <code>REJECT</code> | <code>ALL</code>).</p> </li> </ul>\"\
         },\
         \"FlowLogIds\":{\
           \"shape\":\"ValueStringList\",\
@@ -7799,14 +8351,13 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000; if <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned. You cannot specify this parameter and the flow log IDs parameter in the same request.</p>\"\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned. You cannot specify this parameter and the flow log IDs parameter in the same request.</p>\"\
         },\
         \"NextToken\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeFlowLogs.</p>\"\
+      }\
     },\
     \"DescribeFlowLogsResult\":{\
       \"type\":\"structure\",\
@@ -7821,8 +8372,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeFlowLogs.</p>\"\
+      }\
     },\
     \"DescribeFpgaImageAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -7874,7 +8424,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>create-time</code> - The creation time of the AFI.</p> </li> <li> <p> <code>fpga-image-id</code> - The FPGA image identifier (AFI ID).</p> </li> <li> <p> <code>fpga-image-global-id</code> - The global FPGA image identifier (AGFI ID).</p> </li> <li> <p> <code>name</code> - The name of the AFI.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the AFI owner.</p> </li> <li> <p> <code>product-code</code> - The product code.</p> </li> <li> <p> <code>shell-version</code> - The version of the AWS Shell that was used to create the bitstream.</p> </li> <li> <p> <code>state</code> - The state of the AFI (<code>pending</code> | <code>failed</code> | <code>available</code> | <code>unavailable</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>update-time</code> - The time of the most recent update.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>create-time</code> - The creation time of the AFI.</p> </li> <li> <p> <code>fpga-image-id</code> - The FPGA image identifier (AFI ID).</p> </li> <li> <p> <code>fpga-image-global-id</code> - The global FPGA image identifier (AGFI ID).</p> </li> <li> <p> <code>name</code> - The name of the AFI.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the AFI owner.</p> </li> <li> <p> <code>product-code</code> - The product code.</p> </li> <li> <p> <code>shell-version</code> - The version of the AWS Shell that was used to create the bitstream.</p> </li> <li> <p> <code>state</code> - The state of the AFI (<code>pending</code> | <code>failed</code> | <code>available</code> | <code>unavailable</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>update-time</code> - The time of the most recent update.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"NextToken\":{\
@@ -7907,15 +8457,15 @@
       \"members\":{\
         \"Filter\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>instance-family</code> - The instance family of the offering (e.g., <code>m4</code>).</p> </li> <li> <p> <code>payment-option</code> - The payment option (<code>NoUpfront</code> | <code>PartialUpfront</code> | <code>AllUpfront</code>).</p> </li> </ul>\"\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>instance-family</code> - The instance family of the offering (for example, <code>m4</code>).</p> </li> <li> <p> <code>payment-option</code> - The payment option (<code>NoUpfront</code> | <code>PartialUpfront</code> | <code>AllUpfront</code>).</p> </li> </ul>\"\
         },\
         \"MaxDuration\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>This is the maximum duration of the reservation you'd like to purchase, specified in seconds. Reservations are available in one-year and three-year terms. The number of seconds specified must be the number of seconds in a year (365x24x60x60) times one of the supported durations (1 or 3). For example, specify 94608000 for three years.</p>\"\
+          \"documentation\":\"<p>This is the maximum duration of the reservation to purchase, specified in seconds. Reservations are available in one-year and three-year terms. The number of seconds specified must be the number of seconds in a year (365x24x60x60) times one of the supported durations (1 or 3). For example, specify 94608000 for three years.</p>\"\
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500; if <code>maxResults</code> is given a larger value than 500, you will receive an error.</p>\"\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500. If <code>maxResults</code> is given a larger value than 500, you receive an error.</p>\"\
         },\
         \"MinDuration\":{\
           \"shape\":\"Integer\",\
@@ -7951,7 +8501,7 @@
       \"members\":{\
         \"Filter\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>instance-family</code> - The instance family (e.g., <code>m4</code>).</p> </li> <li> <p> <code>payment-option</code> - The payment option (<code>NoUpfront</code> | <code>PartialUpfront</code> | <code>AllUpfront</code>).</p> </li> <li> <p> <code>state</code> - The state of the reservation (<code>payment-pending</code> | <code>payment-failed</code> | <code>active</code> | <code>retired</code>).</p> </li> </ul>\"\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>instance-family</code> - The instance family (for example, <code>m4</code>).</p> </li> <li> <p> <code>payment-option</code> - The payment option (<code>NoUpfront</code> | <code>PartialUpfront</code> | <code>AllUpfront</code>).</p> </li> <li> <p> <code>state</code> - The state of the reservation (<code>payment-pending</code> | <code>payment-failed</code> | <code>active</code> | <code>retired</code>).</p> </li> </ul>\"\
         },\
         \"HostReservationIdSet\":{\
           \"shape\":\"HostReservationIdSet\",\
@@ -7959,7 +8509,7 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500; if <code>maxResults</code> is given a larger value than 500, you will receive an error.</p>\"\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500. If <code>maxResults</code> is given a larger value than 500, you receive an error.</p>\"\
         },\
         \"NextToken\":{\
           \"shape\":\"String\",\
@@ -7987,7 +8537,7 @@
       \"members\":{\
         \"Filter\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>auto-placement</code> - Whether auto-placement is enabled or disabled (<code>on</code> | <code>off</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the host.</p> </li> <li> <p> <code>client-token</code> - The idempotency token you provided when you allocated the host.</p> </li> <li> <p> <code>host-reservation-id</code> - The ID of the reservation assigned to this host.</p> </li> <li> <p> <code>instance-type</code> - The instance type size that the Dedicated Host is configured to support.</p> </li> <li> <p> <code>state</code> - The allocation state of the Dedicated Host (<code>available</code> | <code>under-assessment</code> | <code>permanent-failure</code> | <code>released</code> | <code>released-permanent-failure</code>).</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>auto-placement</code> - Whether auto-placement is enabled or disabled (<code>on</code> | <code>off</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the host.</p> </li> <li> <p> <code>client-token</code> - The idempotency token that you provided when you allocated the host.</p> </li> <li> <p> <code>host-reservation-id</code> - The ID of the reservation assigned to this host.</p> </li> <li> <p> <code>instance-type</code> - The instance type size that the Dedicated Host is configured to support.</p> </li> <li> <p> <code>state</code> - The allocation state of the Dedicated Host (<code>available</code> | <code>under-assessment</code> | <code>permanent-failure</code> | <code>released</code> | <code>released-permanent-failure</code>).</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"filter\"\
         },\
         \"HostIds\":{\
@@ -7997,7 +8547,7 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500; if <code>maxResults</code> is given a larger value than 500, you will receive an error. You cannot specify this parameter and the host IDs parameter in the same request.</p>\",\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500. If <code>maxResults</code> is given a larger value than 500, you receive an error. You cannot specify this parameter and the host IDs parameter in the same request.</p>\",\
           \"locationName\":\"maxResults\"\
         },\
         \"NextToken\":{\
@@ -8005,8 +8555,7 @@
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeHosts.</p>\"\
+      }\
     },\
     \"DescribeHostsResult\":{\
       \"type\":\"structure\",\
@@ -8021,8 +8570,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeHosts.</p>\"\
+      }\
     },\
     \"DescribeIamInstanceProfileAssociationsRequest\":{\
       \"type\":\"structure\",\
@@ -8144,7 +8692,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>architecture</code> - The image architecture (<code>i386</code> | <code>x86_64</code>).</p> </li> <li> <p> <code>block-device-mapping.delete-on-termination</code> - A Boolean value that indicates whether the Amazon EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>block-device-mapping.device-name</code> - The device name specified in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>block-device-mapping.snapshot-id</code> - The ID of the snapshot used for the EBS volume.</p> </li> <li> <p> <code>block-device-mapping.volume-size</code> - The volume size of the EBS volume, in GiB.</p> </li> <li> <p> <code>block-device-mapping.volume-type</code> - The volume type of the EBS volume (<code>gp2</code> | <code>io1</code> | <code>st1 </code>| <code>sc1</code> | <code>standard</code>).</p> </li> <li> <p> <code>description</code> - The description of the image (provided during image creation).</p> </li> <li> <p> <code>ena-support</code> - A Boolean that indicates whether enhanced networking with ENA is enabled.</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor type (<code>ovm</code> | <code>xen</code>).</p> </li> <li> <p> <code>image-id</code> - The ID of the image.</p> </li> <li> <p> <code>image-type</code> - The image type (<code>machine</code> | <code>kernel</code> | <code>ramdisk</code>).</p> </li> <li> <p> <code>is-public</code> - A Boolean that indicates whether the image is public.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>manifest-location</code> - The location of the image manifest.</p> </li> <li> <p> <code>name</code> - The name of the AMI (provided during image creation).</p> </li> <li> <p> <code>owner-alias</code> - String value from an Amazon-maintained list (<code>amazon</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the image owner.</p> </li> <li> <p> <code>platform</code> - The platform. To only list Windows-based AMIs, use <code>windows</code>.</p> </li> <li> <p> <code>product-code</code> - The product code.</p> </li> <li> <p> <code>product-code.type</code> - The type of the product code (<code>devpay</code> | <code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>root-device-type</code> - The type of the root device volume (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>state</code> - The state of the image (<code>available</code> | <code>pending</code> | <code>failed</code>).</p> </li> <li> <p> <code>state-reason-code</code> - The reason code for the state change.</p> </li> <li> <p> <code>state-reason-message</code> - The message for the state change.</p> </li> <li> <p> <code>sriov-net-support</code> - A value of <code>simple</code> indicates that enhanced networking with the Intel 82599 VF interface is enabled.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the tag-value filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>virtualization-type</code> - The virtualization type (<code>paravirtual</code> | <code>hvm</code>).</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>architecture</code> - The image architecture (<code>i386</code> | <code>x86_64</code>).</p> </li> <li> <p> <code>block-device-mapping.delete-on-termination</code> - A Boolean value that indicates whether the Amazon EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>block-device-mapping.device-name</code> - The device name specified in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>block-device-mapping.snapshot-id</code> - The ID of the snapshot used for the EBS volume.</p> </li> <li> <p> <code>block-device-mapping.volume-size</code> - The volume size of the EBS volume, in GiB.</p> </li> <li> <p> <code>block-device-mapping.volume-type</code> - The volume type of the EBS volume (<code>gp2</code> | <code>io1</code> | <code>st1 </code>| <code>sc1</code> | <code>standard</code>).</p> </li> <li> <p> <code>description</code> - The description of the image (provided during image creation).</p> </li> <li> <p> <code>ena-support</code> - A Boolean that indicates whether enhanced networking with ENA is enabled.</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor type (<code>ovm</code> | <code>xen</code>).</p> </li> <li> <p> <code>image-id</code> - The ID of the image.</p> </li> <li> <p> <code>image-type</code> - The image type (<code>machine</code> | <code>kernel</code> | <code>ramdisk</code>).</p> </li> <li> <p> <code>is-public</code> - A Boolean that indicates whether the image is public.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>manifest-location</code> - The location of the image manifest.</p> </li> <li> <p> <code>name</code> - The name of the AMI (provided during image creation).</p> </li> <li> <p> <code>owner-alias</code> - String value from an Amazon-maintained list (<code>amazon</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the image owner.</p> </li> <li> <p> <code>platform</code> - The platform. To only list Windows-based AMIs, use <code>windows</code>.</p> </li> <li> <p> <code>product-code</code> - The product code.</p> </li> <li> <p> <code>product-code.type</code> - The type of the product code (<code>devpay</code> | <code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>root-device-type</code> - The type of the root device volume (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>state</code> - The state of the image (<code>available</code> | <code>pending</code> | <code>failed</code>).</p> </li> <li> <p> <code>state-reason-code</code> - The reason code for the state change.</p> </li> <li> <p> <code>state-reason-message</code> - The message for the state change.</p> </li> <li> <p> <code>sriov-net-support</code> - A value of <code>simple</code> indicates that enhanced networking with the Intel 82599 VF interface is enabled.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>virtualization-type</code> - The virtualization type (<code>paravirtual</code> | <code>hvm</code>).</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"ImageIds\":{\
@@ -8334,7 +8882,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>event.code</code> - The code for the scheduled event (<code>instance-reboot</code> | <code>system-reboot</code> | <code>system-maintenance</code> | <code>instance-retirement</code> | <code>instance-stop</code>).</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The code for the instance state, as a 16-bit unsigned integer. The high byte is an opaque internal value and should be ignored. The low byte is set based on the state represented. The valid values are 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-status.reachability</code> - Filters on instance status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>instance-status.status</code> - The status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>system-status.reachability</code> - Filters on system status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>system-status.status</code> - The system status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>event.code</code> - The code for the scheduled event (<code>instance-reboot</code> | <code>system-reboot</code> | <code>system-maintenance</code> | <code>instance-retirement</code> | <code>instance-stop</code>).</p> </li> <li> <p> <code>event.description</code> - A description of the event.</p> </li> <li> <p> <code>event.not-after</code> - The latest end time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>event.not-before</code> - The earliest start time for the scheduled event (for example, <code>2014-09-15T17:15:20.000Z</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The code for the instance state, as a 16-bit unsigned integer. The high byte is used for internal purposes and should be ignored. The low byte is set based on the state represented. The valid values are 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-status.reachability</code> - Filters on instance status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>instance-status.status</code> - The status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> <li> <p> <code>system-status.reachability</code> - Filters on system status where the name is <code>reachability</code> (<code>passed</code> | <code>failed</code> | <code>initializing</code> | <code>insufficient-data</code>).</p> </li> <li> <p> <code>system-status.status</code> - The system status of the instance (<code>ok</code> | <code>impaired</code> | <code>initializing</code> | <code>insufficient-data</code> | <code>not-applicable</code>).</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"InstanceIds\":{\
@@ -8384,7 +8932,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>affinity</code> - The affinity setting for an instance running on a Dedicated Host (<code>default</code> | <code>host</code>).</p> </li> <li> <p> <code>architecture</code> - The instance architecture (<code>i386</code> | <code>x86_64</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>block-device-mapping.attach-time</code> - The attach time for an EBS volume mapped to the instance, for example, <code>2010-09-15T17:15:20.000Z</code>.</p> </li> <li> <p> <code>block-device-mapping.delete-on-termination</code> - A Boolean that indicates whether the EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>block-device-mapping.device-name</code> - The device name specified in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>block-device-mapping.status</code> - The status for the EBS volume (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>block-device-mapping.volume-id</code> - The volume ID of the EBS volume.</p> </li> <li> <p> <code>client-token</code> - The idempotency token you provided when you launched the instance.</p> </li> <li> <p> <code>dns-name</code> - The public DNS name of the instance.</p> </li> <li> <p> <code>group-id</code> - The ID of the security group for the instance. EC2-Classic only.</p> </li> <li> <p> <code>group-name</code> - The name of the security group for the instance. EC2-Classic only.</p> </li> <li> <p> <code>host-id</code> - The ID of the Dedicated Host on which the instance is running, if applicable.</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor type of the instance (<code>ovm</code> | <code>xen</code>).</p> </li> <li> <p> <code>iam-instance-profile.arn</code> - The instance profile associated with the instance. Specified as an ARN.</p> </li> <li> <p> <code>image-id</code> - The ID of the image used to launch the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>instance-lifecycle</code> - Indicates whether this is a Spot Instance or a Scheduled Instance (<code>spot</code> | <code>scheduled</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The state of the instance, as a 16-bit unsigned integer. The high byte is an opaque internal value and should be ignored. The low byte is set based on the state represented. The valid values are: 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-type</code> - The type of instance (for example, <code>t2.micro</code>).</p> </li> <li> <p> <code>instance.group-id</code> - The ID of the security group for the instance. </p> </li> <li> <p> <code>instance.group-name</code> - The name of the security group for the instance. </p> </li> <li> <p> <code>ip-address</code> - The public IPv4 address of the instance.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>key-name</code> - The name of the key pair used when the instance was launched.</p> </li> <li> <p> <code>launch-index</code> - When launching multiple instances, this is the index for the instance in the launch group (for example, 0, 1, 2, and so on). </p> </li> <li> <p> <code>launch-time</code> - The time when the instance was launched.</p> </li> <li> <p> <code>monitoring-state</code> - Indicates whether detailed monitoring is enabled (<code>disabled</code> | <code>enabled</code>).</p> </li> <li> <p> <code>network-interface.addresses.private-ip-address</code> - The private IPv4 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.addresses.primary</code> - Specifies whether the IPv4 address of the network interface is the primary private IPv4 address.</p> </li> <li> <p> <code>network-interface.addresses.association.public-ip</code> - The ID of the association of an Elastic IP address (IPv4) with a network interface.</p> </li> <li> <p> <code>network-interface.addresses.association.ip-owner-id</code> - The owner ID of the private IPv4 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>network-interface.association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>network-interface.association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>network-interface.association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>network-interface.attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>network-interface.attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>network-interface.attachment.attach-time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>network-interface.attachment.delete-on-termination</code> - Specifies whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>network-interface.availability-zone</code> - The Availability Zone for the network interface.</p> </li> <li> <p> <code>network-interface.description</code> - The description of the network interface.</p> </li> <li> <p> <code>network-interface.group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.group-name</code> - The name of a security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.ipv6-addresses.ipv6-address</code> - The IPv6 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface.owner-id</code> - The ID of the owner of the network interface.</p> </li> <li> <p> <code>network-interface.private-dns-name</code> - The private DNS name of the network interface.</p> </li> <li> <p> <code>network-interface.requester-id</code> - The requester ID for the network interface.</p> </li> <li> <p> <code>network-interface.requester-managed</code> - Indicates whether the network interface is being managed by AWS.</p> </li> <li> <p> <code>network-interface.status</code> - The status of the network interface (<code>available</code>) | <code>in-use</code>).</p> </li> <li> <p> <code>network-interface.source-dest-check</code> - Whether the network interface performs source/destination checking. A value of <code>true</code> means that checking is enabled, and <code>false</code> means that checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC.</p> </li> <li> <p> <code>network-interface.subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>network-interface.vpc-id</code> - The ID of the VPC for the network interface.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the instance owner.</p> </li> <li> <p> <code>placement-group-name</code> - The name of the placement group for the instance.</p> </li> <li> <p> <code>platform</code> - The platform. Use <code>windows</code> if you have Windows instances; otherwise, leave blank.</p> </li> <li> <p> <code>private-dns-name</code> - The private IPv4 DNS name of the instance.</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address of the instance.</p> </li> <li> <p> <code>product-code</code> - The product code associated with the AMI used to launch the instance.</p> </li> <li> <p> <code>product-code.type</code> - The type of product code (<code>devpay</code> | <code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>reason</code> - The reason for the current state of the instance (for example, shows \\\"User Initiated [date]\\\" when you stop or terminate the instance). Similar to the state-reason-code filter.</p> </li> <li> <p> <code>requester-id</code> - The ID of the entity that launched the instance on your behalf (for example, AWS Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>reservation-id</code> - The ID of the instance's reservation. A reservation ID is created any time you launch an instance. A reservation ID has a one-to-one relationship with an instance launch request, but can be associated with more than one instance if you launch multiple instances using the same launch request. For example, if you launch one instance, you get one reservation ID. If you launch ten instances using the same launch request, you also get one reservation ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>root-device-type</code> - The type of the root device volume (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>source-dest-check</code> - Indicates whether the instance performs source/destination checking. A value of <code>true</code> means that checking is enabled, and <code>false</code> means that checking is disabled. The value must be <code>false</code> for the instance to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>spot-instance-request-id</code> - The ID of the Spot Instance request.</p> </li> <li> <p> <code>state-reason-code</code> - The reason code for the state change.</p> </li> <li> <p> <code>state-reason-message</code> - A message that describes the state change.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the instance.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of the tag's key). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>tenancy</code> - The tenancy of an instance (<code>dedicated</code> | <code>default</code> | <code>host</code>).</p> </li> <li> <p> <code>virtualization-type</code> - The virtualization type of the instance (<code>paravirtual</code> | <code>hvm</code>).</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC that the instance is running in.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>affinity</code> - The affinity setting for an instance running on a Dedicated Host (<code>default</code> | <code>host</code>).</p> </li> <li> <p> <code>architecture</code> - The instance architecture (<code>i386</code> | <code>x86_64</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the instance.</p> </li> <li> <p> <code>block-device-mapping.attach-time</code> - The attach time for an EBS volume mapped to the instance, for example, <code>2010-09-15T17:15:20.000Z</code>.</p> </li> <li> <p> <code>block-device-mapping.delete-on-termination</code> - A Boolean that indicates whether the EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>block-device-mapping.device-name</code> - The device name specified in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>block-device-mapping.status</code> - The status for the EBS volume (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>block-device-mapping.volume-id</code> - The volume ID of the EBS volume.</p> </li> <li> <p> <code>client-token</code> - The idempotency token you provided when you launched the instance.</p> </li> <li> <p> <code>dns-name</code> - The public DNS name of the instance.</p> </li> <li> <p> <code>group-id</code> - The ID of the security group for the instance. EC2-Classic only.</p> </li> <li> <p> <code>group-name</code> - The name of the security group for the instance. EC2-Classic only.</p> </li> <li> <p> <code>host-id</code> - The ID of the Dedicated Host on which the instance is running, if applicable.</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor type of the instance (<code>ovm</code> | <code>xen</code>).</p> </li> <li> <p> <code>iam-instance-profile.arn</code> - The instance profile associated with the instance. Specified as an ARN.</p> </li> <li> <p> <code>image-id</code> - The ID of the image used to launch the instance.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>instance-lifecycle</code> - Indicates whether this is a Spot Instance or a Scheduled Instance (<code>spot</code> | <code>scheduled</code>).</p> </li> <li> <p> <code>instance-state-code</code> - The state of the instance, as a 16-bit unsigned integer. The high byte is used for internal purposes and should be ignored. The low byte is set based on the state represented. The valid values are: 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).</p> </li> <li> <p> <code>instance-state-name</code> - The state of the instance (<code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code>).</p> </li> <li> <p> <code>instance-type</code> - The type of instance (for example, <code>t2.micro</code>).</p> </li> <li> <p> <code>instance.group-id</code> - The ID of the security group for the instance. </p> </li> <li> <p> <code>instance.group-name</code> - The name of the security group for the instance. </p> </li> <li> <p> <code>ip-address</code> - The public IPv4 address of the instance.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>key-name</code> - The name of the key pair used when the instance was launched.</p> </li> <li> <p> <code>launch-index</code> - When launching multiple instances, this is the index for the instance in the launch group (for example, 0, 1, 2, and so on). </p> </li> <li> <p> <code>launch-time</code> - The time when the instance was launched.</p> </li> <li> <p> <code>monitoring-state</code> - Indicates whether detailed monitoring is enabled (<code>disabled</code> | <code>enabled</code>).</p> </li> <li> <p> <code>network-interface.addresses.private-ip-address</code> - The private IPv4 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.addresses.primary</code> - Specifies whether the IPv4 address of the network interface is the primary private IPv4 address.</p> </li> <li> <p> <code>network-interface.addresses.association.public-ip</code> - The ID of the association of an Elastic IP address (IPv4) with a network interface.</p> </li> <li> <p> <code>network-interface.addresses.association.ip-owner-id</code> - The owner ID of the private IPv4 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>network-interface.association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>network-interface.association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>network-interface.association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>network-interface.attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>network-interface.attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>network-interface.attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>network-interface.attachment.attach-time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>network-interface.attachment.delete-on-termination</code> - Specifies whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>network-interface.availability-zone</code> - The Availability Zone for the network interface.</p> </li> <li> <p> <code>network-interface.description</code> - The description of the network interface.</p> </li> <li> <p> <code>network-interface.group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.group-name</code> - The name of a security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.ipv6-addresses.ipv6-address</code> - The IPv6 address associated with the network interface.</p> </li> <li> <p> <code>network-interface.mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface.owner-id</code> - The ID of the owner of the network interface.</p> </li> <li> <p> <code>network-interface.private-dns-name</code> - The private DNS name of the network interface.</p> </li> <li> <p> <code>network-interface.requester-id</code> - The requester ID for the network interface.</p> </li> <li> <p> <code>network-interface.requester-managed</code> - Indicates whether the network interface is being managed by AWS.</p> </li> <li> <p> <code>network-interface.status</code> - The status of the network interface (<code>available</code>) | <code>in-use</code>).</p> </li> <li> <p> <code>network-interface.source-dest-check</code> - Whether the network interface performs source/destination checking. A value of <code>true</code> means that checking is enabled, and <code>false</code> means that checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC.</p> </li> <li> <p> <code>network-interface.subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>network-interface.vpc-id</code> - The ID of the VPC for the network interface.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the instance owner.</p> </li> <li> <p> <code>placement-group-name</code> - The name of the placement group for the instance.</p> </li> <li> <p> <code>platform</code> - The platform. Use <code>windows</code> if you have Windows instances; otherwise, leave blank.</p> </li> <li> <p> <code>private-dns-name</code> - The private IPv4 DNS name of the instance.</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address of the instance.</p> </li> <li> <p> <code>product-code</code> - The product code associated with the AMI used to launch the instance.</p> </li> <li> <p> <code>product-code.type</code> - The type of product code (<code>devpay</code> | <code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>reason</code> - The reason for the current state of the instance (for example, shows \\\"User Initiated [date]\\\" when you stop or terminate the instance). Similar to the state-reason-code filter.</p> </li> <li> <p> <code>requester-id</code> - The ID of the entity that launched the instance on your behalf (for example, AWS Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>reservation-id</code> - The ID of the instance's reservation. A reservation ID is created any time you launch an instance. A reservation ID has a one-to-one relationship with an instance launch request, but can be associated with more than one instance if you launch multiple instances using the same launch request. For example, if you launch one instance, you get one reservation ID. If you launch ten instances using the same launch request, you also get one reservation ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>root-device-type</code> - The type of the root device volume (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>source-dest-check</code> - Indicates whether the instance performs source/destination checking. A value of <code>true</code> means that checking is enabled, and <code>false</code> means that checking is disabled. The value must be <code>false</code> for the instance to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>spot-instance-request-id</code> - The ID of the Spot Instance request.</p> </li> <li> <p> <code>state-reason-code</code> - The reason code for the state change.</p> </li> <li> <p> <code>state-reason-message</code> - A message that describes the state change.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the instance.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources that have a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>tenancy</code> - The tenancy of an instance (<code>dedicated</code> | <code>default</code> | <code>host</code>).</p> </li> <li> <p> <code>virtualization-type</code> - The virtualization type of the instance (<code>paravirtual</code> | <code>hvm</code>).</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC that the instance is running in.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"InstanceIds\":{\
@@ -8399,7 +8947,7 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 5 and 1000. You cannot specify this parameter and the instance IDs parameter or tag filters in the same call.</p>\",\
+          \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 5 and 1000. You cannot specify this parameter and the instance IDs parameter in the same call.</p>\",\
           \"locationName\":\"maxResults\"\
         },\
         \"NextToken\":{\
@@ -8431,7 +8979,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>attachment.state</code> - The current state of the attachment between the gateway and the VPC (<code>available</code>). Present only if a VPC is attached.</p> </li> <li> <p> <code>attachment.vpc-id</code> - The ID of an attached VPC.</p> </li> <li> <p> <code>internet-gateway-id</code> - The ID of the Internet gateway.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>attachment.state</code> - The current state of the attachment between the gateway and the VPC (<code>available</code>). Present only if a VPC is attached.</p> </li> <li> <p> <code>attachment.vpc-id</code> - The ID of an attached VPC.</p> </li> <li> <p> <code>internet-gateway-id</code> - The ID of the Internet gateway.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -8441,22 +8989,20 @@
         },\
         \"InternetGatewayIds\":{\
           \"shape\":\"ValueStringList\",\
-          \"documentation\":\"<p>One or more Internet gateway IDs.</p> <p>Default: Describes all your Internet gateways.</p>\",\
+          \"documentation\":\"<p>One or more internet gateway IDs.</p> <p>Default: Describes all your internet gateways.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeInternetGateways.</p>\"\
+      }\
     },\
     \"DescribeInternetGatewaysResult\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"InternetGateways\":{\
           \"shape\":\"InternetGatewayList\",\
-          \"documentation\":\"<p>Information about one or more Internet gateways.</p>\",\
+          \"documentation\":\"<p>Information about one or more internet gateways.</p>\",\
           \"locationName\":\"internetGatewaySet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeInternetGateways.</p>\"\
+      }\
     },\
     \"DescribeKeyPairsRequest\":{\
       \"type\":\"structure\",\
@@ -8476,8 +9022,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeKeyPairs.</p>\"\
+      }\
     },\
     \"DescribeKeyPairsResult\":{\
       \"type\":\"structure\",\
@@ -8487,8 +9032,7 @@
           \"documentation\":\"<p>Information about one or more key pairs.</p>\",\
           \"locationName\":\"keySet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeKeyPairs.</p>\"\
+      }\
     },\
     \"DescribeLaunchTemplateVersionsRequest\":{\
       \"type\":\"structure\",\
@@ -8524,7 +9068,7 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 5 and 1000.</p>\"\
+          \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 1 and 200.</p>\"\
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
@@ -8567,7 +9111,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>create-time</code> - The time the launch template was created.</p> </li> <li> <p> <code>launch-template-name</code> - The name of the launch template.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of the tag's key). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>create-time</code> - The time the launch template was created.</p> </li> <li> <p> <code>launch-template-name</code> - The name of the launch template.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"NextToken\":{\
@@ -8615,7 +9159,7 @@
         },\
         \"NextToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The token to use to retrieve the next page of results.</p>\",\
+          \"documentation\":\"<p>The token for the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         },\
         \"PublicIps\":{\
@@ -8623,8 +9167,7 @@
           \"documentation\":\"<p>One or more Elastic IP addresses.</p>\",\
           \"locationName\":\"publicIp\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeMovingAddresses.</p>\"\
+      }\
     },\
     \"DescribeMovingAddressesResult\":{\
       \"type\":\"structure\",\
@@ -8639,15 +9182,14 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeMovingAddresses.</p>\"\
+      }\
     },\
     \"DescribeNatGatewaysRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filter\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>nat-gateway-id</code> - The ID of the NAT gateway.</p> </li> <li> <p> <code>state</code> - The state of the NAT gateway (<code>pending</code> | <code>failed</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet in which the NAT gateway resides.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the NAT gateway resides.</p> </li> </ul>\"\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>nat-gateway-id</code> - The ID of the NAT gateway.</p> </li> <li> <p> <code>state</code> - The state of the NAT gateway (<code>pending</code> | <code>failed</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet in which the NAT gateway resides.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the NAT gateway resides.</p> </li> </ul>\"\
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
@@ -8662,8 +9204,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeNatGateways.</p>\"\
+      }\
     },\
     \"DescribeNatGatewaysResult\":{\
       \"type\":\"structure\",\
@@ -8678,15 +9219,14 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeNatGateways.</p>\"\
+      }\
     },\
     \"DescribeNetworkAclsRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>association.association-id</code> - The ID of an association ID for the ACL.</p> </li> <li> <p> <code>association.network-acl-id</code> - The ID of the network ACL involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>default</code> - Indicates whether the ACL is the default network ACL for the VPC.</p> </li> <li> <p> <code>entry.cidr</code> - The IPv4 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.egress</code> - Indicates whether the entry applies to egress traffic.</p> </li> <li> <p> <code>entry.icmp.code</code> - The ICMP code specified in the entry, if any.</p> </li> <li> <p> <code>entry.icmp.type</code> - The ICMP type specified in the entry, if any.</p> </li> <li> <p> <code>entry.ipv6-cidr</code> - The IPv6 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.port-range.from</code> - The start of the port range specified in the entry. </p> </li> <li> <p> <code>entry.port-range.to</code> - The end of the port range specified in the entry. </p> </li> <li> <p> <code>entry.protocol</code> - The protocol specified in the entry (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>entry.rule-action</code> - Allows or denies the matching traffic (<code>allow</code> | <code>deny</code>).</p> </li> <li> <p> <code>entry.rule-number</code> - The number of an entry (in other words, rule) in the ACL's set of entries.</p> </li> <li> <p> <code>network-acl-id</code> - The ID of the network ACL.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network ACL.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>association.association-id</code> - The ID of an association ID for the ACL.</p> </li> <li> <p> <code>association.network-acl-id</code> - The ID of the network ACL involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>default</code> - Indicates whether the ACL is the default network ACL for the VPC.</p> </li> <li> <p> <code>entry.cidr</code> - The IPv4 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.icmp.code</code> - The ICMP code specified in the entry, if any.</p> </li> <li> <p> <code>entry.icmp.type</code> - The ICMP type specified in the entry, if any.</p> </li> <li> <p> <code>entry.ipv6-cidr</code> - The IPv6 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.port-range.from</code> - The start of the port range specified in the entry. </p> </li> <li> <p> <code>entry.port-range.to</code> - The end of the port range specified in the entry. </p> </li> <li> <p> <code>entry.protocol</code> - The protocol specified in the entry (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>entry.rule-action</code> - Allows or denies the matching traffic (<code>allow</code> | <code>deny</code>).</p> </li> <li> <p> <code>entry.rule-number</code> - The number of an entry (in other words, rule) in the set of ACL entries.</p> </li> <li> <p> <code>network-acl-id</code> - The ID of the network ACL.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network ACL.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -8699,8 +9239,7 @@
           \"documentation\":\"<p>One or more network ACL IDs.</p> <p>Default: Describes all your network ACLs.</p>\",\
           \"locationName\":\"NetworkAclId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeNetworkAcls.</p>\"\
+      }\
     },\
     \"DescribeNetworkAclsResult\":{\
       \"type\":\"structure\",\
@@ -8710,8 +9249,7 @@
           \"documentation\":\"<p>Information about one or more network ACLs.</p>\",\
           \"locationName\":\"networkAclSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeNetworkAcls.</p>\"\
+      }\
     },\
     \"DescribeNetworkInterfaceAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -8811,7 +9349,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>addresses.private-ip-address</code> - The private IPv4 addresses associated with the network interface.</p> </li> <li> <p> <code>addresses.primary</code> - Whether the private IPv4 address is the primary IP address associated with the network interface. </p> </li> <li> <p> <code>addresses.association.public-ip</code> - The association ID returned when the network interface was associated with the Elastic IP address (IPv4).</p> </li> <li> <p> <code>addresses.association.owner-id</code> - The owner ID of the addresses associated with the network interface.</p> </li> <li> <p> <code>association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>association.public-dns-name</code> - The public DNS name for the network interface (IPv4).</p> </li> <li> <p> <code>attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>attachment.attach.time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Indicates whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.nat-gateway-id</code> - The ID of the NAT gateway to which the network interface is attached.</p> </li> <li> <p> <code>attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the network interface.</p> </li> <li> <p> <code>description</code> - The description of the network interface.</p> </li> <li> <p> <code>group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>group-name</code> - The name of a security group associated with the network interface.</p> </li> <li> <p> <code>ipv6-addresses.ipv6-address</code> - An IPv6 address associated with the network interface.</p> </li> <li> <p> <code>mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the network interface owner.</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address or addresses of the network interface.</p> </li> <li> <p> <code>private-dns-name</code> - The private DNS name of the network interface (IPv4).</p> </li> <li> <p> <code>requester-id</code> - The ID of the entity that launched the instance on your behalf (for example, AWS Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>requester-managed</code> - Indicates whether the network interface is being managed by an AWS service (for example, AWS Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>source-desk-check</code> - Indicates whether the network interface performs source/destination checking. A value of <code>true</code> means checking is enabled, and <code>false</code> means checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>status</code> - The status of the network interface. If the network interface is not attached to an instance, the status is <code>available</code>; if a network interface is attached to an instance the status is <code>in-use</code>.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network interface.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>addresses.private-ip-address</code> - The private IPv4 addresses associated with the network interface.</p> </li> <li> <p> <code>addresses.primary</code> - Whether the private IPv4 address is the primary IP address associated with the network interface. </p> </li> <li> <p> <code>addresses.association.public-ip</code> - The association ID returned when the network interface was associated with the Elastic IP address (IPv4).</p> </li> <li> <p> <code>addresses.association.owner-id</code> - The owner ID of the addresses associated with the network interface.</p> </li> <li> <p> <code>association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>association.public-dns-name</code> - The public DNS name for the network interface (IPv4).</p> </li> <li> <p> <code>attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>attachment.attach.time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Indicates whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.nat-gateway-id</code> - The ID of the NAT gateway to which the network interface is attached.</p> </li> <li> <p> <code>attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the network interface.</p> </li> <li> <p> <code>description</code> - The description of the network interface.</p> </li> <li> <p> <code>group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>group-name</code> - The name of a security group associated with the network interface.</p> </li> <li> <p> <code>ipv6-addresses.ipv6-address</code> - An IPv6 address associated with the network interface.</p> </li> <li> <p> <code>mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the network interface owner.</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address or addresses of the network interface.</p> </li> <li> <p> <code>private-dns-name</code> - The private DNS name of the network interface (IPv4).</p> </li> <li> <p> <code>requester-id</code> - The ID of the entity that launched the instance on your behalf (for example, AWS Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>requester-managed</code> - Indicates whether the network interface is being managed by an AWS service (for example, AWS Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>source-desk-check</code> - Indicates whether the network interface performs source/destination checking. A value of <code>true</code> means checking is enabled, and <code>false</code> means checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>status</code> - The status of the network interface. If the network interface is not attached to an instance, the status is <code>available</code>; if a network interface is attached to an instance the status is <code>in-use</code>.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network interface.</p> </li> </ul>\",\
           \"locationName\":\"filter\"\
         },\
         \"DryRun\":{\
@@ -8823,6 +9361,14 @@
           \"shape\":\"NetworkInterfaceIdList\",\
           \"documentation\":\"<p>One or more network interface IDs.</p> <p>Default: Describes all your network interfaces.</p>\",\
           \"locationName\":\"NetworkInterfaceId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The maximum number of items to return for this request. The request returns a token that you can specify in a subsequent call to get the next set of results.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for DescribeNetworkInterfaces.</p>\"\
@@ -8834,6 +9380,11 @@
           \"shape\":\"NetworkInterfaceList\",\
           \"documentation\":\"<p>Information about one or more network interfaces.</p>\",\
           \"locationName\":\"networkInterfaceSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
         }\
       },\
       \"documentation\":\"<p>Contains the output of DescribeNetworkInterfaces.</p>\"\
@@ -8895,8 +9446,7 @@
           \"documentation\":\"<p>One or more prefix list IDs.</p>\",\
           \"locationName\":\"PrefixListId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribePrefixLists.</p>\"\
+      }\
     },\
     \"DescribePrefixListsResult\":{\
       \"type\":\"structure\",\
@@ -8911,8 +9461,7 @@
           \"documentation\":\"<p>All available prefix lists.</p>\",\
           \"locationName\":\"prefixListSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribePrefixLists.</p>\"\
+      }\
     },\
     \"DescribePrincipalIdFormatRequest\":{\
       \"type\":\"structure\",\
@@ -8947,6 +9496,39 @@
         \"NextToken\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
+        }\
+      }\
+    },\
+    \"DescribePublicIpv4PoolsRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"PoolIds\":{\
+          \"shape\":\"ValueStringList\",\
+          \"documentation\":\"<p>The IDs of the address pools.</p>\",\
+          \"locationName\":\"PoolId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"PoolMaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>\"\
+        }\
+      }\
+    },\
+    \"DescribePublicIpv4PoolsResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"PublicIpv4Pools\":{\
+          \"shape\":\"PublicIpv4PoolSet\",\
+          \"documentation\":\"<p>Information about the address pools.</p>\",\
+          \"locationName\":\"publicIpv4PoolSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
       }\
@@ -9146,7 +9728,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone where the Reserved Instance can be used.</p> </li> <li> <p> <code>duration</code> - The duration of the Reserved Instance (one year or three years), in seconds (<code>31536000</code> | <code>94608000</code>).</p> </li> <li> <p> <code>end</code> - The time when the Reserved Instance expires (for example, 2015-08-07T11:54:42.000Z).</p> </li> <li> <p> <code>fixed-price</code> - The purchase price of the Reserved Instance (for example, 9800.0).</p> </li> <li> <p> <code>instance-type</code> - The instance type that is covered by the reservation.</p> </li> <li> <p> <code>scope</code> - The scope of the Reserved Instance (<code>Region</code> or <code>Availability Zone</code>).</p> </li> <li> <p> <code>product-description</code> - The Reserved Instance product platform description. Instances that include <code>(Amazon VPC)</code> in the product platform description will only be displayed to EC2-Classic account holders and are for use with Amazon VPC (<code>Linux/UNIX</code> | <code>Linux/UNIX (Amazon VPC)</code> | <code>SUSE Linux</code> | <code>SUSE Linux (Amazon VPC)</code> | <code>Red Hat Enterprise Linux</code> | <code>Red Hat Enterprise Linux (Amazon VPC)</code> | <code>Windows</code> | <code>Windows (Amazon VPC)</code> | <code>Windows with SQL Server Standard</code> | <code>Windows with SQL Server Standard (Amazon VPC)</code> | <code>Windows with SQL Server Web</code> | <code>Windows with SQL Server Web (Amazon VPC)</code> | <code>Windows with SQL Server Enterprise</code> | <code>Windows with SQL Server Enterprise (Amazon VPC)</code>).</p> </li> <li> <p> <code>reserved-instances-id</code> - The ID of the Reserved Instance.</p> </li> <li> <p> <code>start</code> - The time at which the Reserved Instance purchase request was placed (for example, 2014-08-07T11:54:42.000Z).</p> </li> <li> <p> <code>state</code> - The state of the Reserved Instance (<code>payment-pending</code> | <code>active</code> | <code>payment-failed</code> | <code>retired</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>usage-price</code> - The usage price of the Reserved Instance, per hour (for example, 0.84).</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone where the Reserved Instance can be used.</p> </li> <li> <p> <code>duration</code> - The duration of the Reserved Instance (one year or three years), in seconds (<code>31536000</code> | <code>94608000</code>).</p> </li> <li> <p> <code>end</code> - The time when the Reserved Instance expires (for example, 2015-08-07T11:54:42.000Z).</p> </li> <li> <p> <code>fixed-price</code> - The purchase price of the Reserved Instance (for example, 9800.0).</p> </li> <li> <p> <code>instance-type</code> - The instance type that is covered by the reservation.</p> </li> <li> <p> <code>scope</code> - The scope of the Reserved Instance (<code>Region</code> or <code>Availability Zone</code>).</p> </li> <li> <p> <code>product-description</code> - The Reserved Instance product platform description. Instances that include <code>(Amazon VPC)</code> in the product platform description will only be displayed to EC2-Classic account holders and are for use with Amazon VPC (<code>Linux/UNIX</code> | <code>Linux/UNIX (Amazon VPC)</code> | <code>SUSE Linux</code> | <code>SUSE Linux (Amazon VPC)</code> | <code>Red Hat Enterprise Linux</code> | <code>Red Hat Enterprise Linux (Amazon VPC)</code> | <code>Windows</code> | <code>Windows (Amazon VPC)</code> | <code>Windows with SQL Server Standard</code> | <code>Windows with SQL Server Standard (Amazon VPC)</code> | <code>Windows with SQL Server Web</code> | <code>Windows with SQL Server Web (Amazon VPC)</code> | <code>Windows with SQL Server Enterprise</code> | <code>Windows with SQL Server Enterprise (Amazon VPC)</code>).</p> </li> <li> <p> <code>reserved-instances-id</code> - The ID of the Reserved Instance.</p> </li> <li> <p> <code>start</code> - The time at which the Reserved Instance purchase request was placed (for example, 2014-08-07T11:54:42.000Z).</p> </li> <li> <p> <code>state</code> - The state of the Reserved Instance (<code>payment-pending</code> | <code>active</code> | <code>payment-failed</code> | <code>retired</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>usage-price</code> - The usage price of the Reserved Instance, per hour (for example, 0.84).</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"OfferingClass\":{\
@@ -9187,7 +9769,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>association.route-table-association-id</code> - The ID of an association ID for the route table.</p> </li> <li> <p> <code>association.route-table-id</code> - The ID of the route table involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>association.main</code> - Indicates whether the route table is the main route table for the VPC (<code>true</code> | <code>false</code>). Route tables that do not have an association ID are not returned in the response.</p> </li> <li> <p> <code>route-table-id</code> - The ID of the route table.</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The IPv4 CIDR range specified in a route in the table.</p> </li> <li> <p> <code>route.destination-ipv6-cidr-block</code> - The IPv6 CIDR range specified in a route in the route table.</p> </li> <li> <p> <code>route.destination-prefix-list-id</code> - The ID (prefix) of the AWS service specified in a route in the table.</p> </li> <li> <p> <code>route.egress-only-internet-gateway-id</code> - The ID of an egress-only Internet gateway specified in a route in the route table.</p> </li> <li> <p> <code>route.gateway-id</code> - The ID of a gateway specified in a route in the table.</p> </li> <li> <p> <code>route.instance-id</code> - The ID of an instance specified in a route in the table.</p> </li> <li> <p> <code>route.nat-gateway-id</code> - The ID of a NAT gateway.</p> </li> <li> <p> <code>route.origin</code> - Describes how the route was created. <code>CreateRouteTable</code> indicates that the route was automatically created when the route table was created; <code>CreateRoute</code> indicates that the route was manually added to the route table; <code>EnableVgwRoutePropagation</code> indicates that the route was propagated by route propagation.</p> </li> <li> <p> <code>route.state</code> - The state of a route in the route table (<code>active</code> | <code>blackhole</code>). The blackhole state indicates that the route's target isn't available (for example, the specified gateway isn't attached to the VPC, the specified NAT instance has been terminated, and so on).</p> </li> <li> <p> <code>route.vpc-peering-connection-id</code> - The ID of a VPC peering connection specified in a route in the table.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the route table.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>association.route-table-association-id</code> - The ID of an association ID for the route table.</p> </li> <li> <p> <code>association.route-table-id</code> - The ID of the route table involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>association.main</code> - Indicates whether the route table is the main route table for the VPC (<code>true</code> | <code>false</code>). Route tables that do not have an association ID are not returned in the response.</p> </li> <li> <p> <code>route-table-id</code> - The ID of the route table.</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The IPv4 CIDR range specified in a route in the table.</p> </li> <li> <p> <code>route.destination-ipv6-cidr-block</code> - The IPv6 CIDR range specified in a route in the route table.</p> </li> <li> <p> <code>route.destination-prefix-list-id</code> - The ID (prefix) of the AWS service specified in a route in the table.</p> </li> <li> <p> <code>route.egress-only-internet-gateway-id</code> - The ID of an egress-only Internet gateway specified in a route in the route table.</p> </li> <li> <p> <code>route.gateway-id</code> - The ID of a gateway specified in a route in the table.</p> </li> <li> <p> <code>route.instance-id</code> - The ID of an instance specified in a route in the table.</p> </li> <li> <p> <code>route.nat-gateway-id</code> - The ID of a NAT gateway.</p> </li> <li> <p> <code>route.origin</code> - Describes how the route was created. <code>CreateRouteTable</code> indicates that the route was automatically created when the route table was created; <code>CreateRoute</code> indicates that the route was manually added to the route table; <code>EnableVgwRoutePropagation</code> indicates that the route was propagated by route propagation.</p> </li> <li> <p> <code>route.state</code> - The state of a route in the route table (<code>active</code> | <code>blackhole</code>). The blackhole state indicates that the route's target isn't available (for example, the specified gateway isn't attached to the VPC, the specified NAT instance has been terminated, and so on).</p> </li> <li> <p> <code>route.vpc-peering-connection-id</code> - The ID of a VPC peering connection specified in a route in the table.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the route table.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -9199,9 +9781,16 @@
           \"shape\":\"ValueStringList\",\
           \"documentation\":\"<p>One or more route table IDs.</p> <p>Default: Describes all your route tables.</p>\",\
           \"locationName\":\"RouteTableId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <b>NextToken</b> value. This value can be between 5 and 100.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeRouteTables.</p>\"\
+      }\
     },\
     \"DescribeRouteTablesResult\":{\
       \"type\":\"structure\",\
@@ -9210,6 +9799,11 @@
           \"shape\":\"RouteTableList\",\
           \"documentation\":\"<p>Information about one or more route tables.</p>\",\
           \"locationName\":\"routeTableSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
         }\
       },\
       \"documentation\":\"<p>Contains the output of DescribeRouteTables.</p>\"\
@@ -9327,7 +9921,7 @@
       \"members\":{\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is DryRunOperation. Otherwise, it is UnauthorizedOperation.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
         \"GroupId\":{\
           \"shape\":\"GroupIds\",\
@@ -9350,7 +9944,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters. If using multiple filters for rules, the results include security groups for which any combination of rules - not necessarily a single rule - match all filters.</p> <ul> <li> <p> <code>description</code> - The description of the security group.</p> </li> <li> <p> <code>egress.ip-permission.cidr</code> - An IPv4 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.from-port</code> - For an outbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>egress.ip-permission.group-id</code> - The ID of a security group that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.group-name</code> - The name of a security group that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.prefix-list-id</code> - The ID (prefix) of the AWS service to which a security group rule allows outbound access.</p> </li> <li> <p> <code>egress.ip-permission.protocol</code> - The IP protocol for an outbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>egress.ip-permission.to-port</code> - For an outbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>egress.ip-permission.user-id</code> - The ID of an AWS account that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>group-id</code> - The ID of the security group. </p> </li> <li> <p> <code>group-name</code> - The name of the security group.</p> </li> <li> <p> <code>ip-permission.cidr</code> - An IPv4 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.from-port</code> - For an inbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>ip-permission.group-id</code> - The ID of a security group that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.group-name</code> - The name of a security group that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.prefix-list-id</code> - The ID (prefix) of the AWS service from which a security group rule allows inbound access.</p> </li> <li> <p> <code>ip-permission.protocol</code> - The IP protocol for an inbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>ip-permission.to-port</code> - For an inbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>ip-permission.user-id</code> - The ID of an AWS account that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the owner of the security group.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the security group.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the security group.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC specified when the security group was created.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters. If using multiple filters for rules, the results include security groups for which any combination of rules - not necessarily a single rule - match all filters.</p> <ul> <li> <p> <code>description</code> - The description of the security group.</p> </li> <li> <p> <code>egress.ip-permission.cidr</code> - An IPv4 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.from-port</code> - For an outbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>egress.ip-permission.group-id</code> - The ID of a security group that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.group-name</code> - The name of a security group that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.prefix-list-id</code> - The ID (prefix) of the AWS service to which a security group rule allows outbound access.</p> </li> <li> <p> <code>egress.ip-permission.protocol</code> - The IP protocol for an outbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>egress.ip-permission.to-port</code> - For an outbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>egress.ip-permission.user-id</code> - The ID of an AWS account that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>group-id</code> - The ID of the security group. </p> </li> <li> <p> <code>group-name</code> - The name of the security group.</p> </li> <li> <p> <code>ip-permission.cidr</code> - An IPv4 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.from-port</code> - For an inbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>ip-permission.group-id</code> - The ID of a security group that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.group-name</code> - The name of a security group that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.prefix-list-id</code> - The ID (prefix) of the AWS service from which a security group rule allows inbound access.</p> </li> <li> <p> <code>ip-permission.protocol</code> - The IP protocol for an inbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>ip-permission.to-port</code> - For an inbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>ip-permission.user-id</code> - The ID of an AWS account that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>owner-id</code> - The AWS account ID of the owner of the security group.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC specified when the security group was created.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"GroupIds\":{\
@@ -9376,8 +9970,7 @@
           \"shape\":\"Integer\",\
           \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this parameter is not specified, then all results are returned.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeSecurityGroups.</p>\"\
+      }\
     },\
     \"DescribeSecurityGroupsResult\":{\
       \"type\":\"structure\",\
@@ -9392,8 +9985,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeSecurityGroups.</p>\"\
+      }\
     },\
     \"DescribeSnapshotAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -9444,7 +10036,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>description</code> - A description of the snapshot.</p> </li> <li> <p> <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console.</p> </li> <li> <p> <code>owner-id</code> - The ID of the AWS account that owns the snapshot.</p> </li> <li> <p> <code>progress</code> - The progress of the snapshot, as a percentage (for example, 80%).</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot ID.</p> </li> <li> <p> <code>start-time</code> - The time stamp when the snapshot was initiated.</p> </li> <li> <p> <code>status</code> - The status of the snapshot (<code>pending</code> | <code>completed</code> | <code>error</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>volume-id</code> - The ID of the volume the snapshot is for.</p> </li> <li> <p> <code>volume-size</code> - The size of the volume, in GiB.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>description</code> - A description of the snapshot.</p> </li> <li> <p> <code>owner-alias</code> - Value from an Amazon-maintained list (<code>amazon</code> | <code>aws-marketplace</code> | <code>microsoft</code>) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console.</p> </li> <li> <p> <code>owner-id</code> - The ID of the AWS account that owns the snapshot.</p> </li> <li> <p> <code>progress</code> - The progress of the snapshot, as a percentage (for example, 80%).</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot ID.</p> </li> <li> <p> <code>start-time</code> - The time stamp when the snapshot was initiated.</p> </li> <li> <p> <code>status</code> - The status of the snapshot (<code>pending</code> | <code>completed</code> | <code>error</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>volume-id</code> - The ID of the volume the snapshot is for.</p> </li> <li> <p> <code>volume-size</code> - The size of the volume, in GiB.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"MaxResults\":{\
@@ -9693,7 +10285,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone-group</code> - The Availability Zone group.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the Spot Instance request was created.</p> </li> <li> <p> <code>fault-code</code> - The fault code related to the request.</p> </li> <li> <p> <code>fault-message</code> - The fault message related to the request.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance that fulfilled the request.</p> </li> <li> <p> <code>launch-group</code> - The Spot Instance launch group.</p> </li> <li> <p> <code>launch.block-device-mapping.delete-on-termination</code> - Indicates whether the EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>launch.block-device-mapping.device-name</code> - The device name for the volume in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>launch.block-device-mapping.snapshot-id</code> - The ID of the snapshot for the EBS volume.</p> </li> <li> <p> <code>launch.block-device-mapping.volume-size</code> - The size of the EBS volume, in GiB.</p> </li> <li> <p> <code>launch.block-device-mapping.volume-type</code> - The type of EBS volume: <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code>for Cold HDD, or <code>standard</code> for Magnetic.</p> </li> <li> <p> <code>launch.group-id</code> - The ID of the security group for the instance.</p> </li> <li> <p> <code>launch.group-name</code> - The name of the security group for the instance.</p> </li> <li> <p> <code>launch.image-id</code> - The ID of the AMI.</p> </li> <li> <p> <code>launch.instance-type</code> - The type of instance (for example, <code>m3.medium</code>).</p> </li> <li> <p> <code>launch.kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>launch.key-name</code> - The name of the key pair the instance launched with.</p> </li> <li> <p> <code>launch.monitoring-enabled</code> - Whether detailed monitoring is enabled for the Spot Instance.</p> </li> <li> <p> <code>launch.ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>launched-availability-zone</code> - The Availability Zone in which the request is launched.</p> </li> <li> <p> <code>network-interface.addresses.primary</code> - Indicates whether the IP address is the primary private IP address.</p> </li> <li> <p> <code>network-interface.delete-on-termination</code> - Indicates whether the network interface is deleted when the instance is terminated.</p> </li> <li> <p> <code>network-interface.description</code> - A description of the network interface.</p> </li> <li> <p> <code>network-interface.device-index</code> - The index of the device for the network interface attachment on the instance.</p> </li> <li> <p> <code>network-interface.group-id</code> - The ID of the security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface.private-ip-address</code> - The primary private IP address of the network interface.</p> </li> <li> <p> <code>network-interface.subnet-id</code> - The ID of the subnet for the instance.</p> </li> <li> <p> <code>product-description</code> - The product description associated with the instance (<code>Linux/UNIX</code> | <code>Windows</code>).</p> </li> <li> <p> <code>spot-instance-request-id</code> - The Spot Instance request ID.</p> </li> <li> <p> <code>spot-price</code> - The maximum hourly price for any Spot Instance launched to fulfill the request.</p> </li> <li> <p> <code>state</code> - The state of the Spot Instance request (<code>open</code> | <code>active</code> | <code>closed</code> | <code>cancelled</code> | <code>failed</code>). Spot request status information can help you track your Amazon EC2 Spot Instance requests. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-bid-status.html\\\">Spot Request Status</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p> </li> <li> <p> <code>status-code</code> - The short code describing the most recent evaluation of your Spot Instance request.</p> </li> <li> <p> <code>status-message</code> - The message explaining the status of the Spot Instance request.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>type</code> - The type of Spot Instance request (<code>one-time</code> | <code>persistent</code>).</p> </li> <li> <p> <code>valid-from</code> - The start date of the request.</p> </li> <li> <p> <code>valid-until</code> - The end date of the request.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone-group</code> - The Availability Zone group.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the Spot Instance request was created.</p> </li> <li> <p> <code>fault-code</code> - The fault code related to the request.</p> </li> <li> <p> <code>fault-message</code> - The fault message related to the request.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance that fulfilled the request.</p> </li> <li> <p> <code>launch-group</code> - The Spot Instance launch group.</p> </li> <li> <p> <code>launch.block-device-mapping.delete-on-termination</code> - Indicates whether the EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>launch.block-device-mapping.device-name</code> - The device name for the volume in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>launch.block-device-mapping.snapshot-id</code> - The ID of the snapshot for the EBS volume.</p> </li> <li> <p> <code>launch.block-device-mapping.volume-size</code> - The size of the EBS volume, in GiB.</p> </li> <li> <p> <code>launch.block-device-mapping.volume-type</code> - The type of EBS volume: <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code>for Cold HDD, or <code>standard</code> for Magnetic.</p> </li> <li> <p> <code>launch.group-id</code> - The ID of the security group for the instance.</p> </li> <li> <p> <code>launch.group-name</code> - The name of the security group for the instance.</p> </li> <li> <p> <code>launch.image-id</code> - The ID of the AMI.</p> </li> <li> <p> <code>launch.instance-type</code> - The type of instance (for example, <code>m3.medium</code>).</p> </li> <li> <p> <code>launch.kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>launch.key-name</code> - The name of the key pair the instance launched with.</p> </li> <li> <p> <code>launch.monitoring-enabled</code> - Whether detailed monitoring is enabled for the Spot Instance.</p> </li> <li> <p> <code>launch.ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>launched-availability-zone</code> - The Availability Zone in which the request is launched.</p> </li> <li> <p> <code>network-interface.addresses.primary</code> - Indicates whether the IP address is the primary private IP address.</p> </li> <li> <p> <code>network-interface.delete-on-termination</code> - Indicates whether the network interface is deleted when the instance is terminated.</p> </li> <li> <p> <code>network-interface.description</code> - A description of the network interface.</p> </li> <li> <p> <code>network-interface.device-index</code> - The index of the device for the network interface attachment on the instance.</p> </li> <li> <p> <code>network-interface.group-id</code> - The ID of the security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface.private-ip-address</code> - The primary private IP address of the network interface.</p> </li> <li> <p> <code>network-interface.subnet-id</code> - The ID of the subnet for the instance.</p> </li> <li> <p> <code>product-description</code> - The product description associated with the instance (<code>Linux/UNIX</code> | <code>Windows</code>).</p> </li> <li> <p> <code>spot-instance-request-id</code> - The Spot Instance request ID.</p> </li> <li> <p> <code>spot-price</code> - The maximum hourly price for any Spot Instance launched to fulfill the request.</p> </li> <li> <p> <code>state</code> - The state of the Spot Instance request (<code>open</code> | <code>active</code> | <code>closed</code> | <code>cancelled</code> | <code>failed</code>). Spot request status information can help you track your Amazon EC2 Spot Instance requests. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-bid-status.html\\\">Spot Request Status</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p> </li> <li> <p> <code>status-code</code> - The short code describing the most recent evaluation of your Spot Instance request.</p> </li> <li> <p> <code>status-message</code> - The message explaining the status of the Spot Instance request.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of Spot Instance request (<code>one-time</code> | <code>persistent</code>).</p> </li> <li> <p> <code>valid-from</code> - The start date of the request.</p> </li> <li> <p> <code>valid-until</code> - The end date of the request.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -9793,7 +10385,7 @@
       \"members\":{\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is DryRunOperation. Otherwise, it is UnauthorizedOperation.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
         \"MaxResults\":{\
           \"shape\":\"MaxResults\",\
@@ -9829,7 +10421,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availabilityZone</code> - The Availability Zone for the subnet. You can also use <code>availability-zone</code> as the filter name.</p> </li> <li> <p> <code>available-ip-address-count</code> - The number of IPv4 addresses in the subnet that are available.</p> </li> <li> <p> <code>cidrBlock</code> - The IPv4 CIDR block of the subnet. The CIDR block you specify must exactly match the subnet's CIDR block for information to be returned for the subnet. You can also use <code>cidr</code> or <code>cidr-block</code> as the filter names.</p> </li> <li> <p> <code>defaultForAz</code> - Indicates whether this is the default subnet for the Availability Zone. You can also use <code>default-for-az</code> as the filter name.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the subnet.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - An association ID for an IPv6 CIDR block associated with the subnet.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the subnet.</p> </li> <li> <p> <code>state</code> - The state of the subnet (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the subnet.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>availabilityZone</code> - The Availability Zone for the subnet. You can also use <code>availability-zone</code> as the filter name.</p> </li> <li> <p> <code>available-ip-address-count</code> - The number of IPv4 addresses in the subnet that are available.</p> </li> <li> <p> <code>cidrBlock</code> - The IPv4 CIDR block of the subnet. The CIDR block you specify must exactly match the subnet's CIDR block for information to be returned for the subnet. You can also use <code>cidr</code> or <code>cidr-block</code> as the filter names.</p> </li> <li> <p> <code>defaultForAz</code> - Indicates whether this is the default subnet for the Availability Zone. You can also use <code>default-for-az</code> as the filter name.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the subnet.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - An association ID for an IPv6 CIDR block associated with the subnet.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the subnet.</p> </li> <li> <p> <code>state</code> - The state of the subnet (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the subnet.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"SubnetIds\":{\
@@ -9842,8 +10434,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeSubnets.</p>\"\
+      }\
     },\
     \"DescribeSubnetsResult\":{\
       \"type\":\"structure\",\
@@ -9853,8 +10444,7 @@
           \"documentation\":\"<p>Information about one or more subnets.</p>\",\
           \"locationName\":\"subnetSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeSubnets.</p>\"\
+      }\
     },\
     \"DescribeTagsRequest\":{\
       \"type\":\"structure\",\
@@ -9866,7 +10456,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>key</code> - The tag key.</p> </li> <li> <p> <code>resource-id</code> - The resource ID.</p> </li> <li> <p> <code>resource-type</code> - The resource type (<code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip</code> | <code>fpga-image</code> | <code>image</code> | <code>instance</code> | <code>internet-gateway</code> | <code>launch-template</code> | <code>natgateway</code> | <code>network-acl</code> | <code>network-interface</code> | <code>reserved-instances</code> | <code>route-table</code> | <code>security-group</code> | <code>snapshot</code> | <code>spot-instances-request</code> | <code>subnet</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>).</p> </li> <li> <p> <code>value</code> - The tag value.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>key</code> - The tag key.</p> </li> <li> <p> <code>resource-id</code> - The ID of the resource.</p> </li> <li> <p> <code>resource-type</code> - The resource type (<code>customer-gateway</code> | <code>dedicated-host</code> | <code>dhcp-options</code> | <code>elastic-ip</code> | <code>fleet</code> | <code>fpga-image</code> | <code>image</code> | <code>instance</code> | <code>internet-gateway</code> | <code>launch-template</code> | <code>natgateway</code> | <code>network-acl</code> | <code>network-interface</code> | <code>reserved-instances</code> | <code>route-table</code> | <code>security-group</code> | <code>snapshot</code> | <code>spot-instances-request</code> | <code>subnet</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of the tag. For example, specify \\\"tag:Owner\\\" for the filter name and \\\"TeamA\\\" for the filter value to find resources with the tag \\\"Owner=TeamA\\\".</p> </li> <li> <p> <code>value</code> - The tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"MaxResults\":{\
@@ -9879,28 +10469,29 @@
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeTags.</p>\"\
+      }\
     },\
     \"DescribeTagsResult\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"NextToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return..</p>\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         },\
         \"Tags\":{\
           \"shape\":\"TagDescriptionList\",\
-          \"documentation\":\"<p>A list of tags.</p>\",\
+          \"documentation\":\"<p>The tags.</p>\",\
           \"locationName\":\"tagSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeTags.</p>\"\
+      }\
     },\
     \"DescribeVolumeAttributeRequest\":{\
       \"type\":\"structure\",\
-      \"required\":[\"VolumeId\"],\
+      \"required\":[\
+        \"Attribute\",\
+        \"VolumeId\"\
+      ],\
       \"members\":{\
         \"Attribute\":{\
           \"shape\":\"VolumeAttributeName\",\
@@ -10031,7 +10622,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>attachment.attach-time</code> - The time stamp when the attachment initiated.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Whether the volume is deleted on instance termination.</p> </li> <li> <p> <code>attachment.device</code> - The device name specified in the block device mapping (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance the volume is attached to.</p> </li> <li> <p> <code>attachment.status</code> - The attachment state (<code>attaching</code> | <code>attached</code> | <code>detaching</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone in which the volume was created.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the volume was created.</p> </li> <li> <p> <code>encrypted</code> - The encryption status of the volume.</p> </li> <li> <p> <code>size</code> - The size of the volume, in GiB.</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot from which the volume was created.</p> </li> <li> <p> <code>status</code> - The status of the volume (<code>creating</code> | <code>available</code> | <code>in-use</code> | <code>deleting</code> | <code>deleted</code> | <code>error</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>volume-id</code> - The volume ID.</p> </li> <li> <p> <code>volume-type</code> - The Amazon EBS volume type. This can be <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code> for Cold HDD, or <code>standard</code> for Magnetic volumes.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>attachment.attach-time</code> - The time stamp when the attachment initiated.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Whether the volume is deleted on instance termination.</p> </li> <li> <p> <code>attachment.device</code> - The device name specified in the block device mapping (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance the volume is attached to.</p> </li> <li> <p> <code>attachment.status</code> - The attachment state (<code>attaching</code> | <code>attached</code> | <code>detaching</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone in which the volume was created.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the volume was created.</p> </li> <li> <p> <code>encrypted</code> - The encryption status of the volume.</p> </li> <li> <p> <code>size</code> - The size of the volume, in GiB.</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot from which the volume was created.</p> </li> <li> <p> <code>status</code> - The status of the volume (<code>creating</code> | <code>available</code> | <code>in-use</code> | <code>deleting</code> | <code>deleted</code> | <code>error</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>volume-id</code> - The volume ID.</p> </li> <li> <p> <code>volume-type</code> - The Amazon EBS volume type. This can be <code>gp2</code> for General Purpose SSD, <code>io1</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code> for Cold HDD, or <code>standard</code> for Magnetic volumes.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"VolumeIds\":{\
@@ -10093,8 +10684,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcAttribute.</p>\"\
+      }\
     },\
     \"DescribeVpcAttributeResult\":{\
       \"type\":\"structure\",\
@@ -10114,8 +10704,7 @@
           \"documentation\":\"<p>Indicates whether DNS resolution is enabled for the VPC. If this attribute is <code>true</code>, the Amazon DNS server resolves DNS hostnames for your instances to their corresponding IP addresses; otherwise, it does not.</p>\",\
           \"locationName\":\"enableDnsSupport\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcAttribute.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkDnsSupportRequest\":{\
       \"type\":\"structure\",\
@@ -10134,8 +10723,7 @@
           \"shape\":\"VpcClassicLinkIdList\",\
           \"documentation\":\"<p>One or more VPC IDs.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkDnsSupportResult\":{\
       \"type\":\"structure\",\
@@ -10150,15 +10738,14 @@
           \"documentation\":\"<p>Information about the ClassicLink DNS support status of the VPCs.</p>\",\
           \"locationName\":\"vpcs\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>is-classic-link-enabled</code> - Whether the VPC is enabled for ClassicLink (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>is-classic-link-enabled</code> - Whether the VPC is enabled for ClassicLink (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -10171,8 +10758,7 @@
           \"documentation\":\"<p>One or more VPCs for which you want to describe the ClassicLink status.</p>\",\
           \"locationName\":\"VpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcClassicLink.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkResult\":{\
       \"type\":\"structure\",\
@@ -10182,8 +10768,7 @@
           \"documentation\":\"<p>The ClassicLink status of one or more VPCs.</p>\",\
           \"locationName\":\"vpcSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcClassicLink.</p>\"\
+      }\
     },\
     \"DescribeVpcEndpointConnectionNotificationsRequest\":{\
       \"type\":\"structure\",\
@@ -10445,7 +11030,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>accepter-vpc-info.cidr-block</code> - The IPv4 CIDR block of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.owner-id</code> - The AWS account ID of the owner of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.vpc-id</code> - The ID of the accepter VPC.</p> </li> <li> <p> <code>expiration-time</code> - The expiration date and time for the VPC peering connection.</p> </li> <li> <p> <code>requester-vpc-info.cidr-block</code> - The IPv4 CIDR block of the requester's VPC.</p> </li> <li> <p> <code>requester-vpc-info.owner-id</code> - The AWS account ID of the owner of the requester VPC.</p> </li> <li> <p> <code>requester-vpc-info.vpc-id</code> - The ID of the requester VPC.</p> </li> <li> <p> <code>status-code</code> - The status of the VPC peering connection (<code>pending-acceptance</code> | <code>failed</code> | <code>expired</code> | <code>provisioning</code> | <code>active</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code>).</p> </li> <li> <p> <code>status-message</code> - A message that provides more information about the status of the VPC peering connection, if applicable.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-peering-connection-id</code> - The ID of the VPC peering connection.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>accepter-vpc-info.cidr-block</code> - The IPv4 CIDR block of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.owner-id</code> - The AWS account ID of the owner of the accepter VPC.</p> </li> <li> <p> <code>accepter-vpc-info.vpc-id</code> - The ID of the accepter VPC.</p> </li> <li> <p> <code>expiration-time</code> - The expiration date and time for the VPC peering connection.</p> </li> <li> <p> <code>requester-vpc-info.cidr-block</code> - The IPv4 CIDR block of the requester's VPC.</p> </li> <li> <p> <code>requester-vpc-info.owner-id</code> - The AWS account ID of the owner of the requester VPC.</p> </li> <li> <p> <code>requester-vpc-info.vpc-id</code> - The ID of the requester VPC.</p> </li> <li> <p> <code>status-code</code> - The status of the VPC peering connection (<code>pending-acceptance</code> | <code>failed</code> | <code>expired</code> | <code>provisioning</code> | <code>active</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code>).</p> </li> <li> <p> <code>status-message</code> - A message that provides more information about the status of the VPC peering connection, if applicable.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-peering-connection-id</code> - The ID of the VPC peering connection.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -10458,8 +11043,7 @@
           \"documentation\":\"<p>One or more VPC peering connection IDs.</p> <p>Default: Describes all your VPC peering connections.</p>\",\
           \"locationName\":\"VpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcPeeringConnections.</p>\"\
+      }\
     },\
     \"DescribeVpcPeeringConnectionsResult\":{\
       \"type\":\"structure\",\
@@ -10469,15 +11053,14 @@
           \"documentation\":\"<p>Information about the VPC peering connections.</p>\",\
           \"locationName\":\"vpcPeeringConnectionSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcPeeringConnections.</p>\"\
+      }\
     },\
     \"DescribeVpcsRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>cidr</code> - The primary IPv4 CIDR block of the VPC. The CIDR block you specify must exactly match the VPC's CIDR block for information to be returned for the VPC. Must contain the slash followed by one or two digits (for example, <code>/28</code>).</p> </li> <li> <p> <code>cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - The association ID for an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>isDefault</code> - Indicates whether the VPC is the default VPC.</p> </li> <li> <p> <code>state</code> - The state of the VPC (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>cidr</code> - The primary IPv4 CIDR block of the VPC. The CIDR block you specify must exactly match the VPC's CIDR block for information to be returned for the VPC. Must contain the slash followed by one or two digits (for example, <code>/28</code>).</p> </li> <li> <p> <code>cidr-block-association.cidr-block</code> - An IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.association-id</code> - The association ID for an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>cidr-block-association.state</code> - The state of an IPv4 CIDR block associated with the VPC.</p> </li> <li> <p> <code>dhcp-options-id</code> - The ID of a set of DHCP options.</p> </li> <li> <p> <code>ipv6-cidr-block-association.ipv6-cidr-block</code> - An IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.association-id</code> - The association ID for an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>ipv6-cidr-block-association.state</code> - The state of an IPv6 CIDR block associated with the VPC.</p> </li> <li> <p> <code>isDefault</code> - Indicates whether the VPC is the default VPC.</p> </li> <li> <p> <code>state</code> - The state of the VPC (<code>pending</code> | <code>available</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"VpcIds\":{\
@@ -10490,8 +11073,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcs.</p>\"\
+      }\
     },\
     \"DescribeVpcsResult\":{\
       \"type\":\"structure\",\
@@ -10501,15 +11083,14 @@
           \"documentation\":\"<p>Information about one or more VPCs.</p>\",\
           \"locationName\":\"vpcSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcs.</p>\"\
+      }\
     },\
     \"DescribeVpnConnectionsRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>customer-gateway-configuration</code> - The configuration information for the customer gateway.</p> </li> <li> <p> <code>customer-gateway-id</code> - The ID of a customer gateway associated with the VPN connection.</p> </li> <li> <p> <code>state</code> - The state of the VPN connection (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>option.static-routes-only</code> - Indicates whether the connection has static routes only. Used for devices that do not support Border Gateway Protocol (BGP).</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The destination CIDR block. This corresponds to the subnet used in a customer data center.</p> </li> <li> <p> <code>bgp-asn</code> - The BGP Autonomous System Number (ASN) associated with a BGP device.</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>type</code> - The type of VPN connection. Currently the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>vpn-connection-id</code> - The ID of the VPN connection.</p> </li> <li> <p> <code>vpn-gateway-id</code> - The ID of a virtual private gateway associated with the VPN connection.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>customer-gateway-configuration</code> - The configuration information for the customer gateway.</p> </li> <li> <p> <code>customer-gateway-id</code> - The ID of a customer gateway associated with the VPN connection.</p> </li> <li> <p> <code>state</code> - The state of the VPN connection (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>option.static-routes-only</code> - Indicates whether the connection has static routes only. Used for devices that do not support Border Gateway Protocol (BGP).</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The destination CIDR block. This corresponds to the subnet used in a customer data center.</p> </li> <li> <p> <code>bgp-asn</code> - The BGP Autonomous System Number (ASN) associated with a BGP device.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of VPN connection. Currently the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>vpn-connection-id</code> - The ID of the VPN connection.</p> </li> <li> <p> <code>vpn-gateway-id</code> - The ID of a virtual private gateway associated with the VPN connection.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"VpnConnectionIds\":{\
@@ -10541,7 +11122,7 @@
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>amazon-side-asn</code> - The Autonomous System Number (ASN) for the Amazon side of the gateway.</p> </li> <li> <p> <code>attachment.state</code> - The current state of the attachment between the gateway and the VPC (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>attachment.vpc-id</code> - The ID of an attached VPC.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone for the virtual private gateway (if applicable).</p> </li> <li> <p> <code>state</code> - The state of the virtual private gateway (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>tag</code>:<i>key</i>=<i>value</i> - The key/value combination of a tag assigned to the resource. Specify the key of the tag in the filter name and the value of the tag in the filter value. For example, for the tag Purpose=X, specify <code>tag:Purpose</code> for the filter name and <code>X</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. This filter is independent of the <code>tag-value</code> filter. For example, if you use both the filter \\\"tag-key=Purpose\\\" and the filter \\\"tag-value=X\\\", you get any resources assigned both the tag key Purpose (regardless of what the tag's value is), and the tag value X (regardless of what the tag's key is). If you want to list only resources where Purpose is X, see the <code>tag</code>:<i>key</i>=<i>value</i> filter.</p> </li> <li> <p> <code>tag-value</code> - The value of a tag assigned to the resource. This filter is independent of the <code>tag-key</code> filter.</p> </li> <li> <p> <code>type</code> - The type of virtual private gateway. Currently the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>vpn-gateway-id</code> - The ID of the virtual private gateway.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>amazon-side-asn</code> - The Autonomous System Number (ASN) for the Amazon side of the gateway.</p> </li> <li> <p> <code>attachment.state</code> - The current state of the attachment between the gateway and the VPC (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>attachment.vpc-id</code> - The ID of an attached VPC.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone for the virtual private gateway (if applicable).</p> </li> <li> <p> <code>state</code> - The state of the virtual private gateway (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of virtual private gateway. Currently the only supported type is <code>ipsec.1</code>.</p> </li> <li> <p> <code>vpn-gateway-id</code> - The ID of the virtual private gateway.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"VpnGatewayIds\":{\
@@ -10590,8 +11171,7 @@
           \"documentation\":\"<p>The ID of the VPC to which the instance is linked.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DetachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"DetachClassicLinkVpcResult\":{\
       \"type\":\"structure\",\
@@ -10601,8 +11181,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DetachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"DetachInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -10618,7 +11197,7 @@
         },\
         \"InternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the Internet gateway.</p>\",\
+          \"documentation\":\"<p>The ID of the internet gateway.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         },\
         \"VpcId\":{\
@@ -10626,8 +11205,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DetachInternetGateway.</p>\"\
+      }\
     },\
     \"DetachNetworkInterfaceRequest\":{\
       \"type\":\"structure\",\
@@ -10799,8 +11377,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the VPC.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DisableVpcClassicLinkDnsSupportResult\":{\
       \"type\":\"structure\",\
@@ -10810,8 +11387,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DisableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DisableVpcClassicLinkRequest\":{\
       \"type\":\"structure\",\
@@ -10827,8 +11403,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisableVpcClassicLink.</p>\"\
+      }\
     },\
     \"DisableVpcClassicLinkResult\":{\
       \"type\":\"structure\",\
@@ -10838,8 +11413,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DisableVpcClassicLink.</p>\"\
+      }\
     },\
     \"DisassociateAddressRequest\":{\
       \"type\":\"structure\",\
@@ -10857,8 +11431,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisassociateAddress.</p>\"\
+      }\
     },\
     \"DisassociateIamInstanceProfileRequest\":{\
       \"type\":\"structure\",\
@@ -10894,8 +11467,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisassociateRouteTable.</p>\"\
+      }\
     },\
     \"DisassociateSubnetCidrBlockRequest\":{\
       \"type\":\"structure\",\
@@ -11086,11 +11658,6 @@
     \"EbsBlockDevice\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"Encrypted\":{\
-          \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Indicates whether the EBS volume is encrypted. Encrypted volumes can only be attached to instances that support Amazon EBS encryption. If you are creating a volume from a snapshot, you can't specify an encryption value. This is because only blank volumes can be encrypted on creation.</p>\",\
-          \"locationName\":\"encrypted\"\
-        },\
         \"DeleteOnTermination\":{\
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Indicates whether the EBS volume is deleted on instance termination.</p>\",\
@@ -11100,10 +11667,6 @@
           \"shape\":\"Integer\",\
           \"documentation\":\"<p>The number of I/O operations per second (IOPS) that the volume supports. For <code>io1</code>, this represents the number of IOPS that are provisioned for the volume. For <code>gp2</code>, this represents the baseline performance of the volume and the rate at which the volume accumulates I/O credits for bursting. For more information about General Purpose SSD baseline performance, I/O credits, and bursting, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Constraint: Range is 100-20000 IOPS for <code>io1</code> volumes and 100-10000 IOPS for <code>gp2</code> volumes.</p> <p>Condition: This parameter is required for requests to create <code>io1</code> volumes; it is not used in requests to create <code>gp2</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code> volumes.</p>\",\
           \"locationName\":\"iops\"\
-        },\
-        \"KmsKeyId\":{\
-          \"shape\":\"String\",\
-          \"documentation\":\"<p>Identifier (key ID, key alias, ID ARN, or alias ARN) for a user-managed CMK under which the EBS volume is encrypted.</p> <p>Note: This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\\\">RunInstances</a>, <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\\\">RequestSpotFleet</a>, and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\\\">RequestSpotInstances</a>.</p>\"\
         },\
         \"SnapshotId\":{\
           \"shape\":\"String\",\
@@ -11119,6 +11682,15 @@
           \"shape\":\"VolumeType\",\
           \"documentation\":\"<p>The volume type: <code>gp2</code>, <code>io1</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code>.</p> <p>Default: <code>standard</code> </p>\",\
           \"locationName\":\"volumeType\"\
+        },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the EBS volume is encrypted. Encrypted volumes can only be attached to instances that support Amazon EBS encryption. </p> <p>If you are creating a volume from a snapshot, you cannot specify an encryption value. This is because only blank volumes can be encrypted on creation. If you are creating a snapshot from an existing EBS volume, you cannot specify an encryption value that differs from that of the EBS volume. We recommend that you omit the encryption value from the block device mappings when creating an image from an instance.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Identifier (key ID, key alias, ID ARN, or alias ARN) for a user-managed CMK under which the EBS volume is encrypted.</p> <p>This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\\\">RunInstances</a>, <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\\\">RequestSpotFleet</a>, and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\\\">RequestSpotInstances</a>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes a block device for an EBS volume.</p>\"\
@@ -11170,16 +11742,16 @@
       \"members\":{\
         \"Attachments\":{\
           \"shape\":\"InternetGatewayAttachmentList\",\
-          \"documentation\":\"<p>Information about the attachment of the egress-only Internet gateway.</p>\",\
+          \"documentation\":\"<p>Information about the attachment of the egress-only internet gateway.</p>\",\
           \"locationName\":\"attachmentSet\"\
         },\
         \"EgressOnlyInternetGatewayId\":{\
           \"shape\":\"EgressOnlyInternetGatewayId\",\
-          \"documentation\":\"<p>The ID of the egress-only Internet gateway.</p>\",\
+          \"documentation\":\"<p>The ID of the egress-only internet gateway.</p>\",\
           \"locationName\":\"egressOnlyInternetGatewayId\"\
         }\
       },\
-      \"documentation\":\"<p>Describes an egress-only Internet gateway.</p>\"\
+      \"documentation\":\"<p>Describes an egress-only internet gateway.</p>\"\
     },\
     \"EgressOnlyInternetGatewayId\":{\"type\":\"string\"},\
     \"EgressOnlyInternetGatewayIdList\":{\
@@ -11386,8 +11958,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the VPC.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for EnableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"EnableVpcClassicLinkDnsSupportResult\":{\
       \"type\":\"structure\",\
@@ -11397,8 +11968,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of EnableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"EnableVpcClassicLinkRequest\":{\
       \"type\":\"structure\",\
@@ -11414,8 +11984,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for EnableVpcClassicLink.</p>\"\
+      }\
     },\
     \"EnableVpcClassicLinkResult\":{\
       \"type\":\"structure\",\
@@ -11425,8 +11994,14 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of EnableVpcClassicLink.</p>\"\
+      }\
+    },\
+    \"EndDateType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"unlimited\",\
+        \"limited\"\
+      ]\
     },\
     \"EventCode\":{\
       \"type\":\"string\",\
@@ -11714,6 +12289,11 @@
           \"documentation\":\"<p>The configuration of Spot Instances in an EC2 Fleet.</p>\",\
           \"locationName\":\"spotOptions\"\
         },\
+        \"OnDemandOptions\":{\
+          \"shape\":\"OnDemandOptions\",\
+          \"documentation\":\"<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>\",\
+          \"locationName\":\"onDemandOptions\"\
+        },\
         \"Tags\":{\
           \"shape\":\"TagList\",\
           \"documentation\":\"<p>The tags for an EC2 Fleet resource.</p>\",\
@@ -11814,6 +12394,11 @@
           \"shape\":\"Double\",\
           \"documentation\":\"<p>The number of units provided by the specified instance type.</p>\",\
           \"locationName\":\"weightedCapacity\"\
+        },\
+        \"Priority\":{\
+          \"shape\":\"Double\",\
+          \"documentation\":\"<p>The priority for the launch template override. If <b>AllocationStrategy</b> is set to <code>prioritized</code>, EC2 Fleet uses priority to determine which launch template override to use first in fulfilling On-Demand capacity. The highest priority is launched first. Valid values are whole numbers starting at <code>0</code>. The lower the number, the higher the priority. If no number is set, the override has the lowest priority.</p>\",\
+          \"locationName\":\"priority\"\
         }\
       },\
       \"documentation\":\"<p>Describes overrides for a launch template.</p>\"\
@@ -11855,6 +12440,10 @@
         \"WeightedCapacity\":{\
           \"shape\":\"Double\",\
           \"documentation\":\"<p>The number of units provided by the specified instance type.</p>\"\
+        },\
+        \"Priority\":{\
+          \"shape\":\"Double\",\
+          \"documentation\":\"<p>The priority for the launch template override. If <b>AllocationStrategy</b> is set to <code>prioritized</code>, EC2 Fleet uses priority to determine which launch template override to use first in fulfilling On-Demand capacity. The highest priority is launched first. Valid values are whole numbers starting at <code>0</code>. The lower the number, the higher the priority. If no number is set, the launch template override has the lowest priority.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes overrides for a launch template.</p>\"\
@@ -11874,7 +12463,7 @@
         },\
         \"Version\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The version number. By default, the default version of the launch template is used.</p>\",\
+          \"documentation\":\"<p>The version number of the launch template. You must specify a version number.</p>\",\
           \"locationName\":\"version\"\
         }\
       },\
@@ -11897,6 +12486,13 @@
         }\
       },\
       \"documentation\":\"<p>The launch template to use. You must specify either the launch template ID or launch template name in the request. </p>\"\
+    },\
+    \"FleetOnDemandAllocationStrategy\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"lowest-price\",\
+        \"prioritized\"\
+      ]\
     },\
     \"FleetSet\":{\
       \"type\":\"list\",\
@@ -11935,7 +12531,7 @@
         },\
         \"DeliverLogsErrorMessage\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Information about the error that occurred. <code>Rate limited</code> indicates that CloudWatch logs throttling has been applied for one or more network interfaces, or that you've reached the limit on the number of CloudWatch Logs log groups that you can create. <code>Access error</code> indicates that the IAM role associated with the flow log does not have sufficient permissions to publish to CloudWatch Logs. <code>Unknown error</code> indicates an internal error.</p>\",\
+          \"documentation\":\"<p>Information about the error that occurred. <code>Rate limited</code> indicates that CloudWatch Logs throttling has been applied for one or more network interfaces, or that you've reached the limit on the number of log groups that you can create. <code>Access error</code> indicates that the IAM role associated with the flow log does not have sufficient permissions to publish to CloudWatch Logs. <code>Unknown error</code> indicates an internal error.</p>\",\
           \"locationName\":\"deliverLogsErrorMessage\"\
         },\
         \"DeliverLogsPermissionArn\":{\
@@ -11972,6 +12568,16 @@
           \"shape\":\"TrafficType\",\
           \"documentation\":\"<p>The type of traffic captured for the flow log.</p>\",\
           \"locationName\":\"trafficType\"\
+        },\
+        \"LogDestinationType\":{\
+          \"shape\":\"LogDestinationType\",\
+          \"documentation\":\"<p>Specifies the type of destination to which the flow log data is published. Flow log data can be published to CloudWatch Logs or Amazon S3.</p>\",\
+          \"locationName\":\"logDestinationType\"\
+        },\
+        \"LogDestination\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Specifies the destination to which the flow log data is published. Flow log data can be published to an CloudWatch Logs log group or an Amazon S3 bucket. If the flow log publishes to CloudWatch Logs, this element indicates the Amazon Resource Name (ARN) of the CloudWatch Logs log group to which the data is published. If the flow log publishes to Amazon S3, this element indicates the ARN of the Amazon S3 bucket to which the data is published.</p>\",\
+          \"locationName\":\"logDestination\"\
         }\
       },\
       \"documentation\":\"<p>Describes a flow log.</p>\"\
@@ -12235,7 +12841,7 @@
       \"members\":{\
         \"HostIdSet\":{\
           \"shape\":\"RequestHostIdSet\",\
-          \"documentation\":\"<p>The ID/s of the Dedicated Host/s that the reservation will be associated with.</p>\"\
+          \"documentation\":\"<p>The IDs of the Dedicated Hosts with which the reservation is associated.</p>\"\
         },\
         \"OfferingId\":{\
           \"shape\":\"String\",\
@@ -12253,7 +12859,7 @@
         },\
         \"Purchase\":{\
           \"shape\":\"PurchaseSet\",\
-          \"documentation\":\"<p>The purchase information of the Dedicated Host Reservation and the Dedicated Hosts associated with it.</p>\",\
+          \"documentation\":\"<p>The purchase information of the Dedicated Host reservation and the Dedicated Hosts associated with it.</p>\",\
           \"locationName\":\"purchase\"\
         },\
         \"TotalHourlyPrice\":{\
@@ -12497,7 +13103,7 @@
           \"locationName\":\"timestamp\"\
         }\
       },\
-      \"documentation\":\"<p>Describes an event in the history of the EC2 Fleet.</p>\"\
+      \"documentation\":\"<p>Describes an event in the history of an EC2 Fleet.</p>\"\
     },\
     \"HistoryRecordSet\":{\
       \"type\":\"list\",\
@@ -12533,7 +13139,7 @@
         },\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\",\
           \"locationName\":\"clientToken\"\
         },\
         \"HostId\":{\
@@ -12570,6 +13176,11 @@
           \"shape\":\"DateTime\",\
           \"documentation\":\"<p>The time that the Dedicated Host was released.</p>\",\
           \"locationName\":\"releaseTime\"\
+        },\
+        \"Tags\":{\
+          \"shape\":\"TagList\",\
+          \"documentation\":\"<p>Any tags assigned to the Dedicated Host.</p>\",\
+          \"locationName\":\"tagSet\"\
         }\
       },\
       \"documentation\":\"<p>Describes the properties of the Dedicated Host.</p>\"\
@@ -13183,9 +13794,17 @@
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Specifies whether the destination AMI of the imported image should be encrypted. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
         \"Hypervisor\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The target hypervisor platform.</p> <p>Valid values: <code>xen</code> </p>\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>An identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) to use when creating the encrypted AMI. This parameter is only required if you want to use a non-default CMK; if this parameter is not specified, the default CMK for EBS is used. If a <code>KmsKeyId</code> is specified, the <code>Encrypted</code> flag must also be set. </p> <p>The CMK identifier may be provided in any of the following formats: </p> <ul> <li> <p>Key ID</p> </li> <li> <p>Key alias, in the form <code>alias/<i>ExampleAlias</i> </code> </p> </li> <li> <p>ARN using key ID. The ID ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>key</code> namespace, and then the CMK ID. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:key/<i>abcd1234-a123-456a-a12b-a123b4cd56ef</i>.</p> </li> <li> <p>ARN using key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>alias</code> namespace, and then the CMK alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>. </p> </li> </ul> <p>AWS parses <code>KmsKeyId</code> asynchronously, meaning that the action you call may appear to complete even though you provided an invalid identifier. This action will eventually report failure. </p> <p>The specified CMK must exist in the region that the AMI is being copied to. </p>\"\
         },\
         \"LicenseType\":{\
           \"shape\":\"String\",\
@@ -13215,6 +13834,11 @@
           \"documentation\":\"<p>A description of the import task.</p>\",\
           \"locationName\":\"description\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the AMI is encypted.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
         \"Hypervisor\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The target hypervisor of the import task.</p>\",\
@@ -13229,6 +13853,11 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The task ID of the import image task.</p>\",\
           \"locationName\":\"importTaskId\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to create the encrypted AMI.</p>\",\
+          \"locationName\":\"kmsKeyId\"\
         },\
         \"LicenseType\":{\
           \"shape\":\"String\",\
@@ -13276,6 +13905,11 @@
           \"documentation\":\"<p>A description of the import task.</p>\",\
           \"locationName\":\"description\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the image is encrypted.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
         \"Hypervisor\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The target hypervisor for the import task.</p> <p>Valid values: <code>xen</code> </p>\",\
@@ -13290,6 +13924,11 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the import image task.</p>\",\
           \"locationName\":\"importTaskId\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to create the encrypted image.</p>\",\
+          \"locationName\":\"kmsKeyId\"\
         },\
         \"LicenseType\":{\
           \"shape\":\"String\",\
@@ -13463,13 +14102,6 @@
     },\
     \"ImportInstanceVolumeDetailItem\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"AvailabilityZone\",\
-        \"BytesConverted\",\
-        \"Image\",\
-        \"Status\",\
-        \"Volume\"\
-      ],\
       \"members\":{\
         \"AvailabilityZone\":{\
           \"shape\":\"String\",\
@@ -13538,8 +14170,7 @@
           \"documentation\":\"<p>The public key. For API calls, the text must be base64-encoded. For command line tools, base64 encoding is performed for you.</p>\",\
           \"locationName\":\"publicKeyMaterial\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ImportKeyPair.</p>\"\
+      }\
     },\
     \"ImportKeyPairResult\":{\
       \"type\":\"structure\",\
@@ -13554,8 +14185,7 @@
           \"documentation\":\"<p>The key pair name you provided.</p>\",\
           \"locationName\":\"keyName\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ImportKeyPair.</p>\"\
+      }\
     },\
     \"ImportSnapshotRequest\":{\
       \"type\":\"structure\",\
@@ -13579,6 +14209,14 @@
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Specifies whether the destination snapshot of the imported image should be encrypted. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>An identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) to use when creating the encrypted snapshot. This parameter is only required if you want to use a non-default CMK; if this parameter is not specified, the default CMK for EBS is used. If a <code>KmsKeyId</code> is specified, the <code>Encrypted</code> flag must also be set. </p> <p>The CMK identifier may be provided in any of the following formats: </p> <ul> <li> <p>Key ID</p> </li> <li> <p>Key alias, in the form <code>alias/<i>ExampleAlias</i> </code> </p> </li> <li> <p>ARN using key ID. The ID ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>key</code> namespace, and then the CMK ID. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:key/<i>abcd1234-a123-456a-a12b-a123b4cd56ef</i>.</p> </li> <li> <p>ARN using key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>alias</code> namespace, and then the CMK alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>. </p> </li> </ul> <p>AWS parses <code>KmsKeyId</code> asynchronously, meaning that the action you call may appear to complete even though you provided an invalid identifier. This action will eventually report failure. </p> <p>The specified CMK must exist in the region that the snapshot is being copied to. </p>\"\
         },\
         \"RoleName\":{\
           \"shape\":\"String\",\
@@ -13923,6 +14561,16 @@
           \"shape\":\"CpuOptions\",\
           \"documentation\":\"<p>The CPU options for the instance.</p>\",\
           \"locationName\":\"cpuOptions\"\
+        },\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationId\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"CapacityReservationSpecificationResponse\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\",\
+          \"locationName\":\"capacityReservationSpecification\"\
         }\
       },\
       \"documentation\":\"<p>Describes an instance.</p>\"\
@@ -14141,7 +14789,7 @@
           \"locationName\":\"cpuCredits\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 instance. </p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 or T3 instance. </p>\"\
     },\
     \"InstanceCreditSpecificationList\":{\
       \"type\":\"list\",\
@@ -14169,7 +14817,7 @@
           \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 instance.</p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 or T3 instance.</p>\"\
     },\
     \"InstanceExportDetails\":{\
       \"type\":\"structure\",\
@@ -14278,6 +14926,13 @@
         }\
       },\
       \"documentation\":\"<p>Describes the market (purchasing) option for the instances.</p>\"\
+    },\
+    \"InstanceMatchCriteria\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"open\",\
+        \"targeted\"\
+      ]\
     },\
     \"InstanceMonitoring\":{\
       \"type\":\"structure\",\
@@ -14555,7 +15210,7 @@
       \"members\":{\
         \"Code\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The low byte represents the state. The high byte is an opaque internal value and should be ignored.</p> <ul> <li> <p> <code>0</code> : <code>pending</code> </p> </li> <li> <p> <code>16</code> : <code>running</code> </p> </li> <li> <p> <code>32</code> : <code>shutting-down</code> </p> </li> <li> <p> <code>48</code> : <code>terminated</code> </p> </li> <li> <p> <code>64</code> : <code>stopping</code> </p> </li> <li> <p> <code>80</code> : <code>stopped</code> </p> </li> </ul>\",\
+          \"documentation\":\"<p>The low byte represents the state. The high byte is used for internal purposes and should be ignored.</p> <ul> <li> <p> <code>0</code> : <code>pending</code> </p> </li> <li> <p> <code>16</code> : <code>running</code> </p> </li> <li> <p> <code>32</code> : <code>shutting-down</code> </p> </li> <li> <p> <code>48</code> : <code>terminated</code> </p> </li> <li> <p> <code>64</code> : <code>stopping</code> </p> </li> <li> <p> <code>80</code> : <code>stopped</code> </p> </li> </ul>\",\
           \"locationName\":\"code\"\
         },\
         \"Name\":{\
@@ -14736,6 +15391,13 @@
         \"t2.large\",\
         \"t2.xlarge\",\
         \"t2.2xlarge\",\
+        \"t3.nano\",\
+        \"t3.micro\",\
+        \"t3.small\",\
+        \"t3.medium\",\
+        \"t3.large\",\
+        \"t3.xlarge\",\
+        \"t3.2xlarge\",\
         \"m1.small\",\
         \"m1.medium\",\
         \"m1.large\",\
@@ -14765,6 +15427,30 @@
         \"r4.4xlarge\",\
         \"r4.8xlarge\",\
         \"r4.16xlarge\",\
+        \"r5.large\",\
+        \"r5.xlarge\",\
+        \"r5.2xlarge\",\
+        \"r5.4xlarge\",\
+        \"r5.8xlarge\",\
+        \"r5.12xlarge\",\
+        \"r5.16xlarge\",\
+        \"r5.24xlarge\",\
+        \"r5.metal\",\
+        \"r5a.large\",\
+        \"r5a.xlarge\",\
+        \"r5a.2xlarge\",\
+        \"r5a.4xlarge\",\
+        \"r5a.12xlarge\",\
+        \"r5a.24xlarge\",\
+        \"r5d.large\",\
+        \"r5d.xlarge\",\
+        \"r5d.2xlarge\",\
+        \"r5d.4xlarge\",\
+        \"r5d.8xlarge\",\
+        \"r5d.12xlarge\",\
+        \"r5d.16xlarge\",\
+        \"r5d.24xlarge\",\
+        \"r5d.metal\",\
         \"x1.16xlarge\",\
         \"x1.32xlarge\",\
         \"x1e.xlarge\",\
@@ -14817,6 +15503,7 @@
         \"g3.4xlarge\",\
         \"g3.8xlarge\",\
         \"g3.16xlarge\",\
+        \"g3s.xlarge\",\
         \"cg1.4xlarge\",\
         \"p2.xlarge\",\
         \"p2.8xlarge\",\
@@ -14829,6 +15516,7 @@
         \"d2.4xlarge\",\
         \"d2.8xlarge\",\
         \"f1.2xlarge\",\
+        \"f1.4xlarge\",\
         \"f1.16xlarge\",\
         \"m5.large\",\
         \"m5.xlarge\",\
@@ -14836,10 +15524,31 @@
         \"m5.4xlarge\",\
         \"m5.12xlarge\",\
         \"m5.24xlarge\",\
+        \"m5a.large\",\
+        \"m5a.xlarge\",\
+        \"m5a.2xlarge\",\
+        \"m5a.4xlarge\",\
+        \"m5a.12xlarge\",\
+        \"m5a.24xlarge\",\
+        \"m5d.large\",\
+        \"m5d.xlarge\",\
+        \"m5d.2xlarge\",\
+        \"m5d.4xlarge\",\
+        \"m5d.12xlarge\",\
+        \"m5d.24xlarge\",\
         \"h1.2xlarge\",\
         \"h1.4xlarge\",\
         \"h1.8xlarge\",\
-        \"h1.16xlarge\"\
+        \"h1.16xlarge\",\
+        \"z1d.large\",\
+        \"z1d.xlarge\",\
+        \"z1d.2xlarge\",\
+        \"z1d.3xlarge\",\
+        \"z1d.6xlarge\",\
+        \"z1d.12xlarge\",\
+        \"u-6tb1.metal\",\
+        \"u-9tb1.metal\",\
+        \"u-12tb1.metal\"\
       ]\
     },\
     \"InstanceTypeList\":{\
@@ -14859,28 +15568,28 @@
       \"members\":{\
         \"Attachments\":{\
           \"shape\":\"InternetGatewayAttachmentList\",\
-          \"documentation\":\"<p>Any VPCs attached to the Internet gateway.</p>\",\
+          \"documentation\":\"<p>Any VPCs attached to the internet gateway.</p>\",\
           \"locationName\":\"attachmentSet\"\
         },\
         \"InternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the Internet gateway.</p>\",\
+          \"documentation\":\"<p>The ID of the internet gateway.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         },\
         \"Tags\":{\
           \"shape\":\"TagList\",\
-          \"documentation\":\"<p>Any tags assigned to the Internet gateway.</p>\",\
+          \"documentation\":\"<p>Any tags assigned to the internet gateway.</p>\",\
           \"locationName\":\"tagSet\"\
         }\
       },\
-      \"documentation\":\"<p>Describes an Internet gateway.</p>\"\
+      \"documentation\":\"<p>Describes an internet gateway.</p>\"\
     },\
     \"InternetGatewayAttachment\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"State\":{\
           \"shape\":\"AttachmentStatus\",\
-          \"documentation\":\"<p>The current state of the attachment. For an Internet gateway, the state is <code>available</code> when attached to a VPC; otherwise, this value is not returned.</p>\",\
+          \"documentation\":\"<p>The current state of the attachment. For an internet gateway, the state is <code>available</code> when attached to a VPC; otherwise, this value is not returned.</p>\",\
           \"locationName\":\"state\"\
         },\
         \"VpcId\":{\
@@ -14889,7 +15598,7 @@
           \"locationName\":\"vpcId\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the attachment of a VPC to an Internet gateway or an egress-only Internet gateway.</p>\"\
+      \"documentation\":\"<p>Describes the attachment of a VPC to an internet gateway or an egress-only internet gateway.</p>\"\
     },\
     \"InternetGatewayAttachmentList\":{\
       \"type\":\"list\",\
@@ -14930,7 +15639,7 @@
         },\
         \"PrefixListIds\":{\
           \"shape\":\"PrefixListIdList\",\
-          \"documentation\":\"<p>(EC2-VPC only; valid for <a>AuthorizeSecurityGroupEgress</a>, <a>RevokeSecurityGroupEgress</a> and <a>DescribeSecurityGroups</a> only) One or more prefix list IDs for an AWS service. In an <a>AuthorizeSecurityGroupEgress</a> request, this is the AWS service that you want to access through a VPC endpoint from instances associated with the security group.</p>\",\
+          \"documentation\":\"<p>[EC2-VPC only] One or more prefix list IDs for an AWS service. With <a>AuthorizeSecurityGroupEgress</a>, this is the AWS service that you want to access through a VPC endpoint from instances associated with the security group.</p>\",\
           \"locationName\":\"prefixListIds\"\
         },\
         \"ToPort\":{\
@@ -15310,6 +16019,36 @@
         \"locationName\":\"BlockDeviceMapping\"\
       }\
     },\
+    \"LaunchTemplateCapacityReservationSpecificationRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTarget\",\
+          \"documentation\":\"<p>Information about the target Capacity Reservation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an instance's Capacity Reservation targeting option. You can specify only one option at a time. Use the <code>CapacityReservationPreference</code> parameter to configure the instance to run in On-Demand capacity or to run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). Use the <code>CapacityReservationTarget</code> parameter to explicitly target a specific Capacity Reservation.</p>\"\
+    },\
+    \"LaunchTemplateCapacityReservationSpecificationResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>\",\
+          \"locationName\":\"capacityReservationPreference\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTargetResponse\",\
+          \"documentation\":\"<p>Information about the target Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationTarget\"\
+        }\
+      },\
+      \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
+    },\
     \"LaunchTemplateConfig\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -15332,6 +16071,36 @@
         \"shape\":\"LaunchTemplateConfig\",\
         \"locationName\":\"item\"\
       }\
+    },\
+    \"LaunchTemplateCpuOptions\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CoreCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of CPU cores for the instance.</p>\",\
+          \"locationName\":\"coreCount\"\
+        },\
+        \"ThreadsPerCore\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of threads per CPU core.</p>\",\
+          \"locationName\":\"threadsPerCore\"\
+        }\
+      },\
+      \"documentation\":\"<p>The CPU options for the instance.</p>\"\
+    },\
+    \"LaunchTemplateCpuOptionsRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CoreCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of CPU cores for the instance.</p>\"\
+        },\
+        \"ThreadsPerCore\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of threads per CPU core. To disable Intel Hyper-Threading Technology for the instance, specify a value of 1. Otherwise, specify the default value of 2.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The CPU options for the instance. Both the core count and threads per core must be specified in the request.</p>\"\
     },\
     \"LaunchTemplateEbsBlockDevice\":{\
       \"type\":\"structure\",\
@@ -15654,6 +16423,11 @@
           \"shape\":\"Double\",\
           \"documentation\":\"<p>The number of units provided by the specified instance type.</p>\",\
           \"locationName\":\"weightedCapacity\"\
+        },\
+        \"Priority\":{\
+          \"shape\":\"Double\",\
+          \"documentation\":\"<p>The priority for the launch template override. If <b>OnDemandAllocationStrategy</b> is set to <code>prioritized</code>, Spot Fleet uses priority to determine which launch template override to use first in fulfilling On-Demand capacity. The highest priority is launched first. Valid values are whole numbers starting at <code>0</code>. The lower the number, the higher the priority. If no number is set, the launch template override has the lowest priority.</p>\",\
+          \"locationName\":\"priority\"\
         }\
       },\
       \"documentation\":\"<p>Describes overrides for a launch template.</p>\"\
@@ -15841,7 +16615,7 @@
       \"members\":{\
         \"ResourceType\":{\
           \"shape\":\"ResourceType\",\
-          \"documentation\":\"<p>The type of resource to tag. Currently, the resource types that support tagging on creation are <code>instance</code> and <code>volume</code>.</p>\"\
+          \"documentation\":\"<p>The type of resource to tag. Currently, the resource types that support tagging on creation are <code>instance</code> and <code>volume</code>. To tag a resource after it has been created, see <a>CreateTags</a>.</p>\"\
         },\
         \"Tags\":{\
           \"shape\":\"TagList\",\
@@ -16024,6 +16798,13 @@
       },\
       \"documentation\":\"<p>Describes a load permission.</p>\"\
     },\
+    \"LogDestinationType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"cloud-watch-logs\",\
+        \"s3\"\
+      ]\
+    },\
     \"Long\":{\"type\":\"long\"},\
     \"MarketType\":{\
       \"type\":\"string\",\
@@ -16033,6 +16814,42 @@
       \"type\":\"integer\",\
       \"max\":255,\
       \"min\":5\
+    },\
+    \"ModifyCapacityReservationRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"CapacityReservationId\"],\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\"\
+        },\
+        \"InstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of instances for which to reserve capacity.</p>\"\
+        },\
+        \"EndDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p> <p>The Capacity Reservation is cancelled within an hour from the specified time. For example, if you specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.</p> <p>You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>. Omit <code>EndDate</code> if <code>EndDateType</code> is <code>unlimited</code>.</p>\"\
+        },\
+        \"EndDateType\":{\
+          \"shape\":\"EndDateType\",\
+          \"documentation\":\"<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it. Do not provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>unlimited</code>.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time. You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>.</p> </li> </ul>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"ModifyCapacityReservationResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Return\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation.</p>\",\
+          \"locationName\":\"return\"\
+        }\
+      }\
     },\
     \"ModifyFleetRequest\":{\
       \"type\":\"structure\",\
@@ -16064,7 +16881,7 @@
       \"members\":{\
         \"Return\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Is <code>true</code> if the request succeeds, and an error otherwise. </p>\",\
+          \"documentation\":\"<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>\",\
           \"locationName\":\"return\"\
         }\
       }\
@@ -16142,11 +16959,10 @@
         },\
         \"HostIds\":{\
           \"shape\":\"RequestHostIdList\",\
-          \"documentation\":\"<p>The host IDs of the Dedicated Hosts you want to modify.</p>\",\
+          \"documentation\":\"<p>The IDs of the Dedicated Hosts to modify.</p>\",\
           \"locationName\":\"hostId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyHosts.</p>\"\
+      }\
     },\
     \"ModifyHostsResult\":{\
       \"type\":\"structure\",\
@@ -16161,8 +16977,7 @@
           \"documentation\":\"<p>The IDs of the Dedicated Hosts that could not be modified. Check whether the setting you requested can be used.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ModifyHosts.</p>\"\
+      }\
     },\
     \"ModifyIdFormatRequest\":{\
       \"type\":\"structure\",\
@@ -16345,6 +17160,37 @@
       },\
       \"documentation\":\"<p>Contains the parameters for ModifyInstanceAttribute.</p>\"\
     },\
+    \"ModifyInstanceCapacityReservationAttributesRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"InstanceId\",\
+        \"CapacityReservationSpecification\"\
+      ],\
+      \"members\":{\
+        \"InstanceId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the instance to be modified.</p>\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"CapacityReservationSpecification\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"ModifyInstanceCapacityReservationAttributesResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Return\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
+          \"locationName\":\"return\"\
+        }\
+      }\
+    },\
     \"ModifyInstanceCreditSpecificationRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"InstanceCreditSpecifications\"],\
@@ -16407,8 +17253,7 @@
           \"documentation\":\"<p>The tenancy for the instance.</p>\",\
           \"locationName\":\"tenancy\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyInstancePlacement.</p>\"\
+      }\
     },\
     \"ModifyInstancePlacementResult\":{\
       \"type\":\"structure\",\
@@ -16418,8 +17263,7 @@
           \"documentation\":\"<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ModifyInstancePlacement.</p>\"\
+      }\
     },\
     \"ModifyLaunchTemplateRequest\":{\
       \"type\":\"structure\",\
@@ -16536,7 +17380,7 @@
       \"members\":{\
         \"Attribute\":{\
           \"shape\":\"SnapshotAttributeName\",\
-          \"documentation\":\"<p>The snapshot attribute to modify.</p> <note> <p>Only volume creation permissions may be modified at the customer level.</p> </note>\"\
+          \"documentation\":\"<p>The snapshot attribute to modify. Only volume creation permissions can be modified.</p>\"\
         },\
         \"CreateVolumePermission\":{\
           \"shape\":\"CreateVolumePermissionModifications\",\
@@ -16618,8 +17462,7 @@
           \"documentation\":\"<p>The ID of the subnet.</p>\",\
           \"locationName\":\"subnetId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifySubnetAttribute.</p>\"\
+      }\
     },\
     \"ModifyVolumeAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -16655,15 +17498,15 @@
         },\
         \"Size\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>Target size in GiB of the volume to be modified. Target volume size must be greater than or equal to than the existing size of the volume. For information about available EBS volume sizes, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html</a>.</p> <p>Default: If no size is specified, the existing size is retained. </p>\"\
+          \"documentation\":\"<p>The target size of the volume, in GiB. The target volume size must be greater than or equal to than the existing size of the volume. For information about available EBS volume sizes, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a>.</p> <p>Default: If no size is specified, the existing size is retained.</p>\"\
         },\
         \"VolumeType\":{\
           \"shape\":\"VolumeType\",\
-          \"documentation\":\"<p>Target EBS volume type of the volume to be modified</p> <p> The API does not support modifications for volume type <code>standard</code>. You also cannot change the type of a volume to <code>standard</code>. </p> <p>Default: If no type is specified, the existing type is retained. </p>\"\
+          \"documentation\":\"<p>The target EBS volume type of the volume.</p> <p>Default: If no type is specified, the existing type is retained.</p>\"\
         },\
         \"Iops\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>Target IOPS rate of the volume to be modified.</p> <p>Only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information about <code>io1</code> IOPS configuration, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops\\\">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops</a>.</p> <p>Default: If no IOPS value is specified, the existing value is retained. </p>\"\
+          \"documentation\":\"<p>The target IOPS rate of the volume.</p> <p>This is only valid for Provisioned IOPS SSD (<code>io1</code>) volumes. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html#EBSVolumeTypes_piops\\\">Provisioned IOPS SSD (io1) Volumes</a>.</p> <p>Default: If no IOPS value is specified, the existing value is retained.</p>\"\
         }\
       }\
     },\
@@ -16672,7 +17515,7 @@
       \"members\":{\
         \"VolumeModification\":{\
           \"shape\":\"VolumeModification\",\
-          \"documentation\":\"<p>A <a>VolumeModification</a> object.</p>\",\
+          \"documentation\":\"<p>Information about the volume modification.</p>\",\
           \"locationName\":\"volumeModification\"\
         }\
       }\
@@ -16687,15 +17530,14 @@
         },\
         \"EnableDnsSupport\":{\
           \"shape\":\"AttributeBooleanValue\",\
-          \"documentation\":\"<p>Indicates whether the DNS resolution is supported for the VPC. If enabled, queries to the Amazon provided DNS server at the 169.254.169.253 IP address, or the reserved IP address at the base of the VPC network range \\\"plus two\\\" will succeed. If disabled, the Amazon provided DNS service in the VPC that resolves public DNS hostnames to IP addresses is not enabled.</p> <p>You cannot modify the DNS resolution and DNS hostnames attributes in the same request. Use separate requests for each attribute.</p>\"\
+          \"documentation\":\"<p>Indicates whether the DNS resolution is supported for the VPC. If enabled, queries to the Amazon provided DNS server at the 169.254.169.253 IP address, or the reserved IP address at the base of the VPC network range \\\"plus two\\\" succeed. If disabled, the Amazon provided DNS service in the VPC that resolves public DNS hostnames to IP addresses is not enabled.</p> <p>You cannot modify the DNS resolution and DNS hostnames attributes in the same request. Use separate requests for each attribute.</p>\"\
         },\
         \"VpcId\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyVpcAttribute.</p>\"\
+      }\
     },\
     \"ModifyVpcEndpointConnectionNotificationRequest\":{\
       \"type\":\"structure\",\
@@ -16848,11 +17690,11 @@
         },\
         \"AddAllowedPrincipals\":{\
           \"shape\":\"ValueStringList\",\
-          \"documentation\":\"<p>One or more Amazon Resource Names (ARNs) of principals for which to allow permission. Specify <code>*</code> to allow all principals.</p>\"\
+          \"documentation\":\"<p>The Amazon Resource Names (ARN) of one or more principals. Permissions are granted to the principals in this list. To grant permissions to all principals, specify an asterisk (*).</p>\"\
         },\
         \"RemoveAllowedPrincipals\":{\
           \"shape\":\"ValueStringList\",\
-          \"documentation\":\"<p>One or more Amazon Resource Names (ARNs) of principals for which to remove permission.</p>\"\
+          \"documentation\":\"<p>The Amazon Resource Names (ARN) of one or more principals. Permissions are revoked for principals in this list.</p>\"\
         }\
       }\
     },\
@@ -16876,7 +17718,7 @@
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
         \"RequesterPeeringConnectionOptions\":{\
           \"shape\":\"PeeringConnectionOptionsRequest\",\
@@ -16920,10 +17762,9 @@
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyVpcTenancy.</p>\"\
+      }\
     },\
     \"ModifyVpcTenancyResult\":{\
       \"type\":\"structure\",\
@@ -16933,8 +17774,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ModifyVpcTenancy.</p>\"\
+      }\
     },\
     \"MonitorInstancesRequest\":{\
       \"type\":\"structure\",\
@@ -16998,8 +17838,7 @@
           \"documentation\":\"<p>The Elastic IP address.</p>\",\
           \"locationName\":\"publicIp\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for MoveAddressToVpc.</p>\"\
+      }\
     },\
     \"MoveAddressToVpcResult\":{\
       \"type\":\"structure\",\
@@ -17014,8 +17853,7 @@
           \"documentation\":\"<p>The status of the move of the IP address.</p>\",\
           \"locationName\":\"status\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of MoveAddressToVpc.</p>\"\
+      }\
     },\
     \"MoveStatus\":{\
       \"type\":\"string\",\
@@ -17252,7 +18090,7 @@
         },\
         \"Protocol\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The protocol. A value of <code>-1</code> means all protocols.</p>\",\
+          \"documentation\":\"<p>The protocol number. A value of \\\"-1\\\" means all protocols.</p>\",\
           \"locationName\":\"protocol\"\
         },\
         \"RuleAction\":{\
@@ -17696,6 +18534,34 @@
         \"All Upfront\"\
       ]\
     },\
+    \"OnDemandAllocationStrategy\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"lowestPrice\",\
+        \"prioritized\"\
+      ]\
+    },\
+    \"OnDemandOptions\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"AllocationStrategy\":{\
+          \"shape\":\"FleetOnDemandAllocationStrategy\",\
+          \"documentation\":\"<p>The order of the launch template overrides to use in fulfilling On-Demand capacity. If you specify <code>lowest-price</code>, EC2 Fleet uses price to determine the order, launching the lowest price first. If you specify <code>prioritized</code>, EC2 Fleet uses the priority that you assigned to each launch template override, launching the highest priority first. If you do not specify a value, EC2 Fleet defaults to <code>lowest-price</code>.</p>\",\
+          \"locationName\":\"allocationStrategy\"\
+        }\
+      },\
+      \"documentation\":\"<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>\"\
+    },\
+    \"OnDemandOptionsRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"AllocationStrategy\":{\
+          \"shape\":\"FleetOnDemandAllocationStrategy\",\
+          \"documentation\":\"<p>The order of the launch template overrides to use in fulfilling On-Demand capacity. If you specify <code>lowest-price</code>, EC2 Fleet uses price to determine the order, launching the lowest price first. If you specify <code>prioritized</code>, EC2 Fleet uses the priority that you assigned to each launch template override, launching the highest priority first. If you do not specify a value, EC2 Fleet defaults to <code>lowest-price</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>\"\
+    },\
     \"OperationType\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -17750,12 +18616,12 @@
         },\
         \"AllowEgressFromLocalClassicLinkToRemoteVpc\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC via ClassicLink to instances in a peer VPC.</p>\",\
+          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC using ClassicLink to instances in a peer VPC.</p>\",\
           \"locationName\":\"allowEgressFromLocalClassicLinkToRemoteVpc\"\
         },\
         \"AllowEgressFromLocalVpcToRemoteClassicLink\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC via ClassicLink.</p>\",\
+          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC using ClassicLink.</p>\",\
           \"locationName\":\"allowEgressFromLocalVpcToRemoteClassicLink\"\
         }\
       },\
@@ -17770,11 +18636,11 @@
         },\
         \"AllowEgressFromLocalClassicLinkToRemoteVpc\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC via ClassicLink to instances in a peer VPC.</p>\"\
+          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC using ClassicLink to instances in a peer VPC.</p>\"\
         },\
         \"AllowEgressFromLocalVpcToRemoteClassicLink\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC via ClassicLink.</p>\"\
+          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC using ClassicLink.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The VPC peering connection options.</p>\"\
@@ -17798,7 +18664,7 @@
         },\
         \"GroupName\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The name of the placement group the instance is in (for cluster compute instances).</p>\",\
+          \"documentation\":\"<p>The name of the placement group the instance is in.</p>\",\
           \"locationName\":\"groupName\"\
         },\
         \"HostId\":{\
@@ -17871,6 +18737,11 @@
       \"type\":\"string\",\
       \"enum\":[\"Windows\"]\
     },\
+    \"PoolMaxResults\":{\
+      \"type\":\"integer\",\
+      \"max\":10,\
+      \"min\":1\
+    },\
     \"PortRange\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -17922,7 +18793,7 @@
           \"locationName\":\"prefixListId\"\
         }\
       },\
-      \"documentation\":\"<p>[EC2-VPC only] The ID of the prefix.</p>\"\
+      \"documentation\":\"<p>Describes a prefix list ID.</p>\"\
     },\
     \"PrefixListIdList\":{\
       \"type\":\"list\",\
@@ -18072,7 +18943,6 @@
     },\
     \"PrivateIpAddressSpecification\":{\
       \"type\":\"structure\",\
-      \"required\":[\"PrivateIpAddress\"],\
       \"members\":{\
         \"Primary\":{\
           \"shape\":\"Boolean\",\
@@ -18147,7 +19017,7 @@
       \"members\":{\
         \"GatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the virtual private gateway (VGW).</p>\",\
+          \"documentation\":\"<p>The ID of the virtual private gateway.</p>\",\
           \"locationName\":\"gatewayId\"\
         }\
       },\
@@ -18158,6 +19028,38 @@
       \"member\":{\
         \"shape\":\"PropagatingVgw\",\
         \"locationName\":\"item\"\
+      }\
+    },\
+    \"ProvisionByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation. The most specific prefix that you can specify is /24. The address range cannot overlap with another address range that you've brought to this or another region.</p>\"\
+        },\
+        \"CidrAuthorizationContext\":{\
+          \"shape\":\"CidrAuthorizationContext\",\
+          \"documentation\":\"<p>A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP.</p>\"\
+        },\
+        \"Description\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>A description for the address range and the address pool.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"ProvisionByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address pool.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
       }\
     },\
     \"ProvisionedBandwidth\":{\
@@ -18196,6 +19098,77 @@
       \"member\":{\
         \"shape\":\"String\",\
         \"locationName\":\"PublicIp\"\
+      }\
+    },\
+    \"PublicIpv4Pool\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"PoolId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the IPv4 address pool.</p>\",\
+          \"locationName\":\"poolId\"\
+        },\
+        \"Description\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>A description of the address pool.</p>\",\
+          \"locationName\":\"description\"\
+        },\
+        \"PoolAddressRanges\":{\
+          \"shape\":\"PublicIpv4PoolRangeSet\",\
+          \"documentation\":\"<p>The address ranges.</p>\",\
+          \"locationName\":\"poolAddressRangeSet\"\
+        },\
+        \"TotalAddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The total number of addresses.</p>\",\
+          \"locationName\":\"totalAddressCount\"\
+        },\
+        \"TotalAvailableAddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The total number of available addresses.</p>\",\
+          \"locationName\":\"totalAvailableAddressCount\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an address pool.</p>\"\
+    },\
+    \"PublicIpv4PoolRange\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"FirstAddress\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The first IP address in the range.</p>\",\
+          \"locationName\":\"firstAddress\"\
+        },\
+        \"LastAddress\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The last IP address in the range.</p>\",\
+          \"locationName\":\"lastAddress\"\
+        },\
+        \"AddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of addresses in the range.</p>\",\
+          \"locationName\":\"addressCount\"\
+        },\
+        \"AvailableAddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of available addresses in the range.</p>\",\
+          \"locationName\":\"availableAddressCount\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an address range of an IPv4 address pool.</p>\"\
+    },\
+    \"PublicIpv4PoolRangeSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"PublicIpv4PoolRange\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"PublicIpv4PoolSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"PublicIpv4Pool\",\
+        \"locationName\":\"item\"\
       }\
     },\
     \"Purchase\":{\
@@ -18261,11 +19234,11 @@
         },\
         \"HostIdSet\":{\
           \"shape\":\"RequestHostIdSet\",\
-          \"documentation\":\"<p>The ID/s of the Dedicated Host/s that the reservation will be associated with.</p>\"\
+          \"documentation\":\"<p>The IDs of the Dedicated Hosts with which the reservation will be associated.</p>\"\
         },\
         \"LimitPrice\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The specified limit is checked against the total upfront cost of the reservation (calculated as the offering's upfront cost multiplied by the host count). If the total upfront cost is greater than the specified price limit, the request will fail. This is used to ensure that the purchase does not exceed the expected upfront cost of the purchase. At this time, the only supported currency is <code>USD</code>. For example, to indicate a limit price of USD 100, specify 100.00.</p>\"\
+          \"documentation\":\"<p>The specified limit is checked against the total upfront cost of the reservation (calculated as the offering's upfront cost multiplied by the host count). If the total upfront cost is greater than the specified price limit, the request fails. This is used to ensure that the purchase does not exceed the expected upfront cost of the purchase. At this time, the only supported currency is <code>USD</code>. For example, to indicate a limit price of USD 100, specify 100.00.</p>\"\
         },\
         \"OfferingId\":{\
           \"shape\":\"String\",\
@@ -18278,7 +19251,7 @@
       \"members\":{\
         \"ClientToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i> </p>\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
           \"locationName\":\"clientToken\"\
         },\
         \"CurrencyCode\":{\
@@ -18298,7 +19271,7 @@
         },\
         \"TotalUpfrontPrice\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The total amount that will be charged to your account when you purchase the reservation.</p>\",\
+          \"documentation\":\"<p>The total amount charged to your account when you purchase the reservation.</p>\",\
           \"locationName\":\"totalUpfrontPrice\"\
         }\
       }\
@@ -18632,8 +19605,7 @@
           \"documentation\":\"<p>The ID of the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RejectVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"RejectVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -18643,8 +19615,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of RejectVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"ReleaseAddressRequest\":{\
       \"type\":\"structure\",\
@@ -18662,8 +19633,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReleaseAddress.</p>\"\
+      }\
     },\
     \"ReleaseHostsRequest\":{\
       \"type\":\"structure\",\
@@ -18671,11 +19641,10 @@
       \"members\":{\
         \"HostIds\":{\
           \"shape\":\"RequestHostIdList\",\
-          \"documentation\":\"<p>The IDs of the Dedicated Hosts you want to release.</p>\",\
+          \"documentation\":\"<p>The IDs of the Dedicated Hosts to release.</p>\",\
           \"locationName\":\"hostId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReleaseHosts.</p>\"\
+      }\
     },\
     \"ReleaseHostsResult\":{\
       \"type\":\"structure\",\
@@ -18690,8 +19659,7 @@
           \"documentation\":\"<p>The IDs of the Dedicated Hosts that could not be released, including an error message.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ReleaseHosts.</p>\"\
+      }\
     },\
     \"ReplaceIamInstanceProfileAssociationRequest\":{\
       \"type\":\"structure\",\
@@ -18742,8 +19710,7 @@
           \"documentation\":\"<p>The ID of the new network ACL to associate with the subnet.</p>\",\
           \"locationName\":\"networkAclId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceNetworkAclAssociation.</p>\"\
+      }\
     },\
     \"ReplaceNetworkAclAssociationResult\":{\
       \"type\":\"structure\",\
@@ -18753,8 +19720,7 @@
           \"documentation\":\"<p>The ID of the new association.</p>\",\
           \"locationName\":\"newAssociationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ReplaceNetworkAclAssociation.</p>\"\
+      }\
     },\
     \"ReplaceNetworkAclEntryRequest\":{\
       \"type\":\"structure\",\
@@ -18783,7 +19749,7 @@
         },\
         \"IcmpTypeCode\":{\
           \"shape\":\"IcmpTypeCode\",\
-          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying the ICMP (1) protocol, or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
+          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying protocol 1 (ICMP) or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
           \"locationName\":\"Icmp\"\
         },\
         \"Ipv6CidrBlock\":{\
@@ -18798,12 +19764,12 @@
         },\
         \"PortRange\":{\
           \"shape\":\"PortRange\",\
-          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying TCP (6) or UDP (17) for the protocol.</p>\",\
+          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying protocol 6 (TCP) or 17 (UDP).</p>\",\
           \"locationName\":\"portRange\"\
         },\
         \"Protocol\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The IP protocol. You can specify <code>all</code> or <code>-1</code> to mean all protocols. If you specify <code>all</code>, <code>-1</code>, or a protocol number other than <code>tcp</code>, <code>udp</code>, or <code>icmp</code>, traffic on all ports is allowed, regardless of any ports or ICMP types or codes you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
+          \"documentation\":\"<p>The protocol number. A value of \\\"-1\\\" means all protocols. If you specify \\\"-1\\\" or a protocol number other than \\\"6\\\" (TCP), \\\"17\\\" (UDP), or \\\"1\\\" (ICMP), traffic on all ports is allowed, regardless of any ports or ICMP types or codes that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
           \"locationName\":\"protocol\"\
         },\
         \"RuleAction\":{\
@@ -18816,8 +19782,7 @@
           \"documentation\":\"<p>The rule number of the entry to replace.</p>\",\
           \"locationName\":\"ruleNumber\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceNetworkAclEntry.</p>\"\
+      }\
     },\
     \"ReplaceRouteRequest\":{\
       \"type\":\"structure\",\
@@ -18825,12 +19790,12 @@
       \"members\":{\
         \"DestinationCidrBlock\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The IPv4 CIDR address block used for the destination match. The value you provide must match the CIDR of an existing route in the table.</p>\",\
+          \"documentation\":\"<p>The IPv4 CIDR address block used for the destination match. The value that you provide must match the CIDR of an existing route in the table.</p>\",\
           \"locationName\":\"destinationCidrBlock\"\
         },\
         \"DestinationIpv6CidrBlock\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The IPv6 CIDR address block used for the destination match. The value you provide must match the CIDR of an existing route in the table.</p>\",\
+          \"documentation\":\"<p>The IPv6 CIDR address block used for the destination match. The value that you provide must match the CIDR of an existing route in the table.</p>\",\
           \"locationName\":\"destinationIpv6CidrBlock\"\
         },\
         \"DryRun\":{\
@@ -18840,12 +19805,12 @@
         },\
         \"EgressOnlyInternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>[IPv6 traffic only] The ID of an egress-only Internet gateway.</p>\",\
+          \"documentation\":\"<p>[IPv6 traffic only] The ID of an egress-only internet gateway.</p>\",\
           \"locationName\":\"egressOnlyInternetGatewayId\"\
         },\
         \"GatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of an Internet gateway or virtual private gateway.</p>\",\
+          \"documentation\":\"<p>The ID of an internet gateway or virtual private gateway.</p>\",\
           \"locationName\":\"gatewayId\"\
         },\
         \"InstanceId\":{\
@@ -18873,8 +19838,7 @@
           \"documentation\":\"<p>The ID of a VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceRoute.</p>\"\
+      }\
     },\
     \"ReplaceRouteTableAssociationRequest\":{\
       \"type\":\"structure\",\
@@ -18898,8 +19862,7 @@
           \"documentation\":\"<p>The ID of the new route table to associate with the subnet.</p>\",\
           \"locationName\":\"routeTableId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceRouteTableAssociation.</p>\"\
+      }\
     },\
     \"ReplaceRouteTableAssociationResult\":{\
       \"type\":\"structure\",\
@@ -18909,8 +19872,7 @@
           \"documentation\":\"<p>The ID of the new association.</p>\",\
           \"locationName\":\"newAssociationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ReplaceRouteTableAssociation.</p>\"\
+      }\
     },\
     \"ReportInstanceReasonCodes\":{\
       \"type\":\"string\",\
@@ -19056,7 +20018,7 @@
         },\
         \"TagSpecifications\":{\
           \"shape\":\"LaunchTemplateTagSpecificationRequestList\",\
-          \"documentation\":\"<p>The tags to apply to the resources during launch. You can tag instances and volumes. The specified tags are applied to all instances or volumes that are created during launch.</p>\",\
+          \"documentation\":\"<p>The tags to apply to the resources during launch. You can only tag instances and volumes on launch. The specified tags are applied to all instances or volumes that are created during launch. To tag a resource after it has been created, see <a>CreateTags</a>.</p>\",\
           \"locationName\":\"TagSpecification\"\
         },\
         \"ElasticGpuSpecifications\":{\
@@ -19080,7 +20042,15 @@
         },\
         \"CreditSpecification\":{\
           \"shape\":\"CreditSpecificationRequest\",\
-          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid for T2 instances only.</p>\"\
+          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid for T2 or T3 instances only.</p>\"\
+        },\
+        \"CpuOptions\":{\
+          \"shape\":\"LaunchTemplateCpuOptionsRequest\",\
+          \"documentation\":\"<p>The CPU options for the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\\\">Optimizing CPU Options</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"LaunchTemplateCapacityReservationSpecificationRequest\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The information to include in the launch template.</p>\"\
@@ -19951,6 +20921,7 @@
       \"type\":\"string\",\
       \"enum\":[\
         \"customer-gateway\",\
+        \"dedicated-host\",\
         \"dhcp-options\",\
         \"image\",\
         \"instance\",\
@@ -20101,6 +21072,16 @@
           \"shape\":\"CreditSpecification\",\
           \"documentation\":\"<p>The credit option for CPU usage of the instance.</p>\",\
           \"locationName\":\"creditSpecification\"\
+        },\
+        \"CpuOptions\":{\
+          \"shape\":\"LaunchTemplateCpuOptions\",\
+          \"documentation\":\"<p>The CPU options for the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\\\">Optimizing CPU Options</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
+          \"locationName\":\"cpuOptions\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"LaunchTemplateCapacityReservationSpecificationResponse\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\",\
+          \"locationName\":\"capacityReservationSpecification\"\
         }\
       },\
       \"documentation\":\"<p>The information for a launch template. </p>\"\
@@ -20123,8 +21104,7 @@
           \"documentation\":\"<p>The Elastic IP address.</p>\",\
           \"locationName\":\"publicIp\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RestoreAddressToClassic.</p>\"\
+      }\
     },\
     \"RestoreAddressToClassicResult\":{\
       \"type\":\"structure\",\
@@ -20139,8 +21119,7 @@
           \"documentation\":\"<p>The move status for the IP address.</p>\",\
           \"locationName\":\"status\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of RestoreAddressToClassic.</p>\"\
+      }\
     },\
     \"RevokeSecurityGroupEgressRequest\":{\
       \"type\":\"structure\",\
@@ -20191,8 +21170,7 @@
           \"documentation\":\"<p>Not supported. Use a set of IP permissions to specify a destination security group.</p>\",\
           \"locationName\":\"sourceSecurityGroupOwnerId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RevokeSecurityGroupEgress.</p>\"\
+      }\
     },\
     \"RevokeSecurityGroupIngressRequest\":{\
       \"type\":\"structure\",\
@@ -20238,8 +21216,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RevokeSecurityGroupIngress.</p>\"\
+      }\
     },\
     \"Route\":{\
       \"type\":\"structure\",\
@@ -20261,7 +21238,7 @@
         },\
         \"EgressOnlyInternetGatewayId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the egress-only Internet gateway.</p>\",\
+          \"documentation\":\"<p>The ID of the egress-only internet gateway.</p>\",\
           \"locationName\":\"egressOnlyInternetGatewayId\"\
         },\
         \"GatewayId\":{\
@@ -20550,7 +21527,7 @@
         },\
         \"TagSpecifications\":{\
           \"shape\":\"TagSpecificationList\",\
-          \"documentation\":\"<p>The tags to apply to the resources during launch. You can tag instances and volumes. The specified tags are applied to all instances or volumes that are created during launch.</p>\",\
+          \"documentation\":\"<p>The tags to apply to the resources during launch. You can only tag instances and volumes on launch. The specified tags are applied to all instances or volumes that are created during launch. To tag a resource after it has been created, see <a>CreateTags</a>.</p>\",\
           \"locationName\":\"TagSpecification\"\
         },\
         \"LaunchTemplate\":{\
@@ -20559,15 +21536,19 @@
         },\
         \"InstanceMarketOptions\":{\
           \"shape\":\"InstanceMarketOptionsRequest\",\
-          \"documentation\":\"<p>The market (purchasing) option for the instances.</p>\"\
+          \"documentation\":\"<p>The market (purchasing) option for the instances.</p> <p>For <a>RunInstances</a>, persistent Spot Instance requests are only supported when <b>InstanceInterruptionBehavior</b> is set to either <code>hibernate</code> or <code>stop</code>.</p>\"\
         },\
         \"CreditSpecification\":{\
           \"shape\":\"CreditSpecificationRequest\",\
-          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid values are <code>standard</code> and <code>unlimited</code>. To change this attribute after launch, use <a>ModifyInstanceCreditSpecification</a>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html\\\">T2 Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Default: <code>standard</code> </p>\"\
+          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid values are <code>standard</code> and <code>unlimited</code>. To change this attribute after launch, use <a>ModifyInstanceCreditSpecification</a>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\\\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Default: <code>standard</code> (T2 instances) or <code>unlimited</code> (T3 instances)</p>\"\
         },\
         \"CpuOptions\":{\
           \"shape\":\"CpuOptionsRequest\",\
           \"documentation\":\"<p>The CPU options for the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\\\">Optimizing CPU Options</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"CapacityReservationSpecification\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for RunInstances.</p>\"\
@@ -21218,10 +22199,6 @@
     },\
     \"SecurityGroupReference\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"GroupId\",\
-        \"ReferencingVpcId\"\
-      ],\
       \"members\":{\
         \"GroupId\":{\
           \"shape\":\"String\",\
@@ -21643,10 +22620,20 @@
           \"documentation\":\"<p>The size of the disk in the snapshot, in GiB.</p>\",\
           \"locationName\":\"diskImageSize\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the snapshot is encrypted.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
         \"Format\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The format of the disk image from which the snapshot is created.</p>\",\
           \"locationName\":\"format\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to create the encrypted snapshot.</p>\",\
+          \"locationName\":\"kmsKeyId\"\
         },\
         \"Progress\":{\
           \"shape\":\"String\",\
@@ -21875,6 +22862,11 @@
           \"documentation\":\"<p>Indicates how to allocate the target capacity across the Spot pools specified by the Spot Fleet request. The default is <code>lowestPrice</code>.</p>\",\
           \"locationName\":\"allocationStrategy\"\
         },\
+        \"OnDemandAllocationStrategy\":{\
+          \"shape\":\"OnDemandAllocationStrategy\",\
+          \"documentation\":\"<p>The order of the launch template overrides to use in fulfilling On-Demand capacity. If you specify <code>lowestPrice</code>, Spot Fleet uses price to determine the order, launching the lowest price first. If you specify <code>prioritized</code>, Spot Fleet uses the priority that you assign to each Spot Fleet launch template override, launching the highest priority first. If you do not specify a value, Spot Fleet defaults to <code>lowestPrice</code>.</p>\",\
+          \"locationName\":\"onDemandAllocationStrategy\"\
+        },\
         \"ClientToken\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of your listings. This helps to avoid duplicate listings. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\\\">Ensuring Idempotency</a>.</p>\",\
@@ -21887,7 +22879,7 @@
         },\
         \"FulfilledCapacity\":{\
           \"shape\":\"Double\",\
-          \"documentation\":\"<p>The number of units fulfilled by this request compared to the set target capacity.</p>\",\
+          \"documentation\":\"<p>The number of units fulfilled by this request compared to the set target capacity. You cannot set this value.</p>\",\
           \"locationName\":\"fulfilledCapacity\"\
         },\
         \"OnDemandFulfilledCapacity\":{\
@@ -21959,6 +22951,11 @@
           \"shape\":\"LoadBalancersConfig\",\
           \"documentation\":\"<p>One or more Classic Load Balancers and target groups to attach to the Spot Fleet request. Spot Fleet registers the running Spot Instances with the specified Classic Load Balancers and target groups.</p> <p>With Network Load Balancers, Spot Fleet cannot register instances that have the following instance types: C1, CC1, CC2, CG1, CG2, CR1, CS1, G1, G2, HI1, HS1, M1, M2, M3, and T1.</p>\",\
           \"locationName\":\"loadBalancersConfig\"\
+        },\
+        \"InstancePoolsToUseCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of Spot pools across which to allocate your target Spot capacity. Valid only when Spot <b>AllocationStrategy</b> is set to <code>lowest-price</code>. Spot Fleet selects the cheapest Spot pools and evenly allocates your target Spot capacity across the number of Spot pools that you specify.</p>\",\
+          \"locationName\":\"instancePoolsToUseCount\"\
         }\
       },\
       \"documentation\":\"<p>Describes the configuration of a Spot Fleet request.</p>\"\
@@ -22179,7 +23176,7 @@
         },\
         \"SpotInstanceType\":{\
           \"shape\":\"SpotInstanceType\",\
-          \"documentation\":\"<p>The Spot Instance request type.</p>\"\
+          \"documentation\":\"<p>The Spot Instance request type. For <a>RunInstances</a>, persistent Spot Instance requests are only supported when <b>InstanceInterruptionBehavior</b> is set to either <code>hibernate</code> or <code>stop</code>.</p>\"\
         },\
         \"BlockDurationMinutes\":{\
           \"shape\":\"Integer\",\
@@ -22201,13 +23198,18 @@
       \"members\":{\
         \"AllocationStrategy\":{\
           \"shape\":\"SpotAllocationStrategy\",\
-          \"documentation\":\"<p>Indicates how to allocate the target capacity across the Spot pools specified by the Spot Fleet request. The default is <code>lowestPrice</code>.</p>\",\
+          \"documentation\":\"<p>Indicates how to allocate the target capacity across the Spot pools specified by the Spot Fleet request. The default is <code>lowest-price</code>.</p>\",\
           \"locationName\":\"allocationStrategy\"\
         },\
         \"InstanceInterruptionBehavior\":{\
           \"shape\":\"SpotInstanceInterruptionBehavior\",\
           \"documentation\":\"<p>The behavior when a Spot Instance is interrupted. The default is <code>terminate</code>.</p>\",\
           \"locationName\":\"instanceInterruptionBehavior\"\
+        },\
+        \"InstancePoolsToUseCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of Spot pools across which to allocate your target Spot capacity. Valid only when <b>AllocationStrategy</b> is set to <code>lowestPrice</code>. EC2 Fleet selects the cheapest Spot pools and evenly allocates your target Spot capacity across the number of Spot pools that you specify.</p>\",\
+          \"locationName\":\"instancePoolsToUseCount\"\
         }\
       },\
       \"documentation\":\"<p>Describes the configuration of Spot Instances in an EC2 Fleet.</p>\"\
@@ -22222,6 +23224,10 @@
         \"InstanceInterruptionBehavior\":{\
           \"shape\":\"SpotInstanceInterruptionBehavior\",\
           \"documentation\":\"<p>The behavior when a Spot Instance is interrupted. The default is <code>terminate</code>.</p>\"\
+        },\
+        \"InstancePoolsToUseCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of Spot pools across which to allocate your target Spot capacity. Valid only when Spot <b>AllocationStrategy</b> is set to <code>lowest-price</code>. EC2 Fleet selects the cheapest Spot pools and evenly allocates your target Spot capacity across the number of Spot pools that you specify.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes the configuration of Spot Instances in an EC2 Fleet request.</p>\"\
@@ -22330,7 +23336,6 @@
     },\
     \"StaleSecurityGroup\":{\
       \"type\":\"structure\",\
-      \"required\":[\"GroupId\"],\
       \"members\":{\
         \"Description\":{\
           \"shape\":\"String\",\
@@ -22428,7 +23433,7 @@
         },\
         \"Message\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The message for the state change.</p> <ul> <li> <p> <code>Server.InsufficientInstanceCapacity</code>: There was insufficient instance capacity to satisfy the launch request.</p> </li> <li> <p> <code>Server.InternalError</code>: An internal error occurred during instance launch, resulting in termination.</p> </li> <li> <p> <code>Server.ScheduledStop</code>: The instance was stopped due to a scheduled retirement.</p> </li> <li> <p> <code>Server.SpotInstanceTermination</code>: A Spot Instance was terminated due to an increase in the Spot price.</p> </li> <li> <p> <code>Client.InternalError</code>: A client error caused the instance to terminate on launch.</p> </li> <li> <p> <code>Client.InstanceInitiatedShutdown</code>: The instance was shut down using the <code>shutdown -h</code> command from the instance.</p> </li> <li> <p> <code>Client.InstanceTerminated</code>: The instance was terminated or rebooted during AMI creation.</p> </li> <li> <p> <code>Client.UserInitiatedShutdown</code>: The instance was shut down using the Amazon EC2 API.</p> </li> <li> <p> <code>Client.VolumeLimitExceeded</code>: The limit on the number of EBS volumes or total storage was exceeded. Decrease usage or request an increase in your limits.</p> </li> <li> <p> <code>Client.InvalidSnapshot.NotFound</code>: The specified snapshot was not found.</p> </li> </ul>\",\
+          \"documentation\":\"<p>The message for the state change.</p> <ul> <li> <p> <code>Server.InsufficientInstanceCapacity</code>: There was insufficient capacity available to satisfy the launch request.</p> </li> <li> <p> <code>Server.InternalError</code>: An internal error caused the instance to terminate during launch.</p> </li> <li> <p> <code>Server.ScheduledStop</code>: The instance was stopped due to a scheduled retirement.</p> </li> <li> <p> <code>Server.SpotInstanceShutdown</code>: The instance was stopped because the number of Spot requests with a maximum price equal to or higher than the Spot price exceeded available capacity or because of an increase in the Spot price.</p> </li> <li> <p> <code>Server.SpotInstanceTermination</code>: The instance was terminated because the number of Spot requests with a maximum price equal to or higher than the Spot price exceeded available capacity or because of an increase in the Spot price.</p> </li> <li> <p> <code>Client.InstanceInitiatedShutdown</code>: The instance was shut down using the <code>shutdown -h</code> command from the instance.</p> </li> <li> <p> <code>Client.InstanceTerminated</code>: The instance was terminated or rebooted during AMI creation.</p> </li> <li> <p> <code>Client.InternalError</code>: A client error caused the instance to terminate during launch.</p> </li> <li> <p> <code>Client.InvalidSnapshot.NotFound</code>: The specified snapshot was not found.</p> </li> <li> <p> <code>Client.UserInitiatedShutdown</code>: The instance was shut down using the Amazon EC2 API.</p> </li> <li> <p> <code>Client.VolumeLimitExceeded</code>: The limit on the number of EBS volumes or total storage was exceeded. Decrease usage or request an increase in your account limits.</p> </li> </ul>\",\
           \"locationName\":\"message\"\
         }\
       },\
@@ -22523,7 +23528,7 @@
         },\
         \"AvailableIpAddressCount\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The number of unused private IPv4 addresses in the subnet. Note that the IPv4 addresses for any stopped instances are considered unavailable.</p>\",\
+          \"documentation\":\"<p>The number of unused private IPv4 addresses in the subnet. The IPv4 addresses for any stopped instances are considered unavailable.</p>\",\
           \"locationName\":\"availableIpAddressCount\"\
         },\
         \"CidrBlock\":{\
@@ -22659,7 +23664,7 @@
           \"locationName\":\"instanceId\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the T2 instance whose credit option for CPU usage was successfully modified.</p>\"\
+      \"documentation\":\"<p>Describes the T2 or T3 instance whose credit option for CPU usage was successfully modified.</p>\"\
     },\
     \"SuccessfulInstanceCreditSpecificationSet\":{\
       \"type\":\"list\",\
@@ -22683,7 +23688,7 @@
       \"members\":{\
         \"Key\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The key of the tag.</p> <p>Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with <code>aws:</code> </p>\",\
+          \"documentation\":\"<p>The key of the tag.</p> <p>Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with <code>aws:</code>.</p>\",\
           \"locationName\":\"key\"\
         },\
         \"Value\":{\
@@ -22704,7 +23709,7 @@
         },\
         \"ResourceId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the resource. For example, <code>ami-1a2b3c4d</code>.</p>\",\
+          \"documentation\":\"<p>The ID of the resource.</p>\",\
           \"locationName\":\"resourceId\"\
         },\
         \"ResourceType\":{\
@@ -22739,7 +23744,7 @@
       \"members\":{\
         \"ResourceType\":{\
           \"shape\":\"ResourceType\",\
-          \"documentation\":\"<p>The type of resource to tag. Currently, the resource types that support tagging on creation are <code>instance</code>, <code>snapshot</code>, and <code>volume</code>. </p>\",\
+          \"documentation\":\"<p>The type of resource to tag. Currently, the resource types that support tagging on creation are <code>fleet</code>, <code>dedicated-host</code>, <code>instance</code>, <code>snapshot</code>, and <code>volume</code>. To tag a resource after it has been created, see <a>CreateTags</a>.</p>\",\
           \"locationName\":\"resourceType\"\
         },\
         \"Tags\":{\
@@ -23059,11 +24064,11 @@
         },\
         \"Error\":{\
           \"shape\":\"UnsuccessfulInstanceCreditSpecificationItemError\",\
-          \"documentation\":\"<p>The applicable error for the T2 instance whose credit option for CPU usage was not modified.</p>\",\
+          \"documentation\":\"<p>The applicable error for the T2 or T3 instance whose credit option for CPU usage was not modified.</p>\",\
           \"locationName\":\"error\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the T2 instance whose credit option for CPU usage was not modified.</p>\"\
+      \"documentation\":\"<p>Describes the T2 or T3 instance whose credit option for CPU usage was not modified.</p>\"\
     },\
     \"UnsuccessfulInstanceCreditSpecificationItemError\":{\
       \"type\":\"structure\",\
@@ -23079,7 +24084,7 @@
           \"locationName\":\"message\"\
         }\
       },\
-      \"documentation\":\"<p>Information about the error for the T2 instance whose credit option for CPU usage was not modified.</p>\"\
+      \"documentation\":\"<p>Information about the error for the T2 or T3 instance whose credit option for CPU usage was not modified.</p>\"\
     },\
     \"UnsuccessfulInstanceCreditSpecificationSet\":{\
       \"type\":\"list\",\
@@ -23159,8 +24164,7 @@
           \"shape\":\"IpPermissionList\",\
           \"documentation\":\"<p>The IP permissions for the security group rule.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for UpdateSecurityGroupRuleDescriptionsEgress.</p>\"\
+      }\
     },\
     \"UpdateSecurityGroupRuleDescriptionsEgressResult\":{\
       \"type\":\"structure\",\
@@ -23170,8 +24174,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of UpdateSecurityGroupRuleDescriptionsEgress.</p>\"\
+      }\
     },\
     \"UpdateSecurityGroupRuleDescriptionsIngressRequest\":{\
       \"type\":\"structure\",\
@@ -23193,8 +24196,7 @@
           \"shape\":\"IpPermissionList\",\
           \"documentation\":\"<p>The IP permissions for the security group rule. </p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for UpdateSecurityGroupRuleDescriptionsIngress.</p>\"\
+      }\
     },\
     \"UpdateSecurityGroupRuleDescriptionsIngressResult\":{\
       \"type\":\"structure\",\
@@ -23204,8 +24206,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of UpdateSecurityGroupRuleDescriptionsIngress.</p>\"\
+      }\
     },\
     \"UserBucket\":{\
       \"type\":\"structure\",\
@@ -23430,7 +24431,7 @@
         },\
         \"Iops\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The number of I/O operations per second (IOPS) that the volume supports. For Provisioned IOPS SSD volumes, this represents the number of IOPS that are provisioned for the volume. For General Purpose SSD volumes, this represents the baseline performance of the volume and the rate at which the volume accumulates I/O credits for bursting. For more information on General Purpose SSD baseline performance, I/O credits, and bursting, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Constraint: Range is 100-32000 IOPS for io1 volumes and 100-10000 IOPS for <code>gp2</code> volumes.</p> <p>Condition: This parameter is required for requests to create <code>io1</code> volumes; it is not used in requests to create <code>gp2</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code> volumes.</p>\",\
+          \"documentation\":\"<p>The number of I/O operations per second (IOPS) that the volume supports. For Provisioned IOPS SSD volumes, this represents the number of IOPS that are provisioned for the volume. For General Purpose SSD volumes, this represents the baseline performance of the volume and the rate at which the volume accumulates I/O credits for bursting. For more information about General Purpose SSD baseline performance, I/O credits, and bursting, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Constraint: Range is 100-32000 IOPS for io1 volumes and 100-10000 IOPS for <code>gp2</code> volumes.</p> <p>Condition: This parameter is required for requests to create <code>io1</code> volumes; it is not used in requests to create <code>gp2</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code> volumes.</p>\",\
           \"locationName\":\"iops\"\
         },\
         \"Tags\":{\
@@ -23537,62 +24538,62 @@
       \"members\":{\
         \"VolumeId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>ID of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The ID of the volume.</p>\",\
           \"locationName\":\"volumeId\"\
         },\
         \"ModificationState\":{\
           \"shape\":\"VolumeModificationState\",\
-          \"documentation\":\"<p>Current state of modification. Modification state is null for unmodified volumes. </p>\",\
+          \"documentation\":\"<p>The current modification state. The modification state is null for unmodified volumes.</p>\",\
           \"locationName\":\"modificationState\"\
         },\
         \"StatusMessage\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Generic status message on modification progress or failure.</p>\",\
+          \"documentation\":\"<p>A status message about the modification progress or failure.</p>\",\
           \"locationName\":\"statusMessage\"\
         },\
         \"TargetSize\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>Target size of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The target size of the volume, in GiB.</p>\",\
           \"locationName\":\"targetSize\"\
         },\
         \"TargetIops\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>Target IOPS rate of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The target IOPS rate of the volume.</p>\",\
           \"locationName\":\"targetIops\"\
         },\
         \"TargetVolumeType\":{\
           \"shape\":\"VolumeType\",\
-          \"documentation\":\"<p>Target EBS volume type of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The target EBS volume type of the volume.</p>\",\
           \"locationName\":\"targetVolumeType\"\
         },\
         \"OriginalSize\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>Original size of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The original size of the volume.</p>\",\
           \"locationName\":\"originalSize\"\
         },\
         \"OriginalIops\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>Original IOPS rate of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The original IOPS rate of the volume.</p>\",\
           \"locationName\":\"originalIops\"\
         },\
         \"OriginalVolumeType\":{\
           \"shape\":\"VolumeType\",\
-          \"documentation\":\"<p>Original EBS volume type of the volume being modified.</p>\",\
+          \"documentation\":\"<p>The original EBS volume type of the volume.</p>\",\
           \"locationName\":\"originalVolumeType\"\
         },\
         \"Progress\":{\
           \"shape\":\"Long\",\
-          \"documentation\":\"<p>Modification progress from 0 to 100%.</p>\",\
+          \"documentation\":\"<p>The modification progress, from 0 to 100 percent complete.</p>\",\
           \"locationName\":\"progress\"\
         },\
         \"StartTime\":{\
           \"shape\":\"DateTime\",\
-          \"documentation\":\"<p>Modification start time </p>\",\
+          \"documentation\":\"<p>The modification start time.</p>\",\
           \"locationName\":\"startTime\"\
         },\
         \"EndTime\":{\
           \"shape\":\"DateTime\",\
-          \"documentation\":\"<p>Modification completion or failure time.</p>\",\
+          \"documentation\":\"<p>The modification completion or failure time.</p>\",\
           \"locationName\":\"endTime\"\
         }\
       },\
@@ -24491,6 +25492,30 @@
       },\
       \"documentation\":\"<p>The tunnel options for a VPN connection.</p>\"\
     },\
+    \"WithdrawByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"WithdrawByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address pool.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
+      }\
+    },\
     \"ZoneNameStringList\":{\
       \"type\":\"list\",\
       \"member\":{\
@@ -24506,9 +25531,8 @@
       ]\
     }\
   },\
-  \"documentation\":\"<fullname>Amazon Elastic Compute Cloud</fullname> <p>Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the AWS Cloud. Using Amazon EC2 eliminates the need to invest in hardware up front, so you can develop and deploy applications faster.</p>\"\
+  \"documentation\":\"<fullname>Amazon Elastic Compute Cloud</fullname> <p>Amazon Elastic Compute Cloud (Amazon EC2) provides secure and resizable computing capacity in the AWS cloud. Using Amazon EC2 eliminates the need to invest in hardware up front, so you can develop and deploy applications faster.</p> <p>To learn more about Amazon EC2, Amazon EBS, and Amazon VPC, see the following resources:</p> <ul> <li> <p> <a href=\\\"http://aws.amazon.com/ec2\\\">Amazon EC2 product page</a> </p> </li> <li> <p> <a href=\\\"http://aws.amazon.com/documentation/ec2\\\">Amazon EC2 documentation</a> </p> </li> <li> <p> <a href=\\\"http://aws.amazon.com/ebs\\\">Amazon EBS product page</a> </p> </li> <li> <p> <a href=\\\"http://aws.amazon.com/vpc\\\">Amazon VPC product page</a> </p> </li> <li> <p> <a href=\\\"http://aws.amazon.com/documentation/vpc\\\">Amazon VPC documentation</a> </p> </li> </ul>\"\
 }\
-\
 ";
 }
 

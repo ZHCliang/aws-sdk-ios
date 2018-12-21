@@ -34,6 +34,9 @@ typedef NS_ENUM(NSInteger, AWSTranscribeLanguageCode) {
     AWSTranscribeLanguageCodeUnknown,
     AWSTranscribeLanguageCodeEnUS,
     AWSTranscribeLanguageCodeEsUS,
+    AWSTranscribeLanguageCodeEnAU,
+    AWSTranscribeLanguageCodeFrCA,
+    AWSTranscribeLanguageCodeEnUK,
 };
 
 typedef NS_ENUM(NSInteger, AWSTranscribeMediaFormat) {
@@ -42,6 +45,12 @@ typedef NS_ENUM(NSInteger, AWSTranscribeMediaFormat) {
     AWSTranscribeMediaFormatMp4,
     AWSTranscribeMediaFormatWav,
     AWSTranscribeMediaFormatFlac,
+};
+
+typedef NS_ENUM(NSInteger, AWSTranscribeOutputLocationType) {
+    AWSTranscribeOutputLocationTypeUnknown,
+    AWSTranscribeOutputLocationTypeCustomerBucket,
+    AWSTranscribeOutputLocationTypeServiceBucket,
 };
 
 typedef NS_ENUM(NSInteger, AWSTranscribeTranscriptionJobStatus) {
@@ -60,6 +69,7 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 
 @class AWSTranscribeCreateVocabularyRequest;
 @class AWSTranscribeCreateVocabularyResponse;
+@class AWSTranscribeDeleteTranscriptionJobRequest;
 @class AWSTranscribeDeleteVocabularyRequest;
 @class AWSTranscribeGetTranscriptionJobRequest;
 @class AWSTranscribeGetTranscriptionJobResponse;
@@ -133,6 +143,19 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
  <p>The processing state of the vocabulary. When the <code>VocabularyState</code> field contains <code>READY</code> the vocabulary is ready to be used in a <code>StartTranscriptionJob</code> request.</p>
  */
 @property (nonatomic, assign) AWSTranscribeVocabularyState vocabularyState;
+
+@end
+
+/**
+ 
+ */
+@interface AWSTranscribeDeleteTranscriptionJobRequest : AWSRequest
+
+
+/**
+ <p>The name of the transcription job to be deleted.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable transcriptionJobName;
 
 @end
 
@@ -348,12 +371,17 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 
 
 /**
+ <p>Instructs Amazon Transcribe to process each audio channel separately and then merge the transcription output of each channel into a single transcription. </p><p>Amazon Transcribe also produces a transcription of each item detected on an audio channel, including the start time and end time of the item and alternative transcriptions of the item including the confidence that Amazon Transcribe has in the transcription.</p><p>You can't set both <code>ShowSpeakerLabels</code> and <code>ChannelIdentification</code> in the same request. If you set both, your request returns a <code>BadRequestException</code>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable channelIdentification;
+
+/**
  <p>The maximum number of speakers to identify in the input audio. If there are more speakers in the audio than this number, multiple speakers will be identified as a single speaker. If you specify the <code>MaxSpeakerLabels</code> field, you must set the <code>ShowSpeakerLabels</code> field to true.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxSpeakerLabels;
 
 /**
- <p>Determines whether the transcription job should use speaker recognition to identify different speakers in the input audio. If you set the <code>ShowSpeakerLabels</code> field to true, you must also set the maximum number of speaker labels <code>MaxSpeakerLabels</code> field.</p>
+ <p>Determines whether the transcription job uses speaker recognition to identify different speakers in the input audio. Speaker recognition labels individual speakers in the audio file. If you set the <code>ShowSpeakerLabels</code> field to true, you must also set the maximum number of speaker labels <code>MaxSpeakerLabels</code> field.</p><p>You can't set both <code>ShowSpeakerLabels</code> and <code>ChannelIdentification</code> in the same request. If you set both, your request returns a <code>BadRequestException</code>.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable showSpeakerLabels;
 
@@ -391,12 +419,17 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @property (nonatomic, strong) NSNumber * _Nullable mediaSampleRateHertz;
 
 /**
+ <p>The location where the transcription is stored.</p><p>If you set the <code>OutputBucketName</code>, Amazon Transcribe puts the transcription in the specified S3 bucket. When you call the <a>GetTranscriptionJob</a> operation, the operation returns this location in the <code>TranscriptFileUri</code> field. The S3 bucket must have permissions that allow Amazon Transcribe to put files in the bucket. For more information, see <a href="https://docs.aws.amazon.com/transcribe/latest/dg/access-control-managing-permissions.html#auth-role-iam-user">Permissions Required for IAM User Roles</a>.</p><p>If you don't set the <code>OutputBucketName</code>, Amazon Transcribe generates a pre-signed URL, a shareable URL that provides secure access to your transcription, and returns it in the <code>TranscriptFileUri</code> field. Use this URL to download the transcription.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable outputBucketName;
+
+/**
  <p>A <code>Settings</code> object that provides optional settings for a transcription job.</p>
  */
 @property (nonatomic, strong) AWSTranscribeSettings * _Nullable settings;
 
 /**
- <p>The name of the job. The name must be unique within an AWS account.</p>
+ <p>The name of the job. You can't use the strings "." or ".." in the job name. The name must be unique within an AWS account.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable transcriptionJobName;
 
@@ -416,31 +449,31 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @end
 
 /**
- <p>Describes the output of a transcription job.</p>
+ <p>Identifies the location of a transcription.</p>
  */
 @interface AWSTranscribeTranscript : AWSModel
 
 
 /**
- <p>The S3 location where the transcription result is stored. Use this URI to access the results of the transcription job. </p>
+ <p>The location where the transcription is stored.</p><p>Use this URI to access the transcription. If you specified an S3 bucket in the <code>OutputBucketName</code> field when you created the job, this is the URI of that bucket. If you chose to store the transcription in Amazon Transcribe, this is a shareable URL that provides secure access to that location.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable transcriptFileUri;
 
 @end
 
 /**
- <p>Describes an asynchronous transcription job that was created with the <code>StartTranscriptionJob</code> operation.</p>
+ <p>Describes an asynchronous transcription job that was created with the <code>StartTranscriptionJob</code> operation. Note that en-AU, en-UK, and fr-CA languages are in preview and are only available to whitelisted customers.</p>
  */
 @interface AWSTranscribeTranscriptionJob : AWSModel
 
 
 /**
- <p>Timestamp of the date and time that the job completed.</p>
+ <p>A timestamp that shows when the job was completed.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable completionTime;
 
 /**
- <p>Timestamp of the date and time that the job was created.</p>
+ <p>A timestamp that shows when the job was created.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable creationTime;
 
@@ -455,7 +488,7 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @property (nonatomic, assign) AWSTranscribeLanguageCode languageCode;
 
 /**
- <p>An object that describes the input media for a transcription job.</p>
+ <p>An object that describes the input media for the transcription job.</p>
  */
 @property (nonatomic, strong) AWSTranscribeMedia * _Nullable media;
 
@@ -470,7 +503,7 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @property (nonatomic, strong) NSNumber * _Nullable mediaSampleRateHertz;
 
 /**
- <p>Optional settings for the transcription job.</p>
+ <p>Optional settings for the transcription job. Use these settings to turn on speaker recognition, to set the maximum number of speakers that should be identified and to specify a custom vocabulary to use when processing the transcription job.</p>
  */
 @property (nonatomic, strong) AWSTranscribeSettings * _Nullable settings;
 
@@ -480,7 +513,7 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @property (nonatomic, strong) AWSTranscribeTranscript * _Nullable transcript;
 
 /**
- <p>A name to identify the transcription job.</p>
+ <p>The name of the transcription job.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable transcriptionJobName;
 
@@ -492,23 +525,23 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @end
 
 /**
- <p>Provides a summary of information about a transcription job.</p>
+ <p>Provides a summary of information about a transcription job. Note that en-AU, en-UK, and fr-CA languages are in preview and are only available to whitelisted customers.</p>
  */
 @interface AWSTranscribeTranscriptionJobSummary : AWSModel
 
 
 /**
- <p>Timestamp of the date and time that the job completed.</p>
+ <p>A timestamp that shows when the job was completed.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable completionTime;
 
 /**
- <p>Timestamp of the date and time that the job was created.</p>
+ <p>A timestamp that shows when the job was created.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable creationTime;
 
 /**
- <p>If the <code>TranscriptionJobStatus</code> field is <code>FAILED</code>, this field contains a description of the error.</p>
+ <p>If the <code>TranscriptionJobStatus</code> field is <code>FAILED</code>, a description of the error.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable failureReason;
 
@@ -518,7 +551,12 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @property (nonatomic, assign) AWSTranscribeLanguageCode languageCode;
 
 /**
- <p>The name assigned to the transcription job when it was created.</p>
+ <p>Indicates the location of the output of the transcription job.</p><p>If the value is <code>CUSTOMER_BUCKET</code> then the location is the S3 bucket specified in the <code>outputBucketName</code> field when the transcription job was started with the <code>StartTranscriptionJob</code> operation.</p><p>If the value is <code>SERVICE_BUCKET</code> then the output is stored by Amazon Transcribe and can be retrieved using the URI in the <code>GetTranscriptionJob</code> response's <code>TranscriptFileUri</code> field.</p>
+ */
+@property (nonatomic, assign) AWSTranscribeOutputLocationType outputLocationType;
+
+/**
+ <p>The name of the transcription job.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable transcriptionJobName;
 
@@ -581,7 +619,7 @@ typedef NS_ENUM(NSInteger, AWSTranscribeVocabularyState) {
 @end
 
 /**
- <p>Provides information about a custom vocabulary.</p>
+ <p>Provides information about a custom vocabulary. Note that vocabularies for en-AU, en-UK, and fr-CA languages that are in preview are not available. In the console, the vocabulary section will be greyed-out and SDK will return error message.</p>
  */
 @interface AWSTranscribeVocabularyInfo : AWSModel
 

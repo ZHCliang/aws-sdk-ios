@@ -15,28 +15,9 @@
 
 #import "AWSIoTDataService.h"
 #import "AWSIoTService.h"
+#import "AWSIoTMQTTTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-typedef NS_ENUM(NSInteger, AWSIoTMQTTStatus) {
-    AWSIoTMQTTStatusUnknown,
-    AWSIoTMQTTStatusConnecting,
-    AWSIoTMQTTStatusConnected,
-    AWSIoTMQTTStatusDisconnected,
-    AWSIoTMQTTStatusConnectionRefused,
-    AWSIoTMQTTStatusConnectionError,
-    AWSIoTMQTTStatusProtocolError
-};
-
-typedef NS_ENUM(NSInteger, AWSIoTMQTTQoS) {
-    AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce = 0,
-    AWSIoTMQTTQoSMessageDeliveryAttemptedAtLeastOnce = 1
-};
-
-typedef void(^AWSIoTMQTTNewMessageBlock)(NSData *data);
-typedef void(^AWSIoTMQTTExtendedNewMessageBlock)(NSObject *mqttClient, NSString *topic, NSData *data);
-typedef void(^AWSIoTMQTTAckBlock)(void);
-
 
 #pragma mark - AWSIoTMQTTLastWillAndTestament
 
@@ -508,7 +489,7 @@ typedef void(^AWSIoTMQTTAckBlock)(void);
  
  @param topic The topic for publish to.
  
- @param the callback for ack if QoS > 0.
+ @param ackCallback the callback for ack if QoS > 0.
  
  @return Boolean value indicating success or failure.
  
@@ -543,7 +524,7 @@ typedef void(^AWSIoTMQTTAckBlock)(void);
  
  @param topic The topic for publish to.
  
- @param the callback for ack if QoS > 0.
+ @param ackCallback the callback for ack if QoS > 0.
  
  @return Boolean value indicating success or failure.
  
@@ -611,7 +592,7 @@ typedef void(^AWSIoTMQTTAckBlock)(void);
  
  @param callback Reference to AWSIOTMQTTExtendedNewMessageBlock. When new message is received the callback will be invoked.
  
- @param the callback for ack if QoS > 0.
+ @param ackCallback the callback for ack if QoS > 0.
  
  @return Boolean value indicating success or failure.
  
